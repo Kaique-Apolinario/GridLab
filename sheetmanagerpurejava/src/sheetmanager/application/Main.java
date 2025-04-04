@@ -1,13 +1,16 @@
 package sheetmanager.application;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Main {
@@ -15,27 +18,49 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		// Create Workbook instance holding reference to .xlsx file
-		FileInputStream file = new FileInputStream(
-				"C:\\Users\\KaiiaK\\Desktop\\Sheets Manager\\file_example_XLSX_100.xlsx");
+		File file = new File("C:\\Users\\KaiiaK\\Desktop\\Sheets Manager\\file_example_XLSX_100.xlsx");
+
+		String excelVersion = null;
+
+		System.out.println(file.getName());
+		if (file.getName().endsWith(".xlsx")) {
+			excelVersion = "New";
+		} else if (file.getName().endsWith(".xls")) {
+			excelVersion = "Old";
+		}
 
 		// How many sheets do you want the old sheet to be divided in?
 		int amountOfNewSheets = 5;
 
-		// Do you want the first line to be included in each sheet?
+		// Do you want the first line to be the same in every sheet?
 		boolean header = true;
 
 		// Get first/desired sheet from the workbook
-		XSSFWorkbook workbook = new XSSFWorkbook(file);
-		XSSFSheet sheet = workbook.getSheetAt(0);
+		Sheet sheet = null;
+		try {
+				FileInputStream fis = new FileInputStream(file);
+				
+			if ("New".equals(excelVersion)) {
+				XSSFWorkbook workbook = new XSSFWorkbook(fis);
+				sheet = workbook.getSheetAt(0);
 
-		System.out.println(file);
+			} else if ("Old".equals(excelVersion)) {
+				HSSFWorkbook workbook = new HSSFWorkbook(fis);
+				sheet = workbook.getSheetAt(0);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		int amountOfRowsInOriginalSheet = sheet.getPhysicalNumberOfRows();
 		int amountOfRowsInNewSheets = amountOfRowsInOriginalSheet / amountOfNewSheets;
 
+		
+		
+		
 		// Here, it is create new workbooks with new sheets
-		XSSFWorkbook[] listOfNewWorkbook = new XSSFWorkbook[amountOfNewSheets];
-		XSSFSheet[] listOfNewSheets = new XSSFSheet[amountOfNewSheets];
+		Workbook[] listOfNewWorkbook = new Workbook[amountOfNewSheets];
+		Sheet[] listOfNewSheets = new Sheet[amountOfNewSheets];
 		for (int i = 0; i < amountOfNewSheets; i++) {
 			listOfNewWorkbook[i] = new XSSFWorkbook();
 			listOfNewSheets[i] = listOfNewWorkbook[i].createSheet("Sheet1");
@@ -52,10 +77,7 @@ public class Main {
 				selectedSheet++;
 				rowNumber = 0;
 				if (header) {
-					
-
-
-					//It creates a new row in the current sheet
+					// It creates a new row in the current sheet
 					Row rowInNewSheet = listOfNewSheets[selectedSheet].createRow(rowNumber++);
 					int cellnum = 0;
 
@@ -82,12 +104,10 @@ public class Main {
 					}
 					System.out.println("\n");
 
-				
-					
 				}
 			}
 
-			//It creates a new row in the current sheet
+			// It creates a new row in the current sheet
 			Row rowInNewSheet = listOfNewSheets[selectedSheet].createRow(rowNumber++);
 			int cellnum = 0;
 
@@ -124,18 +144,6 @@ public class Main {
 			listOfNewWorkbook[i].close();
 		}
 
-		// Close resources
-		workbook.close();
-		file.close();
-
 		System.out.println("Done!");
 	}
-	
-	
-	private void writeInSheet(){
-		
-		
-	}
-	
-	
 }

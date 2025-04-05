@@ -1,13 +1,13 @@
-package com.kaiqueapol.sheet_manager;
+package com.kaiqueapol.sheetmanager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SheetManagerApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SheetManagerApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }

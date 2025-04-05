@@ -1,10 +1,10 @@
-package com.kaiqueapol.sheet_manager;
+package com.kaiqueapol.sheetmanager;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SheetManagerApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {

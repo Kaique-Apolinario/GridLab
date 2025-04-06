@@ -15,8 +15,9 @@ public class SheetController {
 		this.sheetService = sheetService;
 	}
 
-	public ResponseEntity<String> uploadSheet(@RequestPart("file") MultipartFile file) throws Exception {
-		sheetService.divideSheets(file);
+	public ResponseEntity<String> uploadSheet(@RequestPart("file") MultipartFile file, int sheetParts, boolean header)
+			throws Exception {
+		sheetService.divideSheets(file, sheetParts, header);
 		return ResponseEntity.ok("File updated sucessfully!");
 	}
 }

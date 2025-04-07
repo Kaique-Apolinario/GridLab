@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+@Component
 public class ValidateAndConvertSheet {
 
 	public File sheetValidationAndConvertion(MultipartFile rawFile) throws Exception {

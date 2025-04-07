@@ -12,16 +12,18 @@ import java.util.zip.ZipOutputStream;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ZipSheet {
 
-	public void sheetZipping(int amountOfNewSheets, Workbook[] listOfNewWorkbook, XSSFWorkbook workbook)
+	public void sheetZipping(String ogName, int amountOfNewSheets, Workbook[] listOfNewWorkbook, XSSFWorkbook workbook)
 			throws FileNotFoundException, IOException {
 
 		// It creates a list with every .xlsx created
 		List<String> listWithEveryNewSheet = new ArrayList<>();
 		for (int i = 0; i < amountOfNewSheets; i++) {
-			String fileName = "Sheet_Number_" + (i + 1) + ".xlsx";
+			String fileName = ogName + "_" + (i + 1) + ".xlsx";
 			listWithEveryNewSheet.add(fileName);
 
 			// It takes each sheet from listOfNewWorkbook and write a .xlsx based on its
@@ -37,7 +39,7 @@ public class ZipSheet {
 		}
 
 		// It creates a .zip including all of the .xlsx within listWithEveryNewSheet
-		try (FileOutputStream fos = new FileOutputStream("SheetZip.zip");
+		try (FileOutputStream fos = new FileOutputStream("UploadFolder\\SheetZip.zip");
 				ZipOutputStream zos = new ZipOutputStream(fos);) {
 			for (String part : listWithEveryNewSheet) {
 				File fileToZip = new File(part);
@@ -52,11 +54,11 @@ public class ZipSheet {
 					while ((length = fis.read(bytes)) >= 0) {
 						zos.write(bytes, 0, length);
 					}
+					fileToZip.delete();
 				}
 			}
 		}
 		workbook.close();
-		System.out.println("Done!");
 
 	}
 }

@@ -5,7 +5,9 @@ import java.util.Iterator;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CopyPasteRow {
 
 	public void copyPasteRow(Row originalRow, Sheet selectedSheet, int newSheetRow) {

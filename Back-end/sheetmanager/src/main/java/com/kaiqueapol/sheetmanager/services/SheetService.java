@@ -3,11 +3,14 @@ package com.kaiqueapol.sheetmanager.services;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.UUID;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,7 +35,8 @@ public class SheetService {
 		this.fileRep = fileRep;
 	}
 
-	public void divideSheets(MultipartFile rawFile, int sheetParts, boolean header, boolean saveFile) throws Exception {
+	public FileEntity divideSheets(MultipartFile rawFile, int sheetParts, boolean header, boolean saveFile)
+			throws Exception {
 
 		// It validates if the file is a .xlsx or .xls sheet and converts it to
 		// File
@@ -77,18 +81,26 @@ public class SheetService {
 		// Save the new sheets into a .zip file
 		String fileName = rawFile.getOriginalFilename();
 		zipSheet.sheetZipping(fileName, amountOfNewSheets, listOfNewWorkbook, workbook);
-		zipToEntity(new File("UploadFolder\\SheetZip.zip"));
+		FileEntity fileEntity = zipToEntity(new File("UploadFolder\\SheetZip.zip"));
+		return fileEntity;
 	}
 
-	public void zipToEntity(File zip) throws IOException {
-		FileEntity fileEntity = new FileEntity(null, zip.getName(), "/download/HERE", zip.getTotalSpace(), "HERE",
+	public FileEntity zipToEntity(File zip) throws IOException {
+		FileEntity fileEntity = new FileEntity(UUID.randomUUID(), zip.getName(), zip.getTotalSpace(),
 				Files.probeContentType(zip.toPath()), Files.readAllBytes(zip.toPath()));
 		fileRep.save(fileEntity);
+		return fileEntity;
 	}
 
-	public FileEntity downloadZip(String fileCode) {
-		FileEntity foundFile = fileRep.getFileEntityByFileCode(fileCode);
-		return foundFile;
+	public Resource downloadZip(UUID id) {
+		FileEntity foundFileEntity = getEntityById(id);
+		System.out.println(foundFileEntity);
+		ByteArrayResource resource = new ByteArrayResource(foundFileEntity.getData());
+		return resource;
+
 	}
 
+	public FileEntity getEntityById(UUID id) {
+		return fileRep.getFileEntityById(id);
+	}
 }

@@ -1,5 +1,10 @@
 package com.kaiqueapol.sheetmanager.controllers;
 
+import java.util.UUID;
+
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,13 +27,20 @@ public class SheetController {
 	@PostMapping("/upload")
 	public ResponseEntity<FileEntity> uploadSheet(@RequestPart("file") MultipartFile file, int sheetParts,
 			boolean header, boolean saveFile) throws Exception {
-		sheetService.divideSheets(file, sheetParts, header, saveFile);
-		return ResponseEntity.ok().build();
+		FileEntity fileEntity = sheetService.divideSheets(file, sheetParts, header, saveFile);
+		return ResponseEntity.ok().body(fileEntity);
 	}
 
-	@GetMapping("/downloadFile/{fileCode}")
-	public ResponseEntity<FileEntity> downloadFile(@PathVariable String fileCode) {
-		return ResponseEntity.ok(sheetService.downloadZip(fileCode));
+	@GetMapping("/download/{id}")
+	public ResponseEntity<Resource> downloadFile(@PathVariable UUID id) {
+
+		Resource resource = sheetService.downloadZip(id);
+
+		FileEntity fileEntity = sheetService.getEntityById(id);
+		String headerValue = "attachment; filename=\"" + fileEntity.getFileName() + "\"";
+
+		return ResponseEntity.ok().contentType(MediaType.parseMediaType("application/zip"))
+				.header(HttpHeaders.CONTENT_DISPOSITION, headerValue).body(resource);
 	}
 
 }

@@ -1,8 +1,8 @@
 package com.kaiqueapol.sheetmanager.entities;
 
+import java.util.UUID;
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
@@ -22,8 +22,7 @@ import lombok.Setter;
 public class FileEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private UUID id;
 
 	private String fileName;
 
@@ -31,10 +30,18 @@ public class FileEntity {
 
 	private Long size;
 
-	private String fileCode;
-
 	private String contentType;
 
 	@Lob
 	private byte[] data;
+
+	public FileEntity(UUID id, String fileName, Long size, String contentType, byte[] data) {
+		this.id = id;
+		this.fileName = fileName;
+		this.dlUrl = "/download/" + id;
+		this.size = size;
+		this.contentType = contentType;
+		this.data = data;
+	}
+
 }

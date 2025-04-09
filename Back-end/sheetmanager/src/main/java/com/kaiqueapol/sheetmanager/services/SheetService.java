@@ -79,8 +79,9 @@ public class SheetService {
 			copyPasteRow.copyPasteRow(row, listOfNewSheets[selectedSheet], rowNumber++);
 		}
 		// Save the new sheets into a .zip file
-		String fileName = rawFile.getOriginalFilename();
-		zipSheet.sheetZipping(fileName, amountOfNewSheets, listOfNewWorkbook, workbook);
+		String fileNameWoExtension = rawFile.getOriginalFilename().substring(0,
+				rawFile.getOriginalFilename().length() - 5);
+		zipSheet.sheetZipping(fileNameWoExtension, amountOfNewSheets, listOfNewWorkbook, workbook);
 		FileEntity fileEntity = zipToEntity(new File("UploadFolder\\SheetZip.zip"));
 		return fileEntity;
 	}
@@ -94,7 +95,6 @@ public class SheetService {
 
 	public Resource downloadZip(UUID id) {
 		FileEntity foundFileEntity = getEntityById(id);
-		System.out.println(foundFileEntity);
 		ByteArrayResource resource = new ByteArrayResource(foundFileEntity.getData());
 		return resource;
 

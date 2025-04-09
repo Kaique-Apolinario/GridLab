@@ -23,7 +23,7 @@ public class ZipSheet {
 		// It creates a list with every .xlsx created
 		List<String> listWithEveryNewSheet = new ArrayList<>();
 		for (int i = 0; i < amountOfNewSheets; i++) {
-			String fileName = ogName + "_" + (i + 1) + ".xlsx";
+			String fileName = "UploadFolder\\" + ogName + "_" + (i + 1) + ".xlsx";
 			listWithEveryNewSheet.add(fileName);
 
 			// It takes each sheet from listOfNewWorkbook and write a .xlsx based on its
@@ -54,8 +54,8 @@ public class ZipSheet {
 					while ((length = fis.read(bytes)) >= 0) {
 						zos.write(bytes, 0, length);
 					}
-					fileToZip.delete();
 				}
+				fileToZip.delete();
 			}
 		}
 		workbook.close();

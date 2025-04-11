@@ -32,8 +32,8 @@ public class ZipSheet {
 				listOfNewWorkbook[i].write(fos);
 				listOfNewWorkbook[i].close();
 
-			} catch (Exception e) {
-
+			} catch (IOException e) {
+				e.getMessage();
 			}
 		}
 
@@ -54,9 +54,13 @@ public class ZipSheet {
 						zos.write(bytes, 0, length);
 					}
 					zos.closeEntry();
+				} catch (IOException e) {
+					e.getMessage();
 				}
 				fileToZip.delete();
 			}
+		} catch (IOException e) {
+			e.getMessage();
 		}
 		workbook.close();
 

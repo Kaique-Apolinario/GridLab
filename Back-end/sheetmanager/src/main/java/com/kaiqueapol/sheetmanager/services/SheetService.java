@@ -3,6 +3,7 @@ package com.kaiqueapol.sheetmanager.services;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kaiqueapol.sheetmanager.entities.FileEntity;
+import com.kaiqueapol.sheetmanager.exceptions.FileEntityNotFoundException;
 import com.kaiqueapol.sheetmanager.repositories.FileRepository;
 import com.kaiqueapol.sheetmanager.util.CopyPasteRow;
 import com.kaiqueapol.sheetmanager.util.ZipSheet;
@@ -53,6 +55,9 @@ public class SheetService {
 		// How many sheets the user wants the old sheet to be divided in
 		int amountOfNewSheets = sheetParts;
 
+		if (workbook == null) {
+			throw new IOException("We couldn't identify your file. Please, try again!");
+		}
 		Sheet sheet = workbook.getSheetAt(0);
 		int amountOfRowsInOriginalSheet = sheet.getPhysicalNumberOfRows();
 		int amountOfRowsInNewSheets = amountOfRowsInOriginalSheet / amountOfNewSheets;
@@ -99,13 +104,15 @@ public class SheetService {
 	}
 
 	public Resource downloadZip(UUID id) {
-		FileEntity foundFileEntity = getEntityById(id);
-		ByteArrayResource resource = new ByteArrayResource(foundFileEntity.getData());
+		ByteArrayResource resource = new ByteArrayResource(getEntityById(id).getData());
 		return resource;
 
 	}
 
 	public FileEntity getEntityById(UUID id) {
-		return fileRep.getFileEntityById(id);
+		FileEntity foundFile = Optional.ofNullable(fileRep.getFileEntityById(id))
+				.orElseThrow(FileEntityNotFoundException::new);
+
+		return foundFile;
 	}
 }

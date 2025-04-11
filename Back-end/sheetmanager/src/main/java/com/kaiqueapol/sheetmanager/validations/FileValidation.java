@@ -3,12 +3,14 @@ package com.kaiqueapol.sheetmanager.validations;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kaiqueapol.sheetmanager.exceptions.InvalidFileException;
+
 @Component
 public class FileValidation {
 
-	public MultipartFile sheetValidation(MultipartFile rawFile) throws Exception {
+	public MultipartFile sheetValidation(MultipartFile rawFile) throws InvalidFileException {
 		if (!(rawFile.getOriginalFilename().endsWith(".xlsx") || (rawFile.getOriginalFilename().endsWith(".xls")))) {
-			throw new Exception();
+			throw new InvalidFileException();
 		}
 		return rawFile;
 	}

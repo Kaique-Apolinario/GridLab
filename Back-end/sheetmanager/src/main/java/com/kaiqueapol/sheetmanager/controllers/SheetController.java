@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kaiqueapol.sheetmanager.dto.fileEntityDTO;
 import com.kaiqueapol.sheetmanager.entities.FileEntity;
 import com.kaiqueapol.sheetmanager.services.SheetService;
 
@@ -25,10 +26,11 @@ public class SheetController {
 	}
 
 	@PostMapping("/upload")
-	public ResponseEntity<FileEntity> uploadSheet(@RequestPart("file") MultipartFile file, int sheetParts,
+	public ResponseEntity<fileEntityDTO> uploadSheet(@RequestPart("file") MultipartFile file, int sheetParts,
 			boolean header, boolean saveFile) throws Exception {
 		FileEntity fileEntity = sheetService.divideSheets(file, sheetParts, header, saveFile);
-		return ResponseEntity.ok().body(fileEntity);
+		return ResponseEntity.ok().body(new fileEntityDTO(fileEntity.getFileName(), fileEntity.getContentType(),
+				fileEntity.getSize(), fileEntity.getDlUrl()));
 	}
 
 	@GetMapping("/download/{id}")

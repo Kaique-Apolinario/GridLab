@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.UUID;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -18,18 +19,18 @@ import com.kaiqueapol.sheetmanager.entities.FileEntity;
 import com.kaiqueapol.sheetmanager.repositories.FileRepository;
 import com.kaiqueapol.sheetmanager.util.CopyPasteRow;
 import com.kaiqueapol.sheetmanager.util.ZipSheet;
-import com.kaiqueapol.sheetmanager.validations.ValidateAndConvertSheet;
+import com.kaiqueapol.sheetmanager.validations.FileValidation;
 
 @Service
 public class SheetService {
-	private ValidateAndConvertSheet validateAndConvert;
+	private FileValidation fileValidation;
 	private ZipSheet zipSheet;
 	private CopyPasteRow copyPasteRow;
 	private FileRepository fileRep;
 
-	public SheetService(ValidateAndConvertSheet validateAndConvert, ZipSheet zipSheet, CopyPasteRow copyPasteRow,
+	public SheetService(FileValidation fileValidation, ZipSheet zipSheet, CopyPasteRow copyPasteRow,
 			FileRepository fileRep) {
-		this.validateAndConvert = validateAndConvert;
+		this.fileValidation = fileValidation;
 		this.zipSheet = zipSheet;
 		this.copyPasteRow = copyPasteRow;
 		this.fileRep = fileRep;
@@ -37,16 +38,21 @@ public class SheetService {
 
 	public FileEntity divideSheets(MultipartFile rawFile, int sheetParts, boolean header, boolean saveFile)
 			throws Exception {
-
 		// It validates if the file is a .xlsx or .xls sheet and converts it to
 		// File
-		File file = validateAndConvert.sheetValidationAndConvertion(rawFile);
+		MultipartFile file = fileValidation.sheetValidation(rawFile);
+
+		// Get first/desired sheet from the workbook
+		Workbook workbook = null;
+		if (file.getName().endsWith(".xlsx")) {
+			workbook = new XSSFWorkbook(file.getInputStream());
+		} else if (file.getName().endsWith(".xls")) {
+			workbook = new HSSFWorkbook(file.getInputStream());
+		}
 
 		// How many sheets the user wants the old sheet to be divided in
 		int amountOfNewSheets = sheetParts;
 
-		// Get first/desired sheet from the workbook
-		XSSFWorkbook workbook = new XSSFWorkbook(file);
 		Sheet sheet = workbook.getSheetAt(0);
 		int amountOfRowsInOriginalSheet = sheet.getPhysicalNumberOfRows();
 		int amountOfRowsInNewSheets = amountOfRowsInOriginalSheet / amountOfNewSheets;
@@ -79,8 +85,7 @@ public class SheetService {
 			copyPasteRow.copyPasteRow(row, listOfNewSheets[selectedSheet], rowNumber++);
 		}
 		// Save the new sheets into a .zip file
-		String fileNameWoExtension = rawFile.getOriginalFilename().substring(0,
-				rawFile.getOriginalFilename().length() - 5);
+		String fileNameWoExtension = file.getOriginalFilename().substring(0, file.getOriginalFilename().length() - 5);
 		zipSheet.sheetZipping(fileNameWoExtension, amountOfNewSheets, listOfNewWorkbook, workbook);
 		FileEntity fileEntity = zipToEntity(new File("UploadFolder\\SheetZip.zip"));
 		return fileEntity;

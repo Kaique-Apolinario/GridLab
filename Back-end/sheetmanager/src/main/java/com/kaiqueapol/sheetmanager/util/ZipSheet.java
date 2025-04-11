@@ -11,13 +11,12 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ZipSheet {
 
-	public void sheetZipping(String ogName, int amountOfNewSheets, Workbook[] listOfNewWorkbook, XSSFWorkbook workbook)
+	public void sheetZipping(String ogName, int amountOfNewSheets, Workbook[] listOfNewWorkbook, Workbook workbook)
 			throws FileNotFoundException, IOException {
 
 		// It creates a list with every .xlsx created
@@ -54,6 +53,7 @@ public class ZipSheet {
 					while ((length = fis.read(bytes)) >= 0) {
 						zos.write(bytes, 0, length);
 					}
+					zos.closeEntry();
 				}
 				fileToZip.delete();
 			}

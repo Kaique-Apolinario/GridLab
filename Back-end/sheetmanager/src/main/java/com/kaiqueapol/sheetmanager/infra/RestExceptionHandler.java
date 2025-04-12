@@ -8,6 +8,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.kaiqueapol.sheetmanager.exceptions.FileEntityNotFoundException;
 import com.kaiqueapol.sheetmanager.exceptions.InvalidFileException;
+import com.kaiqueapol.sheetmanager.exceptions.TooManySheetsException;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -18,7 +19,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler(FileEntityNotFoundException.class)
-	public ResponseEntity<String> fileEntityNotFoundException(InvalidFileException e) {
+	public ResponseEntity<String> fileEntityNotFoundException(FileEntityNotFoundException e) {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 	}
+
+	@ExceptionHandler(TooManySheetsException.class)
+	public ResponseEntity<String> tooManySheetsException(TooManySheetsException e) {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+	}
+
 }

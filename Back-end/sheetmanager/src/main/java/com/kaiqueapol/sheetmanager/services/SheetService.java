@@ -22,6 +22,7 @@ import com.kaiqueapol.sheetmanager.repositories.FileRepository;
 import com.kaiqueapol.sheetmanager.util.CopyPasteRow;
 import com.kaiqueapol.sheetmanager.util.ZipSheet;
 import com.kaiqueapol.sheetmanager.validations.FileValidation;
+import com.kaiqueapol.sheetmanager.validations.RowPerSheetsValidation;
 
 @Service
 public class SheetService {
@@ -29,38 +30,37 @@ public class SheetService {
 	private ZipSheet zipSheet;
 	private CopyPasteRow copyPasteRow;
 	private FileRepository fileRep;
+	private RowPerSheetsValidation wpsvalid;
 
 	public SheetService(FileValidation fileValidation, ZipSheet zipSheet, CopyPasteRow copyPasteRow,
-			FileRepository fileRep) {
+			FileRepository fileRep, RowPerSheetsValidation wpsvalid) {
 		this.fileValidation = fileValidation;
 		this.zipSheet = zipSheet;
 		this.copyPasteRow = copyPasteRow;
 		this.fileRep = fileRep;
+		this.wpsvalid = wpsvalid;
 	}
 
-	public FileEntity divideSheets(MultipartFile rawFile, int sheetParts, boolean header, boolean saveFile)
-			throws Exception {
+	public FileEntity divideSheets(MultipartFile rawFile, int sheetParts, boolean header) throws Exception {
 		// It validates if the file is a .xlsx or .xls sheet and converts it to
 		// File
 		MultipartFile file = fileValidation.sheetValidation(rawFile);
 
 		// Get first/desired sheet from the workbook
 		Workbook workbook = null;
-		if (file.getName().endsWith(".xlsx")) {
+		if (file.getOriginalFilename().endsWith(".xlsx")) {
 			workbook = new XSSFWorkbook(file.getInputStream());
-		} else if (file.getName().endsWith(".xls")) {
+		} else if (file.getOriginalFilename().endsWith(".xls")) {
 			workbook = new HSSFWorkbook(file.getInputStream());
 		}
 
 		// How many sheets the user wants the old sheet to be divided in
 		int amountOfNewSheets = sheetParts;
 
-		if (workbook == null) {
-			throw new IOException("We couldn't identify your file. Please, try again!");
-		}
 		Sheet sheet = workbook.getSheetAt(0);
 		int amountOfRowsInOriginalSheet = sheet.getPhysicalNumberOfRows();
 		int amountOfRowsInNewSheets = amountOfRowsInOriginalSheet / amountOfNewSheets;
+		wpsvalid.rowPerSheetsValidation(amountOfRowsInNewSheets, sheetParts);
 
 		// Here, it is create new workbooks with a new sheet
 		Workbook[] listOfNewWorkbook = new Workbook[amountOfNewSheets];
@@ -92,7 +92,9 @@ public class SheetService {
 		// Save the new sheets into a .zip file
 		String fileNameWoExtension = file.getOriginalFilename().substring(0, file.getOriginalFilename().length() - 5);
 		zipSheet.sheetZipping(fileNameWoExtension, amountOfNewSheets, listOfNewWorkbook, workbook);
-		FileEntity fileEntity = zipToEntity(new File("UploadFolder\\SheetZip.zip"));
+		System.out.println("HERE");
+		FileEntity fileEntity = zipToEntity(new File("UploadFolder\\" + fileNameWoExtension + ".zip"));
+		System.out.println("DONE");
 		return fileEntity;
 	}
 

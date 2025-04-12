@@ -38,7 +38,7 @@ public class ZipSheet {
 		}
 
 		// It creates a .zip including all of the .xlsx within listWithEveryNewSheet
-		try (FileOutputStream fos = new FileOutputStream("UploadFolder\\SheetZip.zip");
+		try (FileOutputStream fos = new FileOutputStream("UploadFolder\\" + ogName + ".zip");
 				ZipOutputStream zos = new ZipOutputStream(fos);) {
 			for (String part : listWithEveryNewSheet) {
 				File fileToZip = new File(part);

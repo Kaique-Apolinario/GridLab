@@ -1,6 +1,8 @@
 <div class="body">
     <form (ngSubmit)="OnFormsDone()">
-
+        <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'}">
+            {{fileName}}
+        </div>
         <input type="file" id="upload" (change)="OnFileUpload($event)" class="upload" />
         <label for="upload" class="upload-btn">
             <span></span>
@@ -19,4 +21,6 @@
             </div>
         </div>
     </form>
+    <button [ngStyle]="{ 'display' : downloadFile == null ? 'none' : 'block'}" (click)="OnDownloadFile()">download
+        link</button>
 </div>

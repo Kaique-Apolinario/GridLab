@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FileUploaderService } from '../../services/file-uploader.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FileEntity} from '../../entities/FileEntity';
 
 @Component({
   standalone: true,
@@ -12,10 +13,14 @@ import { FormsModule } from '@angular/forms';
 })
 export class UploadButtonComponent implements OnInit{
   private fileUploaderServ:FileUploaderService = inject(FileUploaderService);
+
   formData!: FormData;
   fileName!: string;
   howManySheets!: number;
   header: boolean = false;
+
+  downloadFile!:FileEntity;
+
 
   ngOnInit(): void {
   }
@@ -36,6 +41,23 @@ export class UploadButtonComponent implements OnInit{
       this.formData.append('sheetParts', this.howManySheets.toString());
   }
       this.formData.append('header', this.header.toString());
-      this.fileUploaderServ.postTasks(this.formData).subscribe();
+      this.fileUploaderServ.postFile(this.formData).subscribe((fileDtoJson) => this.downloadFile = fileDtoJson);
+
+  }
+
+  OnDownloadFile(){
+    console.log("Downloading .......")
+    console.log(this.downloadFile)
+    this.fileUploaderServ.getFile(this.downloadFile.dlUrl).subscribe((blob) => {
+      const objectUrl = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = objectUrl;
+      a.download = this.downloadFile.fileName;
+      a.click();
+
+      URL.revokeObjectURL(objectUrl);
+
+  });
   }
 }

@@ -1,4 +1,4 @@
-body {
+.body {
     margin: 0;
     padding: 0;
     height: 100%;
@@ -102,4 +102,8 @@ body {
 .upload-btn:hover span:nth-child(4) {
     height: 100%;
     transform: translateY(-100%);
+}
+
+.upload{
+    display: none;
 }

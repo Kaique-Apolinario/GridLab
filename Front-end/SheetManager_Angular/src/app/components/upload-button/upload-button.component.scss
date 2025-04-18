@@ -1,6 +1,6 @@
 .body {
     margin: 0;
-    padding: 0;
+    padding: 0px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -8,19 +8,40 @@
     align-items: center;
     text-align: center;
     background-color: transparent;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.header > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 }
 
 .upload-btn {
     position: relative;
     padding: 25px 50px;
     text-decoration: none;
-    color: #fff;
+    color: #ffffff;
     text-transform: uppercase;
-    font-family: sans-serif;
     letter-spacing: 4px;
     overflow: hidden;
-    background: rgba(255, 4, 4, 0.1);
-    box-shadow: 0 5px 5px rgba(211, 104, 104, 0.2);
+    background: rgba(33, 160, 92, 0.782);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     z-index: 0;
     cursor: pointer;
@@ -42,8 +63,12 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(190, 255, 147, 0.5), transparent);
     transition: 0.5s;
+}
+
+.upload-btn:hover, #numberSheet:hover {
+    box-shadow: 0px 0px 20px 1px black;
 }
 
 .upload-btn:hover:after {
@@ -106,4 +131,29 @@
 
 .upload{
     display: none;
+}
+
+#numberSheet{
+    border-radius: 50px;
+    background: transparent;
+    padding: 5px 10px;
+    
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.downloadButton{
+    padding: 2px 8px;
+    background: transparent;
+    border-radius: 50px;
+}
+
+.downloadButton:hover {
+    background: rgba(0, 221, 255, 0.378);
+    transition-duration: .3s;
+    padding: 5px 10px;
 }

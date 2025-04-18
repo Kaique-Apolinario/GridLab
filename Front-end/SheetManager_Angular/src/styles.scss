@@ -2,7 +2,9 @@
 @import "bootstrap/scss/bootstrap";
   .wrapper {
     background: #50a3a2;
-    background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
+    background: linear-gradient(-45deg, #1F7D53, #48bc76, #B3D8A8);
+    animation: gradient 30s ease infinite;
+    background-size: 400% 400%;
     position: absolute;
     top: 0;
     left: 0;
@@ -11,6 +13,18 @@
     overflow: hidden;
     z-index: -1;
   }
+  
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
 
   .bg-bubbles {
     position: absolute;
@@ -29,8 +43,8 @@
     height: 40px;
     background-color: rgba(255, 255, 255, 0.15);
     bottom: -160px;
-    -webkit-animation: square 25s infinite;
-    animation: square 50s infinite;
+    -webkit-animation: square 20s infinite;
+    animation: square 20s infinite;
     transition-timing-function: linear;
     border-radius: 10%;
   }
@@ -47,8 +61,8 @@
     left: 20%;
     width: 80px;
     height: 80px;
-    -webkit-animation-delay: 2s;
-            animation-delay: 2s;
+    -webkit-animation-delay: 4s;
+            animation-delay: 4s;
     -webkit-animation-duration: 17s;
             animation-duration: 17s;
     
@@ -56,16 +70,16 @@
 
   .bg-bubbles li:nth-child(3) {
     left: 25%;
-    -webkit-animation-delay: 4s;
-            animation-delay: 4s;
+    -webkit-animation-delay: 6s;
+            animation-delay: 6s;
   }
 
   .bg-bubbles li:nth-child(4) {
     left: 40%;
     width: 60px;
     height: 60px;
-    -webkit-animation-duration: 22s;
-            animation-duration: 22s;
+    -webkit-animation-duration: 25s;
+            animation-duration: 25s;
     background-color: rgba(255, 255, 255, 0.25);
   }
   .bg-bubbles li:nth-child(5) {
@@ -75,8 +89,8 @@
     left: 80%;
     width: 120px;
     height: 120px;
-    -webkit-animation-delay: 3s;
-            animation-delay: 3s;
+    -webkit-animation-delay: 8s;
+            animation-delay: 8s;
     background-color: rgba(255, 255, 255, 0.2);
   }
   .bg-bubbles li:nth-child(7) {
@@ -99,8 +113,8 @@
     left: 25%;
     width: 10px;
     height: 10px;
-    -webkit-animation-delay: 2s;
-            animation-delay: 2s;
+    -webkit-animation-delay: 3s;
+            animation-delay: 3s;
     -webkit-animation-duration: 40s;
             animation-duration: 40s;
     background-color: rgba(255, 255, 255, 0.3);
@@ -109,15 +123,15 @@
     left: 90%;
     width: 160px;
     height: 160px;
-    -webkit-animation-delay: 11s;
-            animation-delay: 11s;
+    -webkit-animation-delay: 13s;
+            animation-delay: 13s;
   }
   @-webkit-keyframes square {
     0% {
       transform: translateY(0);
     }
     100% {
-      transform: translateY(-700px) rotate(600deg);
+      transform: translateY(-150vh) rotate(600deg);
     }
   }
   @keyframes square {
@@ -125,6 +139,6 @@
       transform: translateY(0);
     }
     100% {
-      transform: translateY(-700px) rotate(600deg);
+      transform: translateY(-150vh) rotate(600deg);
     }
   }

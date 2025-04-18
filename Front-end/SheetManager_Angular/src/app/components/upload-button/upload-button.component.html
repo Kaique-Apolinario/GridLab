@@ -11,16 +11,18 @@
             <span></span>
             UPLOAD
         </label>
-        <br>
-        <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'}">
-            <div>
-                <label for="numberSheet">Divide in </label>
-                <input type="number" id="numberSheet" [(ngModel)]="howManySheets" name="numberSheet"><span>parts</span>
-                <input type="checkbox" id="header" name="header" [(ngModel)]="header">
-                <label for="header">Preserve the header</label>
+        <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'} ">
+            <div class="header">
+                <input type="number" id="numberSheet" [(ngModel)]="howManySheets" name="numberSheet"
+                    placeholder="Divide it into how many parts?">
+                <div>
+                    <input type="checkbox" id="header" name="header" [(ngModel)]="header">
+                    <label for="header">Preserve the header</label>
+                </div>
             </div>
         </div>
     </form>
-    <button [ngStyle]="{ 'display' : downloadFile == null ? 'none' : 'block'}" (click)="OnDownloadFile()">download
-        link</button>
+    <button class="downloadButton" [ngStyle]="{ 'display' : downloadFile == null ? 'none' : 'block'}"
+        (click)="OnDownloadFile()">Download
+        file</button>
 </div>

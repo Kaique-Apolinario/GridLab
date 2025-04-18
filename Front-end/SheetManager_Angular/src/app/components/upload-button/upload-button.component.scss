@@ -148,12 +148,12 @@ input::-webkit-inner-spin-button {
 
 .downloadButton{
     padding: 2px 8px;
-    background: transparent;
+    background: rgba(33, 160, 92, 0.782);
     border-radius: 50px;
 }
 
 .downloadButton:hover {
-    background: rgba(0, 221, 255, 0.378);
+    background: rgba(22, 109, 63, 0.782);
     transition-duration: .3s;
     padding: 5px 10px;
 }

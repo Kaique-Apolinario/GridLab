@@ -27,10 +27,14 @@ export class UploadButtonComponent implements OnInit{
 
   OnFileUpload(event: any){
     if(event.target.files.length > 0 ) {
-      const file: File = event.target.files[0];
+      let file: File = event.target.files[0];
+      if (file.name.toString().endsWith(".xlsx") || file.name.toString().endsWith(".xls")){
       this.fileName = file.name.toString();
       this.formData = new FormData();
       this.formData.append('file', file);
+      } else {
+        alert("It isn't a .xlsx or a .xls file. Please, try again!")
+      }
     }
   }
 

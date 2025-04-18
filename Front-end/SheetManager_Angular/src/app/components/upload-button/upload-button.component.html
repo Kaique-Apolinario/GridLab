@@ -3,7 +3,8 @@
         <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'}">
             {{fileName}}
         </div>
-        <input type="file" id="upload" (change)="OnFileUpload($event)" class="upload" />
+        <input type="file" id="upload" (change)="OnFileUpload($event)" class="upload"
+            accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
         <label for="upload" class="upload-btn">
             <span></span>
             <span></span>

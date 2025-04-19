@@ -15,15 +15,20 @@
         <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'} ">
             <div class="header">
                 <input type="number" id="numberSheet" [(ngModel)]="howManySheets" name="numberSheet"
-                    placeholder="Divide it into how many parts?">
+                    placeholder="Divide it into how many parts?" required>
                 <div>
                     <input type="checkbox" id="header" name="header" [(ngModel)]="header">
                     <label for="header">Preserve the header</label>
                 </div>
             </div>
         </div>
+        <button type="submit" class="downloadButton"
+            [ngStyle]="{ 'display' : howManySheets == null ? 'none' : 'block'}">
+            @if (downloadFile == null) {
+            Divide file!
+            } @else{
+            Download file!
+            }
+        </button>
     </form>
-    <button class="downloadButton" [ngStyle]="{ 'display' : downloadFile == null ? 'none' : 'block'}"
-        (click)="OnDownloadFile()">Download
-        file</button>
 </div>

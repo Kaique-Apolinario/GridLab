@@ -18,6 +18,7 @@ export class UploadButtonComponent implements OnInit{
   fileName!: string;
   howManySheets!: number;
   header: boolean = false;
+  buttonMessage:string= "";
 
   downloadFile!:FileEntity;
 
@@ -39,6 +40,7 @@ export class UploadButtonComponent implements OnInit{
   }
 
   OnFormsDone(){
+    if (this.downloadFile == null){
     if (this.howManySheets > 2000000000){
       alert("More than 2 billions lines per sheet? Sheesh! Try a smaller number.")
     } else {
@@ -46,7 +48,9 @@ export class UploadButtonComponent implements OnInit{
   }
       this.formData.append('header', this.header.toString());
       this.fileUploaderServ.postFile(this.formData).subscribe((fileDtoJson) => this.downloadFile = fileDtoJson);
-
+    } else {
+      this.OnDownloadFile();
+    }
   }
 
   OnDownloadFile(){

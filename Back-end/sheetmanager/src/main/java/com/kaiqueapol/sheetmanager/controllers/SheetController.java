@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,8 +42,12 @@ public class SheetController {
 			@ApiResponse(responseCode = "422", description = "Invalid data requisition"),
 			@ApiResponse(responseCode = "400", description = "Invalid parameters"),
 			@ApiResponse(responseCode = "500", description = "Internal server error"), })
-	public ResponseEntity<fileEntityDTO> uploadSheet(@RequestPart("file") MultipartFile file, int sheetParts,
-			boolean header) throws Exception {
+	public ResponseEntity<fileEntityDTO> uploadSheet(@RequestPart("file") MultipartFile file,
+			@RequestParam("sheetParts") int sheetParts, @RequestParam("header") boolean header) throws Exception {
+
+		System.out.println(file.toString());
+		System.out.println(sheetParts);
+		System.out.println(header);
 
 		FileEntity fileEntity = sheetService.divideSheets(file, sheetParts, header);
 

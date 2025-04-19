@@ -1,0 +1,160 @@
+.body {
+    margin: 0;
+    padding: 0px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: transparent;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.header > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.upload-btn {
+    position: relative;
+    padding: 25px 50px;
+    text-decoration: none;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    overflow: hidden;
+    background: rgba(33, 160, 92, 0.782);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    z-index: 0;
+    cursor: pointer;
+}
+
+.upload-btn:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+}
+
+.upload-btn:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(190, 255, 147, 0.5), transparent);
+    transition: 0.5s;
+}
+
+.upload-btn:hover, #numberSheet:hover {
+    box-shadow: 0px 0px 20px 1px black;
+}
+
+.upload-btn:hover:after {
+    left: 100%;
+}
+
+.upload-btn span {
+    position: absolute;
+    display: block;
+    transition: 0.5s ease;
+}
+
+.upload-btn span:nth-child(1) {
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #fff;
+}
+.upload-btn:hover span:nth-child(1) {
+    width: 100%;
+    transform: translateX(100%);
+}
+
+.upload-btn span:nth-child(3) {
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 1px;
+    background: #fff;
+}
+.upload-btn:hover span:nth-child(3) {
+    width: 100%;
+    transform: translateX(-100%);
+}
+
+.upload-btn span:nth-child(2) {
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 0;
+    background: #fff;
+}
+.upload-btn:hover span:nth-child(2) {
+    height: 100%;
+    transform: translateY(100%);
+}
+
+.upload-btn span:nth-child(4) {
+    bottom: 0;
+    right: 0;
+    width: 1px;
+    height: 0;
+    background: #fff;
+}
+.upload-btn:hover span:nth-child(4) {
+    height: 100%;
+    transform: translateY(-100%);
+}
+
+.upload{
+    display: none;
+}
+
+#numberSheet{
+    border-radius: 50px;
+    background: transparent;
+    padding: 5px 10px;
+    text-align: center;
+    
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.downloadButton{
+    padding: 2px 8px;
+    background: rgba(33, 160, 92, 0.782);
+    border-radius: 50px;
+}
+
+.downloadButton:hover {
+    background: rgba(22, 109, 63, 0.782);
+    transition-duration: .3s;
+    padding: 5px 10px;
+}

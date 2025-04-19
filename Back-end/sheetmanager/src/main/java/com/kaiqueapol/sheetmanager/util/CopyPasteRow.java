@@ -33,10 +33,10 @@ public class CopyPasteRow {
 			default:
 				break;
 			}
-			System.out.print(cellOfNewSheet + "  ");
+			// System.out.print(cellOfNewSheet + " ");
 
 		}
-		System.out.println("\n");
+		// System.out.println("\n");
 
 	}
 }

@@ -3,7 +3,7 @@
   .wrapper {
     background: #50a3a2;
     background: linear-gradient(-45deg, #1F7D53, #48bc76, #B3D8A8);
-    animation: gradient 5ds ease infinite;
+    animation: gradient 5s ease infinite;
     background-size: 400% 400%;
     position: absolute;
     top: 0;
@@ -34,6 +34,7 @@
     height: 100%;
     z-index: -1;
   }
+  
   .bg-bubbles li {
     position: absolute;
     list-style: none;

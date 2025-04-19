@@ -54,8 +54,6 @@ export class UploadButtonComponent implements OnInit{
   }
 
   OnDownloadFile(){
-    console.log("Downloading .......")
-    console.log(this.downloadFile)
     this.fileUploaderServ.getFile(this.downloadFile.dlUrl).subscribe((blob) => {
       const objectUrl = URL.createObjectURL(blob);
 

@@ -1,0 +1,17 @@
+package com.kaiqueapol.gridlab.validations;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.kaiqueapol.gridlab.exceptions.InvalidFileException;
+
+@Component
+public class FileValidation {
+
+	public MultipartFile sheetValidation(MultipartFile rawFile) throws InvalidFileException {
+		if (!(rawFile.getOriginalFilename().endsWith(".xlsx") || (rawFile.getOriginalFilename().endsWith(".xls")))) {
+			throw new InvalidFileException();
+		}
+		return rawFile;
+	}
+}

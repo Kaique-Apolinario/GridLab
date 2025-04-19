@@ -44,11 +44,6 @@ export class UploadButtonComponent implements OnInit{
       if (this.howManySheets > 2000000000){
         alert("More than 2 billions lines per sheet? Sheesh! Try a smaller number.")
       } else {
-
-
-
-
-
         this.formData.delete('sheetParts');
         this.formData.append('sheetParts', this.howManySheets.toString());
       }

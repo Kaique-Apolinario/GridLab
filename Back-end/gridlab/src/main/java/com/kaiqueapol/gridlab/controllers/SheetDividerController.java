@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kaiqueapol.gridlab.dto.fileEntityDTO;
 import com.kaiqueapol.gridlab.entities.FileEntity;
-import com.kaiqueapol.gridlab.services.SheetService;
+import com.kaiqueapol.gridlab.services.SheetDividerService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,11 +29,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(produces = { "application/json" })
 @Tag(name = "GridLabAPI")
-public class SheetController {
-	private SheetService sheetService;
+public class SheetDividerController {
+	private SheetDividerService sheetDividerService;
 
-	public SheetController(SheetService sheetService) {
-		this.sheetService = sheetService;
+	public SheetDividerController(SheetDividerService sheetDividerService) {
+		this.sheetDividerService = sheetDividerService;
 	}
 
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/upload")
@@ -50,7 +50,7 @@ public class SheetController {
 		System.out.println(header);
 		System.out.println(file.getContentType());
 
-		FileEntity fileEntity = sheetService.divideSheets(file, sheetParts, header);
+		FileEntity fileEntity = sheetDividerService.divideSheets(file, sheetParts, header);
 
 		return ResponseEntity.ok().body(new fileEntityDTO(fileEntity.getFileName(), fileEntity.getContentType(),
 				fileEntity.getSize(), fileEntity.getDlUrl()));
@@ -64,9 +64,9 @@ public class SheetController {
 			@ApiResponse(responseCode = "500", description = "Internal server error"), })
 	public ResponseEntity<Resource> downloadFile(@PathVariable UUID id) {
 
-		Resource resource = sheetService.downloadZip(id);
+		Resource resource = sheetDividerService.downloadZip(id);
 
-		FileEntity fileEntity = sheetService.getEntityById(id);
+		FileEntity fileEntity = sheetDividerService.getEntityById(id);
 		String headerValue = "attachment; filename=\"" + fileEntity.getFileName() + "\"";
 
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType("application/zip"))

@@ -25,14 +25,14 @@ import com.kaiqueapol.gridlab.validations.FileValidation;
 import com.kaiqueapol.gridlab.validations.RowPerSheetsValidation;
 
 @Service
-public class SheetService {
+public class SheetDividerService {
 	private FileValidation fileValidation;
 	private ZipSheet zipSheet;
 	private CopyPasteRow copyPasteRow;
 	private FileRepository fileRep;
 	private RowPerSheetsValidation wpsvalid;
 
-	public SheetService(FileValidation fileValidation, ZipSheet zipSheet, CopyPasteRow copyPasteRow,
+	public SheetDividerService(FileValidation fileValidation, ZipSheet zipSheet, CopyPasteRow copyPasteRow,
 			FileRepository fileRep, RowPerSheetsValidation wpsvalid) {
 		this.fileValidation = fileValidation;
 		this.zipSheet = zipSheet;

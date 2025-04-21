@@ -259,5 +259,24 @@ p {
   }
 
 
-
+  .filesSpace {
+    display: flex;
+    flex-direction: column;
+    background: rgba(33, 160, 92, 0.9);
+    padding: 10px;
+    border-radius: 10px;
+    border: solid 1.5px rgba(2, 17, 48, 0.8);
+    max-height: 30dvh;
+    overflow-y: scroll;
+  }
   
+  .fileName{
+    margin: 10px 0;
+    padding: 0px 10px;
+  }
+
+  .fileName:hover {
+    background-color: rgba(2, 17, 48, 0.8);
+    border-radius: 10px;
+    color: #fff;
+  }

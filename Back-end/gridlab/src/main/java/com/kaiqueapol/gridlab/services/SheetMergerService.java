@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.formula.functions.Rows;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -23,7 +24,13 @@ public class SheetMergerService {
 		this.fileValidation = fileValidation;
 	}
 
-	public void mergeSheets(List<MultipartFile> listOfSheets) throws IOException, InvalidFormatException {
+	public void mergeSheets(List<MultipartFile> listOfSheets, boolean ignoreRepeatedRows)
+			throws IOException, InvalidFormatException {
+
+		if (ignoreRepeatedRows) {
+			List<Rows> everyRowInUnitionSheet = new ArrayList<>();
+		}
+
 		// return type of listFiles is array
 		List<MultipartFile> validatedFiles = new ArrayList<>();
 		// Print name of the all files present in that path
@@ -36,7 +43,7 @@ public class SheetMergerService {
 		XSSFWorkbook unitionWorkbook = new XSSFWorkbook();
 		unitionWorkbook.createSheet("unition sheet");
 
-		List<XSSFWorkbook> ogFilesWorkbooks = new ArrayList();
+		List<XSSFWorkbook> ogFilesWorkbooks = new ArrayList<>();
 		for (MultipartFile file : validatedFiles) {
 			XSSFWorkbook fileWorkbook = new XSSFWorkbook(file.getInputStream());
 			ogFilesWorkbooks.add(fileWorkbook);

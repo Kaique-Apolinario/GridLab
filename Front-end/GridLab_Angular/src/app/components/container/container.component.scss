@@ -4,9 +4,6 @@ div {
     position: relative;
 }
 
-app-merger, app-upload-button {
-}
-
 .glueNupload:hover, .scissorNupload:hover {
 transform: scale(1.2);
 transition: all 2s ease;
@@ -15,8 +12,8 @@ z-index: 1;
 
 .glue {
     position: absolute;
-    width: 25%;
-    top: -32%;
+    width: 80px;
+    top: -68px;
     left: 0;
     z-index: 3;
 }
@@ -24,7 +21,7 @@ z-index: 1;
 .scissor {
     position: absolute;
     width: 35%;
-    top: -15%;
+    top: -35px;
     right: -15%;
     transform: rotate(35deg);
     z-index: 3;

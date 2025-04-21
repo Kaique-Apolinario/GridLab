@@ -61,8 +61,9 @@ public class SheetController {
 	}
 
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/upload/merger/")
-	public void uploadSheetToMerge(@RequestPart("files") List<MultipartFile> file) throws Exception {
-		sheetMergerService.mergeSheets(file);
+	public void uploadSheetToMerge(@RequestPart("files") List<MultipartFile> file,
+			@RequestParam("repeatedRows") boolean ignoreRepeatedRows) throws Exception {
+		sheetMergerService.mergeSheets(file, ignoreRepeatedRows);
 	}
 
 	@GetMapping("/download/{id}")

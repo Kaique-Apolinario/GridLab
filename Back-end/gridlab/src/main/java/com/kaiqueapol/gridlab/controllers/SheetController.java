@@ -1,5 +1,6 @@
 package com.kaiqueapol.gridlab.controllers;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.core.io.Resource;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kaiqueapol.gridlab.dto.fileEntityDTO;
 import com.kaiqueapol.gridlab.entities.FileEntity;
 import com.kaiqueapol.gridlab.services.SheetDividerService;
+import com.kaiqueapol.gridlab.services.SheetMergerService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,20 +31,22 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(produces = { "application/json" })
 @Tag(name = "GridLabAPI")
-public class SheetDividerController {
+public class SheetController {
 	private SheetDividerService sheetDividerService;
+	private SheetMergerService sheetMergerService;
 
-	public SheetDividerController(SheetDividerService sheetDividerService) {
+	public SheetController(SheetDividerService sheetDividerService, SheetMergerService sheetMergerService) {
 		this.sheetDividerService = sheetDividerService;
+		this.sheetMergerService = sheetMergerService;
 	}
 
-	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/upload")
+	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/upload/divider/")
 	@Operation(summary = "It uploads the file into the API", method = "POST")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Sucess"),
 			@ApiResponse(responseCode = "422", description = "Invalid data requisition"),
 			@ApiResponse(responseCode = "400", description = "Invalid parameters"),
 			@ApiResponse(responseCode = "500", description = "Internal server error"), })
-	public ResponseEntity<fileEntityDTO> uploadSheet(@RequestPart("file") MultipartFile file,
+	public ResponseEntity<fileEntityDTO> uploadSheetToDivide(@RequestPart("file") MultipartFile file,
 			@RequestParam("sheetParts") int sheetParts, @RequestParam("header") boolean header) throws Exception {
 
 		System.out.println(file.toString());
@@ -54,6 +58,11 @@ public class SheetDividerController {
 
 		return ResponseEntity.ok().body(new fileEntityDTO(fileEntity.getFileName(), fileEntity.getContentType(),
 				fileEntity.getSize(), fileEntity.getDlUrl()));
+	}
+
+	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/upload/merger/")
+	public void uploadSheetToMerge(@RequestPart("files") List<MultipartFile> file) throws Exception {
+		sheetMergerService.mergeSheets(file);
 	}
 
 	@GetMapping("/download/{id}")

@@ -19,7 +19,6 @@ export class UploadButtonComponent implements OnInit{
   howManySheets!: number;
   header: boolean = false;
   buttonMessage:string= "";
-
   downloadFile!:FileEntity | null ;
 
 

@@ -1,40 +1,40 @@
 <div class="container">
     <div class="glass">
         <img src="../assets/GridLab name.png">
-        <p>Break sh<span>ee</span>ts down!</p>
+        <p>Get sh<span>ee</span>ts together!</p>
 
         <div class="body">
             <form (ngSubmit)="OnFormsDone()">
                 <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'}">
                     {{fileName}}
                 </div>
-                <input type="file" id="uploadDivider" (change)="OnFileUpload($event)" class="upload" accept="application/vnd.ms-excel, 
-            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/excel,
+                <input type="file" multiple id="uploadMerger" (change)="OnFileUpload($event)" class="upload" accept="application/vnd.ms-excel, 
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+            application/excel,
             application/vnd.ms-excel,
             application/x-excel,
             application/x-msexcel,
             application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
-                <label for="uploadDivider" class="upload-btn">
+                <label for="uploadMerger" class="upload-btn">
                     <span></span>
                     <span></span>
                     <span></span>
                     <span></span>
                     UPLOAD
                 </label>
+
+
                 <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'} ">
                     <div class="header">
-                        <input type="number" id="numberSheet" [(ngModel)]="howManySheets" (change)="downloadFile = null"
-                            name="numberSheet" placeholder="Divide it into how many parts?" required>
-                        <div>
-                            <input type="checkbox" id="header" name="header" [(ngModel)]="header">
-                            <label for="header">Preserve the header</label>
-                        </div>
+                        <input type="checkbox" id="header" name="header" [(ngModel)]="header">
+                        <label for="header">Ignore repeated rows</label>
                     </div>
                 </div>
+
                 <button type="submit" class="downloadButton"
-                    [ngStyle]="{ 'display' : howManySheets == null ? 'none' : 'block'}">
+                    [ngStyle]="{ 'display' : formData == null ? 'none' : 'block'}">
                     @if (downloadFile == null) {
-                    Divide sheet!
+                    Merge sheets!
                     } @else{
                     Download file!
                     }

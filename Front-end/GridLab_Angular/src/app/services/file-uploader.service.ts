@@ -12,7 +12,17 @@ export class FileUploaderService {
   private apiUrl: string = "http://localhost:8080";
 
   postFile(formData: FormData):Observable<FileEntity>{
-    return this.httpClient.post<FileEntity>(this.apiUrl + "/upload", formData).pipe(
+    return this.httpClient.post<FileEntity>(this.apiUrl + "/upload/divider/", formData).pipe(
+      catchError((error) => { 
+        alert(error.error)
+        throw error;
+      })
+    );
+  } 
+
+  postFileList(formData: FormData):Observable<FileEntity>{
+    console.log("I'm in service hiiii")
+    return this.httpClient.post<FileEntity>(this.apiUrl + "/upload/merger/", formData).pipe(
       catchError((error) => { 
         alert(error.error)
         throw error;

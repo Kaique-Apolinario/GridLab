@@ -53,8 +53,8 @@ public class SheetDividerService {
 		} else if (file.getOriginalFilename().endsWith(".xls")) {
 			workbook = new HSSFWorkbook(file.getInputStream());
 		}
-
 		Sheet sheet = workbook.getSheetAt(0);
+
 		int amountOfRowsInOriginalSheet = sheet.getPhysicalNumberOfRows();
 		int amountOfRowsInNewSheets = amountOfRowsInOriginalSheet / amountOfNewSheets;
 		wpsvalid.rowPerSheetsValidation(amountOfRowsInOriginalSheet, amountOfNewSheets);

@@ -1,0 +1,13 @@
+div {
+    display: flex;
+    justify-content: center;
+}
+
+app-merger, app-upload-button {
+}
+
+app-merger:hover, app-upload-button:hover {
+transform: scale(1.2);
+transition: all 2s ease;
+z-index: 1;
+}

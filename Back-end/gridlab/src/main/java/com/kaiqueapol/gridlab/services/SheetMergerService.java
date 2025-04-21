@@ -19,6 +19,10 @@ import com.kaiqueapol.gridlab.validations.FileValidation;
 public class SheetMergerService {
 	private FileValidation fileValidation;
 
+	public SheetMergerService(FileValidation fileValidation) {
+		this.fileValidation = fileValidation;
+	}
+
 	public void mergeSheets(List<MultipartFile> listOfSheets) throws IOException, InvalidFormatException {
 		// return type of listFiles is array
 		List<MultipartFile> validatedFiles = new ArrayList<>();

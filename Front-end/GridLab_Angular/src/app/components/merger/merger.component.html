@@ -1,14 +1,17 @@
 <div class="container">
     <div class="glass">
         <img src="../assets/GridLab name.png">
-        <p>Get sh<span>ee</span>ts together!</p>
+        <p>Get sh<span class="ee">ee</span>ts together!</p>
 
         <div class="body">
-            <form (ngSubmit)="OnFormsDone()">
-                <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'}">
-                    {{fileName}}
+            <form (ngSubmit)="onFormsDone()">
+                <div cdkDropList [ngStyle]="{ 'display': formData == null ? 'none' : 'block'}" class="dragBoundary"
+                    (cdkDropListDropped)="changeFileOrder($event)">
+                    @for (item of allFiles; track item.name){
+                    <p cdkDrag cdkDragBoundary=".dragBoundary">{{item.name}}</p>
+                    }
                 </div>
-                <input type="file" multiple id="uploadMerger" (change)="OnFileUpload($event)" class="upload" accept="application/vnd.ms-excel, 
+                <input type="file" multiple id="uploadMerger" (change)="onFileUpload($event)" class="upload" accept="application/vnd.ms-excel, 
             application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
             application/excel,
             application/vnd.ms-excel,
@@ -25,9 +28,12 @@
 
 
                 <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'} ">
-                    <div class="header">
-                        <input type="checkbox" id="repeatedRows" name="header" [(ngModel)]="header">
-                        <label for="repeatedRows">Ignore repeated rows</label>
+                    <div class="headerBox">
+                        <label class="switch" for="repeatedRows">
+                            <input type="checkbox" id="repeatedRows" name="repeatedRows" [(ngModel)]="repeatedRow">
+                            <span class="slider round"></span>
+                        </label>
+                        <span>Ignore repeated rows</span>
                     </div>
                 </div>
 

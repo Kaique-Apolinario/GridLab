@@ -21,14 +21,11 @@ public class SheetMergerService {
 
 	public void mergeSheets(List<MultipartFile> listOfSheets) throws IOException, InvalidFormatException {
 		// return type of listFiles is array
-		List<MultipartFile> validatedFiles = listOfSheets;
-
+		List<MultipartFile> validatedFiles = new ArrayList<>();
 		// Print name of the all files present in that path
-		if (validatedFiles != null) {
-			System.out.println("DREAMLIKE");
-			for (MultipartFile file : validatedFiles) {
-				System.out.println("CATCH UP");
-				System.out.println(file.getName());
+		if (listOfSheets != null) {
+			for (MultipartFile file : listOfSheets) {
+				validatedFiles.add(this.fileValidation.sheetValidation(file));
 			}
 		}
 

@@ -36,7 +36,6 @@ export class MergerComponent implements OnInit{
       } else {
         alert("It isn't a .xlsx or a .xls file. Please, try again!");
       }
-
       }
     }
     }

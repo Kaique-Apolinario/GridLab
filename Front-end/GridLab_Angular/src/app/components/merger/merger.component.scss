@@ -268,8 +268,15 @@ p {
     border: solid 1.5px rgba(2, 17, 48, 0.8);
     max-height: 30dvh;
     overflow-y: scroll;
+    scrollbar-color: rgb(48, 48, 48) transparent;
+
   }
-  
+
+.filesSpace:not(:hover) {
+    scrollbar-width: none;
+}
+
+
   .fileName{
     margin: 10px 0;
     padding: 0px 10px;

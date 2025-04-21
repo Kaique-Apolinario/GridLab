@@ -30,7 +30,8 @@
                 <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'} ">
                     <div class="headerBox">
                         <label class="switch" for="repeatedRows">
-                            <input type="checkbox" id="repeatedRows" name="repeatedRows" [(ngModel)]="repeatedRow">
+                            <input type="checkbox" id="repeatedRows" name="repeatedRows"
+                                [(ngModel)]="ignoreRepeatedRows" (change)="onToggle()">
                             <span class="slider round"></span>
                         </label>
                         <span>Ignore repeated rows</span>

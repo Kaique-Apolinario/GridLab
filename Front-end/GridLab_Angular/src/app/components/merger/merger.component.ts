@@ -18,7 +18,7 @@ export class MergerComponent implements OnInit{
 
   formData!: FormData | null;
   fileName!: string;
-  repeatedRow: boolean = false;
+  ignoreRepeatedRows: boolean = false;
   buttonMessage:string= "";
   downloadFile!:FileEntity | null ;
   allFiles!:File[];
@@ -34,6 +34,7 @@ export class MergerComponent implements OnInit{
        if (inputFiles.files){
        this.allFiles = Array.from(inputFiles.files);
       }
+       this.downloadFile = null;
        this.formData = new FormData()
        this.filesToFormData();
       
@@ -51,9 +52,36 @@ export class MergerComponent implements OnInit{
       }
     }
 
+    onToggle(){
+      this.downloadFile = null;
+    }
 
     onFormsDone(){
-      this.fileUploaderServ.postFileList(this.formData!).subscribe((fileDtoJson) => this.downloadFile = fileDtoJson);} 
+      if (this.downloadFile == null){
+      this.formData!.delete("ignoreRepeatedRows")
+      this.formData!.append("ignoreRepeatedRows", this.ignoreRepeatedRows.toString());
+      this.fileUploaderServ.postFileList(this.formData!).subscribe((fileDtoJson) => this.downloadFile = fileDtoJson);
+    } else {
+      this.onDownloadFile();
+    }
+  }
+
+  onDownloadFile(){
+    if (this.downloadFile != null) {
+      this.fileUploaderServ.getFile(this.downloadFile.dlUrl).subscribe((blob) => {
+        const objectUrl = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = objectUrl;
+        if (this.downloadFile != null) {
+        a.download = this.downloadFile.fileName;
+        a.click();
+
+        URL.revokeObjectURL(objectUrl);
+        }
+  })}
+  }
+
 
     changeFileOrder(event: CdkDragDrop<File[]>) {
       moveItemInArray(this.allFiles,  event.previousIndex, event.currentIndex);

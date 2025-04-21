@@ -49,11 +49,6 @@ public class SheetController {
 	public ResponseEntity<fileEntityDTO> uploadSheetToDivide(@RequestPart("file") MultipartFile file,
 			@RequestParam("sheetParts") int sheetParts, @RequestParam("header") boolean header) throws Exception {
 
-		System.out.println(file.toString());
-		System.out.println(sheetParts);
-		System.out.println(header);
-		System.out.println(file.getContentType());
-
 		FileEntity fileEntity = sheetDividerService.divideSheets(file, sheetParts, header);
 
 		return ResponseEntity.ok().body(new fileEntityDTO(fileEntity.getFileName(), fileEntity.getContentType(),
@@ -61,9 +56,12 @@ public class SheetController {
 	}
 
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/upload/merger/")
-	public void uploadSheetToMerge(@RequestPart("files") List<MultipartFile> file,
-			@RequestParam("repeatedRows") boolean ignoreRepeatedRows) throws Exception {
-		sheetMergerService.mergeSheets(file, ignoreRepeatedRows);
+	public ResponseEntity<fileEntityDTO> uploadSheetToMerge(@RequestPart("files") List<MultipartFile> file,
+			@RequestParam("ignoreRepeatedRows") boolean ignoreRepeatedRows) throws Exception {
+		FileEntity fileEntity = sheetMergerService.mergeSheets(file, ignoreRepeatedRows);
+
+		return ResponseEntity.ok().body(new fileEntityDTO(fileEntity.getFileName(), fileEntity.getContentType(),
+				fileEntity.getSize(), fileEntity.getDlUrl()));
 	}
 
 	@GetMapping("/download/{id}")

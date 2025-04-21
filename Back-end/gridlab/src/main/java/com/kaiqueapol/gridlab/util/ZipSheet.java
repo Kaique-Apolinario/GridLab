@@ -18,6 +18,7 @@ public class ZipSheet {
 
 	public void sheetZipping(String ogName, int amountOfNewSheets, Workbook[] listOfNewWorkbook, Workbook workbook)
 			throws FileNotFoundException, IOException {
+		System.out.println(listOfNewWorkbook[0].getSheetAt(0).getRow(2).getCell(0).toString());
 
 		// It creates a list with every .xlsx created
 		List<String> listWithEveryNewSheet = new ArrayList<>();
@@ -33,7 +34,7 @@ public class ZipSheet {
 				listOfNewWorkbook[i].close();
 
 			} catch (IOException e) {
-				e.getMessage();
+				System.out.println(e.getMessage());
 			}
 		}
 

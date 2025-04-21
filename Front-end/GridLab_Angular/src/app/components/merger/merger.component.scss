@@ -17,19 +17,15 @@ form {
     gap:20px;
 }
 
-.header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
+
+.ee {
+    filter: blur(7px);
+    transition: all 0.5s ease;
 }
 
-.header > div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
+.ee:hover {
+    filter: blur(0px);
+    transition: all 0.5s ease;
 }
 
 .upload-btn {
@@ -192,16 +188,6 @@ p {
     margin-top: -10px;
 }
 
-.ee {
-    filter: blur(7px);
-    transition: all 0.5s ease;
-}
-
-.ee:hover {
-    filter: blur(0px);
-    transition: all 0.5s ease;
-}
-
 
 .headerBox {
     justify-content: center;
@@ -270,4 +256,34 @@ p {
   
   .slider.round:before {
     border-radius: 50%;
+  }
+
+
+  .filesSpace {
+    display: flex;
+    flex-direction: column;
+    background: rgba(33, 160, 92, 0.9);
+    padding: 10px;
+    border-radius: 10px;
+    border: solid 1.5px rgba(2, 17, 48, 0.8);
+    max-height: 30dvh;
+    overflow-y: scroll;
+    scrollbar-color: rgb(48, 48, 48) transparent;
+
+  }
+
+.filesSpace:not(:hover) {
+    scrollbar-width: none;
+}
+
+
+  .fileName{
+    margin: 10px 0;
+    padding: 0px 10px;
+  }
+
+  .fileName:hover {
+    background-color: rgba(2, 17, 48, 0.8);
+    border-radius: 10px;
+    color: #fff;
   }

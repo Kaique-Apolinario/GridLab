@@ -1,34 +1,52 @@
-<div class="body">
-    <form (ngSubmit)="OnFormsDone()">
-        <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'}">
-            {{fileName}}
-        </div>
-        <input type="file" id="upload" (change)="OnFileUpload($event)" class="upload"
-            accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
-        <label for="upload" class="upload-btn">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            UPLOAD
-        </label>
-        <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'} ">
-            <div class="header">
-                <input type="number" id="numberSheet" [(ngModel)]="howManySheets" (change)="downloadFile = null"
-                    name="numberSheet" placeholder="Divide it into how many parts?" required>
-                <div>
-                    <input type="checkbox" id="header" name="header" [(ngModel)]="header">
-                    <label for="header">Preserve the header</label>
+<div class="container">
+    <div class="glass">
+        <img src="../assets/GridLab name.png">
+        <p>Break sh<span class="ee">ee</span>ts down!</p>
+
+        <div class="body">
+            <form (ngSubmit)="OnFormsDone()">
+                <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'}">
+                    {{fileName}}
                 </div>
-            </div>
+                <input type="file" id="uploadDivider" (change)="OnFileUpload($event)" class="upload" accept="application/vnd.ms-excel, 
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/excel,
+            application/vnd.ms-excel,
+            application/x-excel,
+            application/x-msexcel,
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                <label for="uploadDivider" class="upload-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    UPLOAD
+                </label>
+                <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'} ">
+                    <div class="header">
+                        <input type="number" id="numberSheet" [(ngModel)]="howManySheets" (change)="downloadFile = null"
+                            name="numberSheet" placeholder="Divide it into how many parts?" required>
+                        <div>
+
+                            <div class="headerBox">
+                                <label class="switch" for="header">
+                                    <input type="checkbox" id="header" name="header" [(ngModel)]="header">
+                                    <span class="slider round"></span></label>
+                                <span>Preserve the header</span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="downloadButton"
+                    [ngStyle]="{ 'display' : howManySheets == null ? 'none' : 'block'}">
+                    @if (downloadFile == null) {
+                    Divide sheet!
+                    } @else{
+                    Download file!
+                    }
+                </button>
+            </form>
         </div>
-        <button type="submit" class="downloadButton"
-            [ngStyle]="{ 'display' : howManySheets == null ? 'none' : 'block'}">
-            @if (downloadFile == null) {
-            Divide file!
-            } @else{
-            Download file!
-            }
-        </button>
-    </form>
+    </div>
 </div>

@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="glass">
+        <img src="../assets/GridLab name.png">
+        <p>Get sh<span class="ee">ee</span>ts together!</p>
+
+        <div class="body">
+            <form (ngSubmit)="onFormsDone()">
+                <div cdkDropList [ngStyle]="{ 'display': formData == null ? 'none' : 'block'}"
+                    class="dragBoundary filesSpace" (cdkDropListDropped)="changeFileOrder($event)">
+                    @for (item of allFiles; track item.name){
+                    <p class="fileName" cdkDragBoundary=".dragBoundary" cdkDrag>{{item.name}}</p>
+                    }
+                </div>
+                <input type="file" multiple id="uploadMerger" (change)="onFileUpload($event)" class="upload" accept="application/vnd.ms-excel, 
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+            application/excel,
+            application/vnd.ms-excel,
+            application/x-excel,
+            application/x-msexcel,
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                <label for="uploadMerger" class="upload-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    UPLOAD
+                </label>
+
+
+                <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'} ">
+                    <div class="headerBox">
+                        <label class="switch" for="repeatedRows">
+                            <input type="checkbox" id="repeatedRows" name="repeatedRows"
+                                [(ngModel)]="ignoreRepeatedRows" (change)="onToggle()">
+                            <span class="slider round"></span>
+                        </label>
+                        <span>Ignore repeated rows</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="downloadButton"
+                    [ngStyle]="{ 'display' : formData == null ? 'none' : 'block'}">
+                    @if (downloadFile == null) {
+                    Merge sheets!
+                    } @else{
+                    Download file!
+                    }
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

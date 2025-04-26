@@ -90,7 +90,7 @@ By enabling "Preserve the header", every new part will have the same first row. 
 
 
 
-####  Merge sheets into one
+###  Merge sheets into one
 
 <img src="Front-end/GridLab_Angular/src/assets/Merge sheets.gif" width="100%">
 

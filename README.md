@@ -1,5 +1,5 @@
-<img src="Front-end/GridLab_Angular/src/assets/GridLab Home.gif">
-# <h1 align="center"> :hash: Grid Lab​ :alembic:</h1>
+<img src="Front-end/GridLab_Angular/src/assets/GridLab Home.gif" width="100%">
+<h1 align="center"> :hash: Grid Lab​ :alembic:</h1>
 
 ## About The Project
 

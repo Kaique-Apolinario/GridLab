@@ -1,5 +1,4 @@
 
-
 # <h1 align="center"> :hash: Grid Lab​ :alembic:</h1>
 
 ## About The Project
@@ -97,7 +96,7 @@ Code under MIT License.
   <tbody>
     <tr>
       <td align="center" valign="top" width="15%">
-          <img src="./Frontend/GridLab_Angular/src/assets/KaiqueApolinário.png" width="200px;" alt="Kaique Apolinário"/>
+          <img src="Front-end/GridLab_Angular/src/assets/KaiqueApolinário.png" width="200px;" alt="Kaique Apolinário"/>
           <br />
           <sub>
               <b>Kaique Apolinário 🙋‍♂️👨‍💻 </b>

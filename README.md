@@ -23,7 +23,6 @@ This is GridLab, a fun and useful FullStack application, which uses Java Spring 
   * H2 Database
   * Maven
   
-* Deploy
 
 ### Swagger Documentation
 
@@ -105,9 +104,7 @@ By enabling "Ignore repeated rows" you make sure each row in the final sheet is 
 
 After uploading all of the sheets to be merged, you are able to change the order each sheet will be copied into the final one.
 
-
-
-
+![GridLab name](C:\Users\KaiiaK\Documents\Projects\Sheet-Manager\sheets-manager\Front-end\GridLab_Angular\src\assets\GridLab name.png)
 
 ## How to contribute
 

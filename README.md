@@ -22,6 +22,7 @@ This is GridLab, a fun and useful FullStack application, which uses Java Spring 
   * Java Spring Boot
   * H2 Database
   * Maven
+  * File manipulation
   
 
 ### Swagger Documentation

@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -44,6 +45,10 @@ public class SheetMergerService {
 	public FileEntity mergeSheets(List<MultipartFile> listOfSheets, boolean ignoreRepeatedRows)
 			throws IOException, InvalidFormatException {
 
+		for (MultipartFile rawFile : listOfSheets) {
+			fileValidation.sheetValidation(rawFile);
+		}
+
 		Set<String> uniqueRows = new HashSet<>();
 
 		// return type of listFiles is array
@@ -59,11 +64,17 @@ public class SheetMergerService {
 		unitionWorkbook.createSheet("unition sheet");
 
 		List<Workbook> ogFilesWorkbooks = new ArrayList<>();
-		for (MultipartFile file : validatedFiles) {
-			XSSFWorkbook fileWorkbook = new XSSFWorkbook(file.getInputStream());
-			ogFilesWorkbooks.add(fileWorkbook);
-		}
 
+		for (MultipartFile file : validatedFiles) {
+
+			if (file.getOriginalFilename().endsWith(".xlsx")) {
+				XSSFWorkbook fileWorkbook = new XSSFWorkbook(file.getInputStream());
+				ogFilesWorkbooks.add(fileWorkbook);
+			} else if (file.getOriginalFilename().endsWith(".xls")) {
+				Workbook fileWorkbook = new HSSFWorkbook(file.getInputStream());
+				ogFilesWorkbooks.add(fileWorkbook);
+			}
+		}
 		int usRowNumber = 0;
 		for (Workbook originalSheet : ogFilesWorkbooks) { // For each original sheet
 
@@ -112,9 +123,7 @@ public class SheetMergerService {
 					default:
 						break;
 					}
-					// System.out.print(cellOfunitionSheet + " ");
 				}
-				System.out.println("\n");
 			}
 		}
 
@@ -141,7 +150,6 @@ public class SheetMergerService {
 	public FileEntity zipToEntity(File zip) throws IOException {
 		FileEntity fileEntity = new FileEntity(UUID.randomUUID(), zip.getName(), zip.getTotalSpace(),
 				Files.probeContentType(zip.toPath()), Files.readAllBytes(zip.toPath()));
-		System.out.println(fileEntity.getDlUrl());
 		fileRep.save(fileEntity);
 		return fileEntity;
 	}

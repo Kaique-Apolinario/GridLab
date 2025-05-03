@@ -8,8 +8,10 @@
                 <div cdkDropList [ngStyle]="{ 'display': formData == null ? 'none' : 'block'}"
                     class="dragBoundary filesSpace" (cdkDropListDropped)="changeFileOrder($event)">
                     @for (item of allFiles; track item.name){
-                    <div>
-                        <p class="fileName" cdkDragBoundary=".dragBoundary" cdkDrag>{{item.name}}</p>
+                    <div cdkDragBoundary=".dragBoundary" cdkDrag
+                        [ngStyle]="{'display':'flex', 'flex-direction':'row', 'justify-content':'space-between'}">
+                        <p class="fileName">{{item.name}}</p>
+                        <img src="../../../assets/HoldingArrows.svg" width="30px" cdkDragHandle>
                     </div>
                     }
                 </div>

@@ -8,7 +8,9 @@
                 <div cdkDropList [ngStyle]="{ 'display': formData == null ? 'none' : 'block'}"
                     class="dragBoundary filesSpace" (cdkDropListDropped)="changeFileOrder($event)">
                     @for (item of allFiles; track item.name){
-                    <p class="fileName" cdkDragBoundary=".dragBoundary" cdkDrag>{{item.name}}</p>
+                    <div>
+                        <p class="fileName" cdkDragBoundary=".dragBoundary" cdkDrag>{{item.name}}</p>
+                    </div>
                     }
                 </div>
                 <input type="file" multiple id="uploadMerger" (change)="onFileUpload($event)" class="upload" accept="application/vnd.ms-excel, 

@@ -11,11 +11,14 @@
 
 
     <div class="breakNMerge">
-        <div class="glueNupload" [ngStyle]="{ 'display': !breakOrMerge ? 'none' : 'block'}">
+
+        <div class="glueNupload"
+            [ngStyle]="{ 'display': (!breakOrMerge && screenWidth() <= 780) || screenWidth() > 780 ? 'block' : 'none'}">
             <img src=" ../../../assets/Glue.gif" class="glue">
             <app-merger></app-merger>
         </div>
-        <div class="scissorNupload" [ngStyle]="{ 'display': breakOrMerge ? 'none' : 'block'}">
+        <div class="scissorNupload"
+            [ngStyle]="{ 'display': (breakOrMerge && screenWidth() <= 780) || screenWidth() > 780? 'block' : 'none'}">
             <img src="../../../assets/scissor.gif" class="scissor">
             <app-upload-button></app-upload-button>
         </div>

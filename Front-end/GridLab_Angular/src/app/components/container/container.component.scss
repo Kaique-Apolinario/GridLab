@@ -34,13 +34,13 @@ z-index: 1;
     z-index: 3;
 }
 
-@media (min-width: 800px){
+@media (min-width: 780px){
     .toggle-container {
         display: none;
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 780px) {
 
     .toggle-container {
         display: flex;

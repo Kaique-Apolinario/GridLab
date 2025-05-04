@@ -89,9 +89,7 @@ public class SheetDividerService {
 		// Save the new sheets into a .zip file
 		String fileNameWoExtension = file.getOriginalFilename().substring(0, file.getOriginalFilename().length() - 5);
 		zipSheet.sheetZipping(fileNameWoExtension, amountOfNewSheets, listOfNewWorkbook, workbook);
-		System.out.println("HERE");
 		FileEntity fileEntity = zipToEntity(new File("UploadFolder\\" + fileNameWoExtension + ".zip"));
-		System.out.println("DONE");
 		return fileEntity;
 	}
 

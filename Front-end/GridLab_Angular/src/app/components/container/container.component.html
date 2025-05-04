@@ -1,10 +1,27 @@
-<div>
-    <div class="glueNupload">
-        <img src="../../../assets/Glue.gif" class="glue">
-        <app-merger></app-merger>
+<div class="mainContainer">
+
+
+    <div class="toggle-container">
+        <input type="checkbox" id="imageToggle" class="toggle-checkbox" [(ngModel)]="breakOrMerge">
+        <label for="imageToggle" class="toggle-slider"></label>
+        <img src="../../../assets/Glue.gif" class="toggle-image on glueInToggle" alt="On state">
+        <img src="../../../assets/scissor.gif" class="toggle-image off" alt="Off state">
     </div>
-    <div class="scissorNupload">
-        <img src="../../../assets/scissor.gif" class="scissor">
-        <app-upload-button></app-upload-button>
+
+
+
+    <div class="breakNMerge">
+
+        <div class="glueNupload"
+            [ngStyle]="{ 'display': (breakOrMerge && screenWidth() <= 780) || screenWidth() > 780 ? 'block' : 'none'}">
+            <img src=" ../../../assets/Glue.gif" class="glue">
+            <app-merger></app-merger>
+        </div>
+        <div class="scissorNupload"
+            [ngStyle]="{ 'display': (!breakOrMerge && screenWidth() <= 780) || screenWidth() > 780? 'block' : 'none'}">
+            <img src="../../../assets/scissor.gif" class="scissor">
+            <app-upload-button></app-upload-button>
+        </div>
     </div>
+
 </div>

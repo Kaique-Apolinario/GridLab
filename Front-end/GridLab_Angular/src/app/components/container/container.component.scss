@@ -1,13 +1,20 @@
-div {
+.breakNMerge, .glueNupload, .scissorNupload {
     display: flex;
-    justify-content: center;
     position: relative;
 }
 
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+}
+
 .glueNupload:hover, .scissorNupload:hover {
-transform: scale(1.2);
-transition: all 2s ease;
-z-index: 1;
+    transform: scale(1.2);
+    transition: all 2s ease;
+    z-index: 1;
 }
 
 .glue {
@@ -20,9 +27,93 @@ z-index: 1;
 
 .scissor {
     position: absolute;
-    width: 35%;
+    width: 100px;
     top: -35px;
-    right: -15%;
-    transform: rotate(35deg);
+    right: -8%;
+    transform: rotate(38deg);
     z-index: 3;
+}
+
+@media (min-width: 780px){
+    .toggle-container {
+        display: none;
+    }
+}
+
+@media (max-width: 780px) {
+
+    .toggle-container {
+        display: flex;
+        align-items: center;
+        position: relative;
+        width: 140px;
+        height: 60px;
+    }
+    
+    .glueInToggle{
+        width: 55px !important;
+    }
+    
+    .toggle-checkbox {
+        display: flex;
+        align-items: center;
+    }
+    
+    .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #2196F3;
+        transition: .4s;
+        border-radius: 34px;
+        overflow: hidden;
+    }
+    
+    .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 48px;
+        width: 50px;
+        left: 4px;
+        bottom: 6px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+        z-index: 2;
+    }
+    
+    .toggle-image {
+        position: absolute;
+        width: 80px;
+        transition: .4s;
+    }
+    
+    .toggle-image.on {
+        left: 8px;
+        opacity: 0;
+    }
+    
+    .toggle-image.off {
+        right: 8px;
+        opacity: 1;
+    }
+    
+    .toggle-checkbox:checked + .toggle-slider {
+        background-color: #2196F3;
+    }
+    
+    .toggle-checkbox:checked + .toggle-slider:before {
+        transform: translateX(160%);
+    }
+    
+    .toggle-checkbox:checked ~ .toggle-image.on {
+        opacity: 1;
+    }
+    
+    .toggle-checkbox:checked ~ .toggle-image.off {
+        opacity: 0;
+    }
 }

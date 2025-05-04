@@ -1,7 +1,6 @@
 .body {
     margin: 0;
     padding: 0px;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -14,13 +13,25 @@
 form {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap:20px;
+    max-width: 100%;
+    max-height: 10%;
+}
+
+.fileName {
+    max-width: 250px;
+    border-radius: 50px;
+    padding: 5px 10px;
+    background-color: rgba(0, 26, 79, 0.8);
+    color: #fff;
 }
 
 .header {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 10px;
     margin-bottom: 10px;
 }
@@ -35,6 +46,7 @@ form {
 .upload-btn {
     position: relative;
     padding: 25px 50px;
+    margin-bottom: 10px;
     text-decoration: none;
     color: #ffffff;
     text-transform: uppercase;
@@ -138,7 +150,9 @@ form {
     background: transparent;
     padding: 5px 10px;
     text-align: center;
-    
+    width: 90%;
+    max-width: 100%;
+    font-size: 0.8rem;
 }
 
 input::-webkit-outer-spin-button,
@@ -156,7 +170,7 @@ input::-webkit-inner-spin-button {
 .downloadButton:hover {
     background: rgba(22, 109, 63, 0.782);
     transition-duration: .3s;
-    padding: 5px 10px;
+    transform: scale(1.2);
 }
 .container {
     display: flex;
@@ -164,6 +178,7 @@ input::-webkit-inner-spin-button {
     align-items: center;
     align-items: center;
     z-index: 1;
+    width: 100%;
 }
 
 
@@ -174,13 +189,16 @@ input::-webkit-inner-spin-button {
     align-items: center;
     text-align: center;
     padding: 20px;
-    margin: 0 auto;
+    margin: 0;
     background: rgba(255, 255, 255, 0.15);
     border-radius: 16px;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    width: 75dvw;
+    max-width: 400px;
+    max-height: 90dvh;
 }
 
 .glass > img {
@@ -188,7 +206,6 @@ input::-webkit-inner-spin-button {
 }
 
 p {
-    font-size: xx-large;
     margin-top: -10px;
 }
 

@@ -5,7 +5,7 @@
 
         <div class="body">
             <form (ngSubmit)="OnFormsDone()">
-                <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'}">
+                <div [ngStyle]="{ 'display': formData == null ? 'none' : 'block'}" class="fileName h6 text-truncate">
                     {{fileName}}
                 </div>
                 <input type="file" id="uploadDivider" (change)="OnFileUpload($event)" class="upload" accept="application/vnd.ms-excel, 
@@ -31,7 +31,7 @@
                                 <label class="switch" for="header">
                                     <input type="checkbox" id="header" name="header" [(ngModel)]="header">
                                     <span class="slider round"></span></label>
-                                <span>Preserve the header</span>
+                                <span class="h6">Preserve the header</span>
                             </div>
 
 

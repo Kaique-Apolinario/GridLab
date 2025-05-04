@@ -3,12 +3,12 @@ import { FileEntity } from '../../entities/FileEntity';
 import { FileUploaderService } from '../../services/file-uploader.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray} from '@angular/cdk/drag-drop';
+import {CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray} from '@angular/cdk/drag-drop';
 
 
 @Component({
   selector: 'app-merger',
-  imports: [CommonModule, FormsModule, CdkDrag, CdkDropList],
+  imports: [CommonModule, FormsModule, CdkDrag, CdkDropList, CdkDragHandle],
   templateUrl: './merger.component.html',
   styleUrl: './merger.component.scss'
 })

@@ -12,9 +12,9 @@
 }
 
 .glueNupload:hover, .scissorNupload:hover {
-transform: scale(1.2);
-transition: all 2s ease;
-z-index: 1;
+    transform: scale(1.2);
+    transition: all 2s ease;
+    z-index: 1;
 }
 
 .glue {
@@ -27,10 +27,10 @@ z-index: 1;
 
 .scissor {
     position: absolute;
-    width: 35%;
+    width: 100px;
     top: -35px;
-    right: -15%;
-    transform: rotate(35deg);
+    right: -8%;
+    transform: rotate(38deg);
     z-index: 3;
 }
 

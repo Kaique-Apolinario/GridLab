@@ -10,7 +10,7 @@
                     @for (item of allFiles; track item.name){
                     <div cdkDragBoundary=".dragBoundary" cdkDrag
                         [ngStyle]="{'display':'flex', 'flex-direction':'row', 'justify-content':'space-between'}">
-                        <p class="fileName">{{item.name}}</p>
+                        <p class="fileName h6 text-truncate">{{item.name}}</p>
                         <img src="../../../assets/HoldingArrows.svg" width="30px" cdkDragHandle>
                     </div>
                     }
@@ -38,7 +38,7 @@
                                 [(ngModel)]="ignoreRepeatedRows" (change)="onToggle()">
                             <span class="slider round"></span>
                         </label>
-                        <span>Ignore repeated rows</span>
+                        <span class="repeatedRowsText">Ignore repeated rows</span>
                     </div>
                 </div>
 

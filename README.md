@@ -14,7 +14,7 @@ This is GridLab, a fun and useful FullStack application, which uses Java Spring 
 ### Built with
 
 * Front-end
-  * HTML / SCSS / TS
+  * HTML / SCSS & Boostrap / TS
   * Angular 19 
   * Angular Material
   
@@ -86,9 +86,8 @@ ng serve --o
 
 You can break your sheets down by uploading the big one and then typing how many parts you want it to be divided into. Download it right after !
 
-#### Preserve the header
-
-By enabling "Preserve the header", every new part will have the same first row. It is useful in cases you want them to have the same header.
+####  Preserve the header
+* By enabling "Preserve the header", every new part will have the same first row. It is useful in cases you want them to have the same header.
 
 
 
@@ -98,13 +97,19 @@ By enabling "Preserve the header", every new part will have the same first row. 
 
 You can merge many sheets into one by uploading them and then downloading it.
 
-##### Ignore repeated rows
+#### Ignore repeated rows
 
-By enabling "Ignore repeated rows" you make sure each row in the final sheet is unique.
+* By enabling "Ignore repeated rows" you make sure each row in the final sheet is unique.
 
-#####  Ordering files
+####  Ordering files
 
-After uploading all of the sheets to be merged, you are able to change the order each sheet will be copied into the final one.
+* After uploading all of the sheets to be merged, you are able to change the order each sheet will be copied into the final one.
+
+  
+
+###  Responsiveness
+<img src="Front-end/GridLab_Angular/src/assets/ResponsivenessPreview.gif" width="100%">
+
 
 <img src="Front-end/GridLab_Angular/src/assets/GridLab name.png" width="100%">
 

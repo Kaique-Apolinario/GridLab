@@ -5,9 +5,10 @@ import org.springframework.stereotype.Component;
 import com.kaiqueapol.gridlab.exceptions.TooManySheetsException;
 
 @Component
-public class RowPerSheetsValidation {
+public class RowPerSheetsValidation { // Stateless class
 
-	public void rowPerSheetsValidation(int amountOfRowsInOriginalSheet, int sheetParts) throws TooManySheetsException {
+	public static void rowPerSheetsValidation(int amountOfRowsInOriginalSheet, int sheetParts)
+			throws TooManySheetsException {
 
 		if (amountOfRowsInOriginalSheet < sheetParts) {
 			throw new TooManySheetsException();

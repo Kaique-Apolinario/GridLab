@@ -1,5 +1,6 @@
 package com.kaiqueapol.gridlab.controllers;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -74,8 +75,7 @@ public class SheetController {
 			@ApiResponse(responseCode = "422", description = "Invalid data requisition"),
 			@ApiResponse(responseCode = "400", description = "Invalid parameters"),
 			@ApiResponse(responseCode = "500", description = "Internal server error"), })
-	public ResponseEntity<Resource> downloadFile(@PathVariable UUID id) {
-
+	public ResponseEntity<Resource> downloadFile(@PathVariable UUID id) throws IOException {
 		Resource resource = downZipServ.downloadZip(id);
 
 		FileEntity fileEntity = downZipServ.getEntityById(id);

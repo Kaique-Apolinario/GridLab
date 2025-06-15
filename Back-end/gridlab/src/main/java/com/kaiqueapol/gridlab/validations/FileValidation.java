@@ -6,9 +6,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kaiqueapol.gridlab.exceptions.InvalidFileException;
 
 @Component
-public class FileValidation {
+public class FileValidation { // Stateless class
 
-	public MultipartFile sheetValidation(MultipartFile rawFile) throws InvalidFileException {
+	public static MultipartFile sheetValidation(MultipartFile rawFile) throws InvalidFileException {
 		if (!(rawFile.getOriginalFilename().endsWith(".xlsx") || (rawFile.getOriginalFilename().endsWith(".xls")))) {
 			throw new InvalidFileException();
 		}

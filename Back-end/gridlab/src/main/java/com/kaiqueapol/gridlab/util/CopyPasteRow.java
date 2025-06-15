@@ -8,9 +8,9 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CopyPasteRow {
+public class CopyPasteRow { // Stateless class
 
-	public void copyPasteRow(Row originalRow, Sheet selectedSheet, int newSheetRow) {
+	public static void copyPasteRow(Row originalRow, Sheet selectedSheet, int newSheetRow) {
 		// It creates a new row in the current sheet
 		Row newRow = selectedSheet.createRow(newSheetRow);
 		int cellnum = 0;
@@ -46,10 +46,6 @@ public class CopyPasteRow {
 				cellOfNewSheet.setCellValue("UNKNOWN");
 				break;
 			}
-			// System.out.print(cellOfNewSheet + " ");
-
 		}
-		// System.out.println("\n");
-
 	}
 }

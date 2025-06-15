@@ -14,10 +14,10 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ZipSheet {
+public class ZipSheet { // Stateless class
 
-	public void sheetZipping(String ogName, int amountOfNewSheets, Workbook[] listOfNewWorkbook, Workbook workbook)
-			throws FileNotFoundException, IOException {
+	public static void sheetZipping(String ogName, int amountOfNewSheets, Workbook[] listOfNewWorkbook,
+			Workbook workbook) throws FileNotFoundException, IOException {
 
 		// It creates a list with every .xlsx created
 		List<File> listWithEveryNewSheet = new ArrayList<>();
@@ -65,6 +65,5 @@ public class ZipSheet {
 			e.getMessage();
 		}
 		workbook.close();
-
 	}
 }

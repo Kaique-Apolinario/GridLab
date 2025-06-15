@@ -1,5 +1,8 @@
 package com.kaiqueapol.gridlab.services;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -14,13 +17,13 @@ import com.kaiqueapol.gridlab.repositories.FileRepository;
 
 @Service
 public class DownloadZipService {
-	private FileRepository fileRep;
+	private static FileRepository fileRep;
 
 	public DownloadZipService(FileRepository fileRep) {
-		this.fileRep = fileRep;
+		DownloadZipService.fileRep = fileRep;
 	}
 
-	public Resource downloadZip(UUID id) {
+	public Resource downloadZip(UUID id) throws IOException {
 		ByteArrayResource resource = new ByteArrayResource(getEntityById(id).getData());
 		return resource;
 
@@ -38,5 +41,12 @@ public class DownloadZipService {
 				.orElseThrow(FileEntityNotFoundException::new);
 
 		return foundFilesList;
+	}
+
+	public static FileEntity zipToEntity(File zip) throws IOException {
+		FileEntity fileEntity = new FileEntity(UUID.randomUUID(), zip.getName(), zip.length(),
+				Files.probeContentType(zip.toPath()), Files.readAllBytes(zip.toPath()));
+		fileRep.save(fileEntity);
+		return fileEntity;
 	}
 }

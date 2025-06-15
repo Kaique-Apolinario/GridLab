@@ -3,14 +3,11 @@ package com.kaiqueapol.gridlab.services;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -18,35 +15,24 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kaiqueapol.gridlab.entities.FileEntity;
-import com.kaiqueapol.gridlab.exceptions.FileEntityNotFoundException;
-import com.kaiqueapol.gridlab.repositories.FileRepository;
 import com.kaiqueapol.gridlab.util.ZipSheet;
 import com.kaiqueapol.gridlab.validations.FileValidation;
 
 @Service
 public class SheetMergerService {
-	private FileValidation fileValidation;
-	private ZipSheet zipSheet;
-	private FileRepository fileRep;
 
-	public SheetMergerService(FileValidation fileValidation, ZipSheet zipSheet, FileRepository fileRep) {
-		this.fileValidation = fileValidation;
-		this.fileRep = fileRep;
-		this.zipSheet = zipSheet;
-
+	public SheetMergerService() {
 	}
 
 	public FileEntity mergeSheets(List<MultipartFile> listOfSheets, boolean ignoreRepeatedRows)
 			throws IOException, InvalidFormatException {
 
 		for (MultipartFile rawFile : listOfSheets) {
-			fileValidation.sheetValidation(rawFile);
+			FileValidation.sheetValidation(rawFile);
 		}
 
 		Set<String> uniqueRows = new HashSet<>();
@@ -56,7 +42,7 @@ public class SheetMergerService {
 		// Print name of the all files present in that path
 		if (listOfSheets != null) {
 			for (MultipartFile file : listOfSheets) {
-				validatedFiles.add(this.fileValidation.sheetValidation(file));
+				validatedFiles.add(FileValidation.sheetValidation(file));
 			}
 		}
 
@@ -138,35 +124,14 @@ public class SheetMergerService {
 		ArrayList<Workbook> workbookArray = new ArrayList<>();
 		workbookArray.add(unitionWorkbook);
 		Workbook[] workArray = workbookArray.toArray(new Workbook[0]);
-		zipSheet.sheetZipping("GridLab_SheetUnision", 1, workArray, unitionWorkbook);
+		ZipSheet.sheetZipping("GridLab_SheetUnision", 1, workArray, unitionWorkbook);
 
-		FileEntity fileEntity = zipToEntity(
-				new File(System.getProperty("java.io.tmpdir") + "GridLab_SheetUnision" + ".zip"));
+		FileEntity fileEntity = DownloadZipService
+				.zipToEntity(new File(System.getProperty("java.io.tmpdir") + "GridLab_SheetUnision" + ".zip"));
 
 		unitionWorkbook.close();
 		return fileEntity;
 
-	}
-
-	public FileEntity zipToEntity(File zip) throws IOException {
-		System.out.println(zip.getTotalSpace());
-		FileEntity fileEntity = new FileEntity(UUID.randomUUID(), zip.getName(), zip.getTotalSpace(),
-				Files.probeContentType(zip.toPath()), Files.readAllBytes(zip.toPath()));
-		fileRep.save(fileEntity);
-		return fileEntity;
-	}
-
-	public Resource downloadZip(UUID id) {
-		ByteArrayResource resource = new ByteArrayResource(getEntityById(id).getData());
-		return resource;
-
-	}
-
-	public FileEntity getEntityById(UUID id) {
-		FileEntity foundFile = Optional.ofNullable(fileRep.getFileEntityById(id))
-				.orElseThrow(FileEntityNotFoundException::new);
-
-		return foundFile;
 	}
 
 }

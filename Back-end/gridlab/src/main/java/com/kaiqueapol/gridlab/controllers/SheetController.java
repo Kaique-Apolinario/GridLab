@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kaiqueapol.gridlab.dto.fileEntityDTO;
 import com.kaiqueapol.gridlab.entities.FileEntity;
+import com.kaiqueapol.gridlab.services.DownloadZipService;
 import com.kaiqueapol.gridlab.services.SheetDividerService;
 import com.kaiqueapol.gridlab.services.SheetMergerService;
 
@@ -34,10 +35,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class SheetController {
 	private SheetDividerService sheetDividerService;
 	private SheetMergerService sheetMergerService;
+	private DownloadZipService downZipServ;
 
-	public SheetController(SheetDividerService sheetDividerService, SheetMergerService sheetMergerService) {
+	public SheetController(SheetDividerService sheetDividerService, SheetMergerService sheetMergerService,
+			DownloadZipService downZipServ) {
 		this.sheetDividerService = sheetDividerService;
 		this.sheetMergerService = sheetMergerService;
+		this.downZipServ = downZipServ;
 	}
 
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/upload/divider/")
@@ -48,7 +52,7 @@ public class SheetController {
 			@ApiResponse(responseCode = "500", description = "Internal server error"), })
 	public ResponseEntity<fileEntityDTO> uploadSheetToDivide(@RequestPart("file") MultipartFile file,
 			@RequestParam("sheetParts") int sheetParts, @RequestParam("header") boolean header) throws Exception {
-
+		System.out.println("TRIGGERED");
 		FileEntity fileEntity = sheetDividerService.divideSheets(file, sheetParts, header);
 
 		return ResponseEntity.ok().body(new fileEntityDTO(fileEntity.getFileName(), fileEntity.getContentType(),
@@ -72,13 +76,27 @@ public class SheetController {
 			@ApiResponse(responseCode = "500", description = "Internal server error"), })
 	public ResponseEntity<Resource> downloadFile(@PathVariable UUID id) {
 
-		Resource resource = sheetDividerService.downloadZip(id);
+		Resource resource = downZipServ.downloadZip(id);
 
-		FileEntity fileEntity = sheetDividerService.getEntityById(id);
+		FileEntity fileEntity = downZipServ.getEntityById(id);
+		System.out.println(fileEntity.toString());
 		String headerValue = "attachment; filename=\"" + fileEntity.getFileName() + "\"";
 
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType("application/zip"))
 				.header(HttpHeaders.CONTENT_DISPOSITION, headerValue).body(resource);
+	}
+
+	@GetMapping("/libFile")
+	@Operation(summary = "It returns every file from the database", method = "GET")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Sucess"),
+			@ApiResponse(responseCode = "422", description = "Invalid data requisition"),
+			@ApiResponse(responseCode = "400", description = "Invalid parameters"),
+			@ApiResponse(responseCode = "500", description = "Internal server error"), })
+	public ResponseEntity<List<FileEntity>> loadAllFiles() {
+
+		List<FileEntity> fileEntityList = downZipServ.getAllFiles();
+
+		return ResponseEntity.ok().body(fileEntityList);
 	}
 
 }

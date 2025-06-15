@@ -18,12 +18,13 @@ public class ZipSheet {
 
 	public void sheetZipping(String ogName, int amountOfNewSheets, Workbook[] listOfNewWorkbook, Workbook workbook)
 			throws FileNotFoundException, IOException {
-		System.out.println(listOfNewWorkbook[0].getSheetAt(0).getRow(2).getCell(0).toString());
 
 		// It creates a list with every .xlsx created
-		List<String> listWithEveryNewSheet = new ArrayList<>();
+		List<File> listWithEveryNewSheet = new ArrayList<>();
 		for (int i = 0; i < amountOfNewSheets; i++) {
-			String fileName = "UploadFolder\\" + ogName + "_" + (i + 1) + ".xlsx";
+			String temporaryDir = System.getProperty("java.io.tmpdir");
+			File fileName = new File(temporaryDir + ogName + "_" + (i + 1) + ".xlsx");
+
 			listWithEveryNewSheet.add(fileName);
 
 			// It takes each sheet from listOfNewWorkbook and write a .xlsx based on its
@@ -39,10 +40,10 @@ public class ZipSheet {
 		}
 
 		// It creates a .zip including all of the .xlsx within listWithEveryNewSheet
-		try (FileOutputStream fos = new FileOutputStream("UploadFolder\\" + ogName + ".zip");
+		try (FileOutputStream fos = new FileOutputStream(System.getProperty("java.io.tmpdir") + ogName + ".zip");
 				ZipOutputStream zos = new ZipOutputStream(fos);) {
-			for (String part : listWithEveryNewSheet) {
-				File fileToZip = new File(part);
+
+			for (File fileToZip : listWithEveryNewSheet) {
 
 				// Inserts each .xlsx into the .zip file
 				try (FileInputStream fis = new FileInputStream(fileToZip)) {

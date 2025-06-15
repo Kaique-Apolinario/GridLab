@@ -3,7 +3,6 @@ package com.kaiqueapol.gridlab.services;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -11,13 +10,10 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kaiqueapol.gridlab.entities.FileEntity;
-import com.kaiqueapol.gridlab.exceptions.FileEntityNotFoundException;
 import com.kaiqueapol.gridlab.repositories.FileRepository;
 import com.kaiqueapol.gridlab.util.CopyPasteRow;
 import com.kaiqueapol.gridlab.util.ZipSheet;
@@ -89,7 +85,9 @@ public class SheetDividerService {
 		// Save the new sheets into a .zip file
 		String fileNameWoExtension = file.getOriginalFilename().substring(0, file.getOriginalFilename().length() - 5);
 		zipSheet.sheetZipping(fileNameWoExtension, amountOfNewSheets, listOfNewWorkbook, workbook);
-		FileEntity fileEntity = zipToEntity(new File("UploadFolder\\" + fileNameWoExtension + ".zip"));
+
+		FileEntity fileEntity = zipToEntity(
+				new File(System.getProperty("java.io.tmpdir") + fileNameWoExtension + ".zip"));
 		return fileEntity;
 	}
 
@@ -100,16 +98,4 @@ public class SheetDividerService {
 		return fileEntity;
 	}
 
-	public Resource downloadZip(UUID id) {
-		ByteArrayResource resource = new ByteArrayResource(getEntityById(id).getData());
-		return resource;
-
-	}
-
-	public FileEntity getEntityById(UUID id) {
-		FileEntity foundFile = Optional.ofNullable(fileRep.getFileEntityById(id))
-				.orElseThrow(FileEntityNotFoundException::new);
-
-		return foundFile;
-	}
 }

@@ -30,7 +30,20 @@ public class CopyPasteRow {
 			case STRING:
 				cellOfNewSheet.setCellValue(cell.getStringCellValue());
 				break;
+			case BOOLEAN:
+				cellOfNewSheet.setCellValue(cell.getBooleanCellValue());
+				break;
+			case FORMULA:
+				cellOfNewSheet.setCellFormula(cell.getCellFormula());
+				break;
+			case BLANK:
+				cellOfNewSheet.setBlank();
+				break;
+			case ERROR:
+				cellOfNewSheet.setCellValue("ERROR");
+				break;
 			default:
+				cellOfNewSheet.setCellValue("UNKNOWN");
 				break;
 			}
 			// System.out.print(cellOfNewSheet + " ");

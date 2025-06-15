@@ -107,7 +107,7 @@ You can merge many sheets into one by uploading them and then downloading it.
 
   
 
-###  Responsiveness
+##  Responsiveness
 <img src="Front-end/GridLab_Angular/src/assets/ResponsivenessPreview.gif" width="100%">
 
 

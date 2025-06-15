@@ -140,7 +140,8 @@ public class SheetMergerService {
 		Workbook[] workArray = workbookArray.toArray(new Workbook[0]);
 		zipSheet.sheetZipping("GridLab_SheetUnision", 1, workArray, unitionWorkbook);
 
-		FileEntity fileEntity = zipToEntity(new File("UploadFolder\\" + "GridLab_SheetUnision" + ".zip"));
+		FileEntity fileEntity = zipToEntity(
+				new File(System.getProperty("java.io.tmpdir") + "GridLab_SheetUnision" + ".zip"));
 
 		unitionWorkbook.close();
 		return fileEntity;
@@ -148,6 +149,7 @@ public class SheetMergerService {
 	}
 
 	public FileEntity zipToEntity(File zip) throws IOException {
+		System.out.println(zip.getTotalSpace());
 		FileEntity fileEntity = new FileEntity(UUID.randomUUID(), zip.getName(), zip.getTotalSpace(),
 				Files.probeContentType(zip.toPath()), Files.readAllBytes(zip.toPath()));
 		fileRep.save(fileEntity);

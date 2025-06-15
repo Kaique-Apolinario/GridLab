@@ -1,5 +1,6 @@
 package com.kaiqueapol.gridlab.entities;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -37,13 +38,16 @@ public class FileEntity {
 	@Lob
 	private byte[] data;
 
-	public FileEntity(UUID id, String fileName, Long size, String contentType, byte[] data) {
+	private LocalDateTime timeNDate;
+
+	public FileEntity(UUID id, String fileName, Long size, String contentType, byte[] data, LocalDateTime timeNDate) {
 		this.id = id;
 		this.fileName = fileName;
 		this.dlUrl = "/download/" + id;
 		this.size = size;
 		this.contentType = contentType;
 		this.data = data;
+		this.timeNDate = timeNDate;
 	}
 
 }

@@ -53,7 +53,6 @@ public class SheetController {
 			@ApiResponse(responseCode = "500", description = "Internal server error"), })
 	public ResponseEntity<fileEntityDTO> uploadSheetToDivide(@RequestPart("file") MultipartFile file,
 			@RequestParam("sheetParts") int sheetParts, @RequestParam("header") boolean header) throws Exception {
-		System.out.println("TRIGGERED");
 		FileEntity fileEntity = sheetDividerService.divideSheets(file, sheetParts, header);
 
 		return ResponseEntity.ok().body(new fileEntityDTO(fileEntity.getFileName(), fileEntity.getContentType(),
@@ -86,7 +85,7 @@ public class SheetController {
 				.header(HttpHeaders.CONTENT_DISPOSITION, headerValue).body(resource);
 	}
 
-	@GetMapping("/libFile")
+	@GetMapping("/fileLib")
 	@Operation(summary = "It returns every file from the database", method = "GET")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Sucess"),
 			@ApiResponse(responseCode = "422", description = "Invalid data requisition"),

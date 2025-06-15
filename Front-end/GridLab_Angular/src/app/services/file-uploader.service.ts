@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { FileEntity } from '../entities/FileEntity';
 import { catchError, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -33,4 +34,15 @@ export class FileUploaderService {
   getFile(fileId: string): Observable<Blob>{
     return this.httpClient.get(this.apiUrl + fileId, {responseType: 'blob'});
   }
+
+  getAllFiles(): Observable<FileEntity[]> {
+  return this.httpClient.get<any[]>(this.apiUrl + "/fileLib").pipe(
+    map(files =>
+      files.map(file => ({
+        ...file,
+        timeNDate: new Date(file.timeNDate.replace(' ', 'T'))  // <-- conversion
+      }))
+    )
+  );
+}
 }

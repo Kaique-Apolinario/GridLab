@@ -3,6 +3,7 @@ package com.kaiqueapol.gridlab.services;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -45,7 +46,7 @@ public class DownloadZipService {
 
 	public static FileEntity zipToEntity(File zip) throws IOException {
 		FileEntity fileEntity = new FileEntity(UUID.randomUUID(), zip.getName(), zip.length(),
-				Files.probeContentType(zip.toPath()), Files.readAllBytes(zip.toPath()));
+				Files.probeContentType(zip.toPath()), Files.readAllBytes(zip.toPath()), LocalDateTime.now());
 		fileRep.save(fileEntity);
 		return fileEntity;
 	}

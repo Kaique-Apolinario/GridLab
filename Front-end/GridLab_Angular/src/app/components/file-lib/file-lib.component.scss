@@ -1,0 +1,30 @@
+th, tr {
+    border: solid 2px black;
+    padding: 10px 50px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+th {
+    background: rgba(199, 255, 223, 0.775);
+}
+
+td{
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+
+
+
+/**
+    border-radius: 50px;
+    padding: 20px;
+    margin: 0;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    width: 75dvw;
+    max-width: 400px;
+    max-height: 90dvh;*/

@@ -1,4 +1,4 @@
-package com.kaiqueapol.gridlab.dto;
+package com.kaiqueapol.gridlab.entities.dto;
 
 public record fileEntityDTO(String fileName, String contentType, Long size, String dlUrl) {
 }

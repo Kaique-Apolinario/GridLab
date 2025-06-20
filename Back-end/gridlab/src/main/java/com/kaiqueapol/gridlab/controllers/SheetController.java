@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kaiqueapol.gridlab.dto.fileEntityDTO;
 import com.kaiqueapol.gridlab.entities.FileEntity;
+import com.kaiqueapol.gridlab.entities.dto.fileEntityDTO;
 import com.kaiqueapol.gridlab.services.DownloadZipService;
 import com.kaiqueapol.gridlab.services.SheetDividerService;
 import com.kaiqueapol.gridlab.services.SheetMergerService;

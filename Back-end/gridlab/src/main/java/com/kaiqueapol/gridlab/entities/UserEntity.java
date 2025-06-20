@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "T_RC_USERS")
-public class User implements UserDetails {
+public class UserEntity implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +31,14 @@ public class User implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() { // Deals with permissions
+	public UserEntity(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
+
+	@Override // Deals with permissions
+	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -47,12 +53,6 @@ public class User implements UserDetails {
 	public String getUsername() {
 		// TODO Auto-generated method stub
 		return email;
-	}
-
-	public User(String email, String password) {
-		super();
-		this.email = email;
-		this.password = password;
 	}
 
 }

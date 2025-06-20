@@ -13,7 +13,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import com.kaiqueapol.gridlab.entities.FileEntity;
-import com.kaiqueapol.gridlab.exceptions.FileEntityNotFoundException;
+import com.kaiqueapol.gridlab.infra.exceptions.FileEntityNotFoundException;
 import com.kaiqueapol.gridlab.repositories.FileRepository;
 
 @Service

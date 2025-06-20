@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.kaiqueapol.gridlab.exceptions.FileEntityNotFoundException;
-import com.kaiqueapol.gridlab.exceptions.InvalidFileException;
-import com.kaiqueapol.gridlab.exceptions.TooManySheetsException;
+import com.kaiqueapol.gridlab.infra.exceptions.FileEntityNotFoundException;
+import com.kaiqueapol.gridlab.infra.exceptions.InvalidFileException;
+import com.kaiqueapol.gridlab.infra.exceptions.TooManySheetsException;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {

@@ -2,7 +2,7 @@ package com.kaiqueapol.gridlab.validations;
 
 import org.springframework.stereotype.Component;
 
-import com.kaiqueapol.gridlab.exceptions.TooManySheetsException;
+import com.kaiqueapol.gridlab.infra.exceptions.TooManySheetsException;
 
 @Component
 public class RowPerSheetsValidation { // Stateless class

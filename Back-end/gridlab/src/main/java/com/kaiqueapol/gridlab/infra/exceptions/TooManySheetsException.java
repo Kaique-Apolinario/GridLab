@@ -1,4 +1,4 @@
-package com.kaiqueapol.gridlab.exceptions;
+package com.kaiqueapol.gridlab.infra.exceptions;
 
 public class TooManySheetsException extends RuntimeException {
 

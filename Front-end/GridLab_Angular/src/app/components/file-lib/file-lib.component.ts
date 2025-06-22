@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-file-lib',
-  imports: [CommonModule, ],
+  imports: [CommonModule],
   templateUrl: './file-lib.component.html',
   styleUrl: './file-lib.component.scss'
 })

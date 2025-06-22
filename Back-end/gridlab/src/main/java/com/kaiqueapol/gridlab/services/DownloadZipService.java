@@ -10,19 +10,23 @@ import java.util.UUID;
 
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.kaiqueapol.gridlab.entities.FileEntity;
+import com.kaiqueapol.gridlab.entities.UserEntity;
 import com.kaiqueapol.gridlab.infra.exceptions.FileEntityNotFoundException;
 import com.kaiqueapol.gridlab.repositories.FileRepository;
+import com.kaiqueapol.gridlab.repositories.UserRepository;
+
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class DownloadZipService {
-	private static FileRepository fileRep;
-
-	public DownloadZipService(FileRepository fileRep) {
-		DownloadZipService.fileRep = fileRep;
-	}
+	private FileRepository fileRep;
+	private UserRepository userRepo;
 
 	public Resource downloadZip(UUID id) throws IOException {
 		ByteArrayResource resource = new ByteArrayResource(getEntityById(id).getData());
@@ -44,10 +48,24 @@ public class DownloadZipService {
 		return foundFilesList;
 	}
 
-	public static FileEntity zipToEntity(File zip) throws IOException {
+	@Transactional
+	public FileEntity zipToEntity(File zip) throws IOException {
+
+		// You need to get the user tracked/controlled by Hibernate, so you take from
+		// the repo
+		Optional<UserEntity> user = userRepo.findByEmailIgnoreCase(
+				((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
+
+		// Attach current authenticated user to the file
 		FileEntity fileEntity = new FileEntity(UUID.randomUUID(), zip.getName(), zip.length(),
-				Files.probeContentType(zip.toPath()), Files.readAllBytes(zip.toPath()), LocalDateTime.now());
+				Files.probeContentType(zip.toPath()), Files.readAllBytes(zip.toPath()), LocalDateTime.now(),
+				user.get());
+
 		fileRep.save(fileEntity);
+
+		// Attach current file to the user's list of files
+		user.get().getFileList().add(fileEntity);
+		userRepo.save(user.get());
 		return fileEntity;
 	}
 }

@@ -1,6 +1,7 @@
 package com.kaiqueapol.gridlab.controllers;
 
 import java.net.URI;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +28,7 @@ public class UserController {
 	private final AuthenticationManager manager;
 
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestBody CredentialsDTO credDto) {
+	public ResponseEntity<Map<String, String>> login(@RequestBody CredentialsDTO credDto) {
 
 		// UsernamePasswordAuthenticationToken represents a login attempt, with username
 		// and password
@@ -35,8 +36,8 @@ public class UserController {
 		Authentication authenticatedUser = manager
 				.authenticate(new UsernamePasswordAuthenticationToken(credDto.email(), credDto.password()));
 
-		// Now. we're going to use the user's email to generate a token
-		String tokenJWT = tokenService.generateToken((UserEntity) authenticatedUser.getPrincipal());
+		// Now. we're going to use the user's email to generate a token in a JSON format
+		Map<String, String> tokenJWT = tokenService.generateToken((UserEntity) authenticatedUser.getPrincipal());
 		return ResponseEntity.ok(tokenJWT);
 	}
 

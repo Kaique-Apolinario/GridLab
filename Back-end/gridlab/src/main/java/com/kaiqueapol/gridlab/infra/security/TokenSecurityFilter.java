@@ -29,20 +29,23 @@ public class TokenSecurityFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
-		String token = getTokenFromReq(request);
-		System.out.println(token + " testeeeeeeeee");
+		String token = getTokenFromReq(request); // For each request, it'll take the request's token
 
 		if (token != null) {
+			// If there is a token, it'll be used to retrieve its owner (user)
 			String email = tokenService.returnUserFromToken(token);
-			System.out.println(email + " AQUIIIIIIII");
-			UserEntity user = userRepo.findByEmailIgnoreCase(email).orElseThrow();
+			// Then, we'll verify if the owner is in our database
+			UserEntity user = userRepo.findByEmailIgnoreCase(email).orElseThrow(() -> new IOException("AQUI"));
 
+			// If it's all alright, the user gets authenticated with its password (already
+			// validated, so it's null here) and its roles
 			Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 			SecurityContextHolder.getContext().setAuthentication(authentication);
+			// Stores the Authentication object into the current security context, making SS
+			// treat the request as authenticated
 		}
 
 		filterChain.doFilter(request, response);
-
 	}
 
 	// If the request has a token in its header, it is going to be returned, else,

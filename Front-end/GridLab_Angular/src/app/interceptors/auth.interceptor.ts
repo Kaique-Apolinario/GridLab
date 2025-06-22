@@ -1,0 +1,23 @@
+import { HttpInterceptorFn } from '@angular/common/http';
+
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  let token: string | null = null;
+
+  // Makes sure Angular takes the browser's 'localStorage'
+  if (typeof window !== 'undefined' && window.localStorage) {
+    token = localStorage.getItem('token'); // get token from localStorage
+  }
+
+    if (token && !req.url.endsWith('/login')) {
+      // clone the request and add Authorization header
+    const authReq = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      
+    return next(authReq);
+  }
+
+  return next(req); // continue the request
+};

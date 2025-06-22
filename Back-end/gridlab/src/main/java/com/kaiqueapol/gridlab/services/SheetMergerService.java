@@ -22,11 +22,12 @@ import com.kaiqueapol.gridlab.entities.FileEntity;
 import com.kaiqueapol.gridlab.util.ZipSheet;
 import com.kaiqueapol.gridlab.validations.FileValidation;
 
-@Service
-public class SheetMergerService {
+import lombok.AllArgsConstructor;
 
-	public SheetMergerService() {
-	}
+@Service
+@AllArgsConstructor
+public class SheetMergerService {
+	private DownloadZipService zipServ;
 
 	public FileEntity mergeSheets(List<MultipartFile> listOfSheets, boolean ignoreRepeatedRows)
 			throws IOException, InvalidFormatException {
@@ -126,7 +127,7 @@ public class SheetMergerService {
 		Workbook[] workArray = workbookArray.toArray(new Workbook[0]);
 		ZipSheet.sheetZipping("GridLab_SheetUnision", 1, workArray, unitionWorkbook);
 
-		FileEntity fileEntity = DownloadZipService
+		FileEntity fileEntity = zipServ
 				.zipToEntity(new File(System.getProperty("java.io.tmpdir") + "GridLab_SheetUnision" + ".zip"));
 
 		unitionWorkbook.close();

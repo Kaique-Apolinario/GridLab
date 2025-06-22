@@ -1,3 +1,4 @@
+/**
 CREATE TABLE T_RC_FILEENTITY (
   nr_idFile         INTEGER NOT NULL,
   txt_fileName      VARCHAR(50) NOT NULL,
@@ -19,3 +20,15 @@ CREATE TABLE T_RC_USERS (
 	
   PRIMARY KEY (nr_id)
 );
+
+CREATE TABLE T_RC_USERS_FILES (
+	id_user	INTEGER,
+	id_file	UUID,
+	
+  PRIMARY KEY (id_user, id_file),
+  FOREIGN KEY (id_user) REFERENCES T_RC_USERS(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_file) REFERENCES T_RC_FILEENTITY(id)
+);
+
+INSERT INTO T_RC_USERS_FILES(id_user, id_file) VALUES 
+(7, (SELECT id FROM T_RC_FILEENTITY WHERE id = '04750b47-58e0-4b8d-a30e-7d472dcef5a2'))*/

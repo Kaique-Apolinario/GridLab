@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kaiqueapol.gridlab.entities.UserEntity;
 import com.kaiqueapol.gridlab.entities.dto.CredentialsDTO;
 import com.kaiqueapol.gridlab.infra.exceptions.AlreadyExistingUserException;
+import com.kaiqueapol.gridlab.infra.exceptions.UserNotFoundException;
 import com.kaiqueapol.gridlab.repositories.UserRepository;
 
 @Service
@@ -26,8 +27,7 @@ public class UserService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return userRepo.findByEmailIgnoreCase(username)
-				.orElseThrow(() -> new UsernameNotFoundException("User not found. Try again!"));
+		return userRepo.findByEmailIgnoreCase(username).orElseThrow(() -> new UserNotFoundException());
 	}
 
 	public UserEntity register(CredentialsDTO credDto) {

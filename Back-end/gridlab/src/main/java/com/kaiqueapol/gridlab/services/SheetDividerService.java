@@ -16,10 +16,10 @@ import com.kaiqueapol.gridlab.util.ZipSheet;
 import com.kaiqueapol.gridlab.validations.FileValidation;
 import com.kaiqueapol.gridlab.validations.RowPerSheetsValidation;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SheetDividerService {
 	private DownloadZipService zipServ;
 

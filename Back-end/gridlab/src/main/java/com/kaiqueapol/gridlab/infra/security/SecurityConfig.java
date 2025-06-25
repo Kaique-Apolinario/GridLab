@@ -30,7 +30,8 @@ public class SecurityConfig {
 				.csrf(csrf -> csrf.disable())
 				.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(req -> req.requestMatchers("/login", "/register").permitAll()
-						.requestMatchers("/fileLib").authenticated().anyRequest().authenticated())
+						.requestMatchers("/fileLib", "/fileLib/*", "/logout").authenticated().anyRequest()
+						.authenticated())
 				.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();

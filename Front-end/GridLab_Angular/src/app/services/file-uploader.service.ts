@@ -22,7 +22,6 @@ export class FileUploaderService {
   } 
 
   postFileList(formData: FormData):Observable<FileEntity>{
-    console.log("I'm in service hiiii")
     return this.httpClient.post<FileEntity>(this.apiUrl + "/upload/merger/", formData).pipe(
       catchError((error) => { 
         alert(error.error)
@@ -44,5 +43,20 @@ export class FileUploaderService {
       }))
     )
   );
+}
+
+getAllFilesFromUser(userId: number): Observable<FileEntity[]> {
+  return this.httpClient.get<any[]>(this.apiUrl + "/fileLib/" + userId).pipe(
+    map(files =>
+      files.map(file => ({
+        ...file,
+        timeNDate: new Date(file.timeNDate.replace(' ', 'T'))  // <-- conversion
+      }))
+    )
+  );
+}
+
+logout(): Observable<any> {
+  return this.httpClient.post(this.apiUrl + "logout", {});
 }
 }

@@ -1,16 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/login';
+  private apiUrl = 'http://localhost:8080';
   private http:HttpClient = inject(HttpClient);
 
-  login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post(this.apiUrl, credentials);
-  }
+  login(loginCredentials: { email: string; password: string }): Observable<any> {
+    return this.http.post(this.apiUrl + "/login", loginCredentials).pipe(
+     catchError(error => {
+      alert(error.error)
+      throw error;
+     })
+  )}
+
+  register(loginCredentials: { email: string; password: string }): Observable<any> {
+    return this.http.post(this.apiUrl + "/register", loginCredentials).pipe(
+     catchError(error => {
+      alert(error.error)
+      throw error;
+     })
+  )}
 }

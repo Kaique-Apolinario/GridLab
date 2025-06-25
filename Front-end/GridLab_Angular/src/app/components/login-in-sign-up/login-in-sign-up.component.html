@@ -1,35 +1,39 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-    <h2>Sign In</h2>
-
+<form [formGroup]="loginForm" class="login-form">
+    <h2>{{ formTitle() }}</h2>
     <div>
         <label>Email</label>
-        <input type="email" formControlName="email" />
-
-
-        <small *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-            Please enter a valid email.
-        </small>
+        <input class="textbox" type="email" formControlName="email" />
     </div>
-
     <div>
         <label>Password</label>
-        <input type="password" formControlName="password" />
+        <input class="textbox" type="password" formControlName="password" />
+    </div>
+
+    @if (formTitle() === "Register") {
+    <div>
+        <label>Confirm password</label>
+        <input class="textbox" type="password" formControlName="confirmationPassword" />
+    </div>
+    }
+
+    <div class="buttonLine">
+
+        @if (formTitle() === "Sign In") {
+
+        <button type="submit" (click)="onLogin()">Login</button>
+        } @else {
+
+        <button type="submit" (click)="switchLoginOrSignUp()">Login instead</button>
+        }
 
 
-        <small *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-            Password must be at least 6 characters.
-        </small>
+        @if (formTitle() === "Sign In") {
+        <button type="button" (click)="switchLoginOrSignUp()">Register</button>}
+        @else {
+        <button type="button" (click)="onRegister()">Sign In</button>
+        }
+
 
 
     </div>
-
-    <button type="submit" [disabled]="loginForm.invalid || loading">
-        {{ loading ? 'Logging in...' : 'Login' }}
-    </button>
-
-
-
-    <div *ngIf="error" class="error">{{ error }}</div>
-
-
 </form>

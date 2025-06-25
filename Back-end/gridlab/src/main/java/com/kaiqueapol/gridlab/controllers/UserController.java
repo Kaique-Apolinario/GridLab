@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,12 +39,18 @@ public class UserController {
 
 		// Now. we're going to use the user's email to generate a token in a JSON format
 		Map<String, String> tokenJWT = tokenService.generateToken((UserEntity) authenticatedUser.getPrincipal());
-		return ResponseEntity.ok(tokenJWT);
+		return ResponseEntity.ok().body(tokenJWT);
 	}
 
 	@PostMapping("/register")
 	public ResponseEntity<UserEntity> register(@RequestBody CredentialsDTO signUpDto) {
 		UserEntity userEntity = userService.register(signUpDto);
 		return ResponseEntity.created(URI.create("/users/" + userEntity.getId())).body(userEntity);
+	}
+
+	@PostMapping("/logout")
+	public ResponseEntity<String> logout() {
+		SecurityContextHolder.clearContext();
+		return ResponseEntity.ok("Logout realizado com sucesso!");
 	}
 }

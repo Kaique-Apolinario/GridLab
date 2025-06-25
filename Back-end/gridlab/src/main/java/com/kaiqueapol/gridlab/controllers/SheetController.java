@@ -79,7 +79,6 @@ public class SheetController {
 		Resource resource = downZipServ.downloadZip(id);
 
 		FileEntity fileEntity = downZipServ.getEntityById(id);
-		System.out.println(fileEntity.toString());
 		String headerValue = "attachment; filename=\"" + fileEntity.getFileName() + "\"";
 
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType("application/zip"))
@@ -96,6 +95,18 @@ public class SheetController {
 
 		List<FileEntity> fileEntityList = downZipServ.getAllFiles();
 
+		return ResponseEntity.ok().body(fileEntityList);
+	}
+
+	@GetMapping("/fileLib/{id}")
+	@Operation(summary = "It returns every file from the database", method = "GET")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Sucess"),
+			@ApiResponse(responseCode = "422", description = "Invalid data requisition"),
+			@ApiResponse(responseCode = "400", description = "Invalid parameters"),
+			@ApiResponse(responseCode = "500", description = "Internal server error"), })
+	public ResponseEntity<List<FileEntity>> loadAllFilesFromUser(@PathVariable int id) {
+
+		List<FileEntity> fileEntityList = downZipServ.getAllFilesFromUser(id);
 		return ResponseEntity.ok().body(fileEntityList);
 	}
 

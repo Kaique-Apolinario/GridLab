@@ -48,6 +48,14 @@ public class DownloadZipService {
 		return foundFilesList;
 	}
 
+	public List<FileEntity> getAllFilesFromUser(int id) {
+		List<FileEntity> foundFilesList = Optional.ofNullable(fileRep.fileListByUser(id))
+				.orElseThrow(FileEntityNotFoundException::new);
+		System.out.println(foundFilesList);
+
+		return foundFilesList;
+	}
+
 	@Transactional
 	public FileEntity zipToEntity(File zip) throws IOException {
 

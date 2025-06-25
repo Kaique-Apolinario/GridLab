@@ -8,7 +8,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     token = localStorage.getItem('token'); // get token from localStorage
   }
 
-    if (token && !req.url.endsWith('/login')) {
+    if (token && !(req.url.endsWith('/login') || req.url.endsWith('/register'))) {
       // clone the request and add Authorization header
     const authReq = req.clone({
         setHeaders: {

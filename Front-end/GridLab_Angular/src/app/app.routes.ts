@@ -8,7 +8,15 @@ export const routes: Routes = [
     {path: '', pathMatch: "full", component: ContainerComponent},
     {path: 'login', pathMatch: "full", component: LoginInSignUpComponent},
     {path: 'fileLib', 
-        pathMatch: "full", 
+        pathMatch: 'full',
         component: FileLibComponent,
         canActivate: [authGuard]},
+    {path: 'fileLib/:id', 
+        pathMatch: 'full',
+        component: FileLibComponent,
+        canActivate: [authGuard]},
+        {path: 'logout', 
+        pathMatch: 'full',
+        component: FileLibComponent,
+        canActivate: [authGuard]}
 ];

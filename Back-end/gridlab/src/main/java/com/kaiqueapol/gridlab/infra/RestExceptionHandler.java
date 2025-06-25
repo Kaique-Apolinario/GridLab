@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.kaiqueapol.gridlab.infra.exceptions.AlreadyExistingUserException;
 import com.kaiqueapol.gridlab.infra.exceptions.FileEntityNotFoundException;
 import com.kaiqueapol.gridlab.infra.exceptions.InvalidFileException;
 import com.kaiqueapol.gridlab.infra.exceptions.TooManySheetsException;
+import com.kaiqueapol.gridlab.infra.exceptions.UserNotFoundException;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -26,6 +28,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(TooManySheetsException.class)
 	public ResponseEntity<String> tooManySheetsException(TooManySheetsException e) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+	}
+
+	@ExceptionHandler(AlreadyExistingUserException.class)
+	public ResponseEntity<String> alreadyExistingUserException(AlreadyExistingUserException e) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+	}
+
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<String> userNotFoundException(UserNotFoundException e) {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 	}
 
 }

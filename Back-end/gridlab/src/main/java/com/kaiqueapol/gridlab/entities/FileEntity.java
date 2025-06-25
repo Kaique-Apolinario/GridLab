@@ -17,6 +17,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -26,6 +27,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "T_RC_FILEENTITY")
+@ToString(exclude = "user")
 public class FileEntity {
 
 	@Id

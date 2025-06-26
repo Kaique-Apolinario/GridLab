@@ -3,6 +3,7 @@ import { FileUploaderService } from '../../services/file-uploader.service';
 import { FileEntity } from '../../entities/FileEntity';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-file-lib',
@@ -20,7 +21,8 @@ export class FileLibComponent implements OnInit{
   ngOnInit(): void {
     if (typeof (Number(this.router.url.replace("/fileLib/", ""))) === 'number'){
     const userIdFromUrl = Number(this.router.url.replace("/fileLib/", ""))
-    this.fileService.getAllFilesFromUser(userIdFromUrl).subscribe((response) => {this.fileList.set(response)});
+    this.fileService.getAllFilesFromUser(userIdFromUrl).subscribe((response) => {this.fileList.set(response)},
+  error => this.router.navigate(['/']));
     }
     this.fileService.getAllFiles().subscribe((response) => {this.fileList.set(response)});
   }

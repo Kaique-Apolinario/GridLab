@@ -12,7 +12,7 @@ public interface FileRepository extends JpaRepository<FileEntity, UUID> {
 
 	public FileEntity getFileEntityById(UUID id);
 
-	@Query("SELECT file FROM FileEntity file WHERE file.user.id = :id")
-	public List<FileEntity> fileListByUser(int id);
+	@Query("SELECT file FROM FileEntity file WHERE file.user.id = :userId")
+	public List<FileEntity> fileListByUser(Long userId);
 
 }

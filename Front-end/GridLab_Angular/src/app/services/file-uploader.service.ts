@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { FileEntity } from '../entities/FileEntity';
 import { catchError, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { error } from 'node:console';
 
 @Injectable({
   providedIn: 'root'
@@ -52,8 +53,7 @@ getAllFilesFromUser(userId: number): Observable<FileEntity[]> {
         ...file,
         timeNDate: new Date(file.timeNDate.replace(' ', 'T'))  // <-- conversion
       }))
-    )
-  );
+    ));
 }
 
 logout(): Observable<any> {

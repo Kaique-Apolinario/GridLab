@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import com.kaiqueapol.gridlab.entities.FileEntity;
 import com.kaiqueapol.gridlab.entities.UserEntity;
 import com.kaiqueapol.gridlab.infra.exceptions.FileEntityNotFoundException;
+import com.kaiqueapol.gridlab.infra.exceptions.NosyException;
+import com.kaiqueapol.gridlab.infra.exceptions.UserNotFoundException;
 import com.kaiqueapol.gridlab.repositories.FileRepository;
 import com.kaiqueapol.gridlab.repositories.UserRepository;
 
@@ -27,6 +29,7 @@ import lombok.AllArgsConstructor;
 public class DownloadZipService {
 	private FileRepository fileRep;
 	private UserRepository userRepo;
+	private TokenService tokenServ;
 
 	public Resource downloadZip(UUID id) throws IOException {
 		ByteArrayResource resource = new ByteArrayResource(getEntityById(id).getData());
@@ -42,18 +45,30 @@ public class DownloadZipService {
 	}
 
 	public List<FileEntity> getAllFiles() {
-		List<FileEntity> foundFilesList = Optional.ofNullable(fileRep.findAll())
-				.orElseThrow(FileEntityNotFoundException::new);
-
-		return foundFilesList;
+		Optional<List<FileEntity>> foundFilesList = Optional.ofNullable(fileRep.findAll());
+		if (foundFilesList.isEmpty())
+			throw new FileEntityNotFoundException();
+		return foundFilesList.get();
 	}
 
-	public List<FileEntity> getAllFilesFromUser(int id) {
-		List<FileEntity> foundFilesList = Optional.ofNullable(fileRep.fileListByUser(id))
-				.orElseThrow(FileEntityNotFoundException::new);
-		System.out.println(foundFilesList);
+	public List<FileEntity> getAllFilesFromUser(String userToken, Long userId) {
 
-		return foundFilesList;
+		Optional<UserEntity> userFromUrlId = Optional.ofNullable(userRepo.findById(userId))
+				.orElseThrow(() -> new UserNotFoundException());
+
+		if (!userFromUrlId.isPresent())
+			throw new UserNotFoundException("No user with the URL's Id");
+
+		String userFromToken = tokenServ.returnUserFromToken(userToken.replace("Bearer ", ""));
+		if (userFromUrlId.get().getEmail().equals(userFromToken)) {
+
+			List<FileEntity> foundFilesList = Optional.ofNullable(fileRep.fileListByUser(userId))
+					.orElseThrow(FileEntityNotFoundException::new);
+
+			return foundFilesList;
+		} else {
+			throw new NosyException();
+		}
 	}
 
 	@Transactional

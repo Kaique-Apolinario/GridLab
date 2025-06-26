@@ -50,7 +50,7 @@ onRegister() {
       this.authService.register(this.loginForm.value).subscribe(() => {
 
       console.log("Current route I am on:",this.router.url);
-      this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
+      this.router.navigateByUrl('/', {skipLocationChange:true}).then(()=>{
       this.router.navigate(['/login'])})
       alert("You signed up! Log in to check your file library.");})
     } else {

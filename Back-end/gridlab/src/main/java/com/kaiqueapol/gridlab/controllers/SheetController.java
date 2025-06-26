@@ -8,10 +8,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -23,27 +25,26 @@ import com.kaiqueapol.gridlab.entities.dto.FileEntityDto;
 import com.kaiqueapol.gridlab.services.DownloadZipService;
 import com.kaiqueapol.gridlab.services.SheetDividerService;
 import com.kaiqueapol.gridlab.services.SheetMergerService;
+import com.kaiqueapol.gridlab.services.TokenService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(produces = { "application/json" })
+@AllArgsConstructor
 @Tag(name = "GridLabAPI")
 public class SheetController {
 	private SheetDividerService sheetDividerService;
 	private SheetMergerService sheetMergerService;
 	private DownloadZipService downZipServ;
+	private final TokenService tokenService;
 
-	public SheetController(SheetDividerService sheetDividerService, SheetMergerService sheetMergerService,
-			DownloadZipService downZipServ) {
-		this.sheetDividerService = sheetDividerService;
-		this.sheetMergerService = sheetMergerService;
-		this.downZipServ = downZipServ;
-	}
+	private final AuthenticationManager manager;
 
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/upload/divider/")
 	@Operation(summary = "It uploads the file into the API", method = "POST")
@@ -98,15 +99,16 @@ public class SheetController {
 		return ResponseEntity.ok().body(fileEntityList);
 	}
 
-	@GetMapping("/fileLib/{id}")
+	@GetMapping("/fileLib/{userId}")
 	@Operation(summary = "It returns every file from the database", method = "GET")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Sucess"),
 			@ApiResponse(responseCode = "422", description = "Invalid data requisition"),
 			@ApiResponse(responseCode = "400", description = "Invalid parameters"),
 			@ApiResponse(responseCode = "500", description = "Internal server error"), })
-	public ResponseEntity<List<FileEntity>> loadAllFilesFromUser(@PathVariable int id) {
+	public ResponseEntity<List<FileEntity>> loadAllFilesFromUser(@RequestHeader("Authorization") String userToken,
+			@PathVariable Long userId) {
 
-		List<FileEntity> fileEntityList = downZipServ.getAllFilesFromUser(id);
+		List<FileEntity> fileEntityList = downZipServ.getAllFilesFromUser(userToken, userId);
 		return ResponseEntity.ok().body(fileEntityList);
 	}
 

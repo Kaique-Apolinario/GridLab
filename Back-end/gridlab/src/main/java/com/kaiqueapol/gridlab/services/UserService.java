@@ -9,8 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kaiqueapol.gridlab.entities.UserEntity;
-import com.kaiqueapol.gridlab.entities.dto.CredentialsDTO;
+import com.kaiqueapol.gridlab.entities.dto.RegisterCredentialsDto;
 import com.kaiqueapol.gridlab.infra.exceptions.AlreadyExistingUserException;
+import com.kaiqueapol.gridlab.infra.exceptions.NotMatchingPasswords;
 import com.kaiqueapol.gridlab.infra.exceptions.UserNotFoundException;
 import com.kaiqueapol.gridlab.repositories.UserRepository;
 
@@ -30,7 +31,11 @@ public class UserService implements UserDetailsService {
 		return userRepo.findByEmailIgnoreCase(username).orElseThrow(() -> new UserNotFoundException());
 	}
 
-	public UserEntity register(CredentialsDTO credDto) {
+	public UserEntity register(RegisterCredentialsDto credDto) {
+		if (!credDto.password().equals(credDto.confirmationPassword())) {
+			throw new NotMatchingPasswords();
+		}
+
 		Optional<UserEntity> existingUser = userRepo.findByEmailIgnoreCase(credDto.email());
 
 		if (existingUser.isPresent()) {

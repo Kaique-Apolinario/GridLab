@@ -18,7 +18,7 @@ export class AuthService {
      })
   )}
 
-  register(loginCredentials: { email: string; password: string }): Observable<any> {
+  register(loginCredentials: { email: string; password: string; confirmationPassword: string }): Observable<any> {
     return this.http.post(this.apiUrl + "/register", loginCredentials).pipe(
      catchError(error => {
       alert(error.error)

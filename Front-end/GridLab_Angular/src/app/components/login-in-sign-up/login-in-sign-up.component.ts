@@ -32,15 +32,14 @@ ngOnInit(): void {
 
 
 
-  onLogin() {
+onLogin() {
   this.emailNPasswordCheck();
   if (this.loginForm.valid){
       this.authService.login(this.loginForm.value).subscribe((res) => {
       localStorage.setItem('token', res.token);
-      this.router.navigate(['/fileLib']);
+      this.router.navigate(['/fileLib/' + res.userId]);
     });
   }
-
 }
 
 
@@ -54,13 +53,9 @@ onRegister() {
       this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
       this.router.navigate(['/login'])})
       alert("You signed up! Log in to check your file library.");})
-
-      
     } else {
       alert("Oops! Password and confirmation password doesn't match!")
-    }
-        }
-
+    }}
 }
 
 emailNPasswordCheck(){

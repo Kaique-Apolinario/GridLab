@@ -3,14 +3,13 @@ package com.kaiqueapol.gridlab.services;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.crypto.SecretKey;
 
 import org.springframework.stereotype.Component;
 
 import com.kaiqueapol.gridlab.entities.UserEntity;
+import com.kaiqueapol.gridlab.entities.dto.UserTokenDto;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -22,16 +21,17 @@ public class TokenService {
 	private Key SECRET_KEY = Keys
 			.hmacShaKeyFor("testeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee".getBytes(StandardCharsets.UTF_8));
 
-	public Map<String, String> generateToken(UserEntity user) {
+	public UserTokenDto generateToken(UserEntity user) {
 
 		String tokenString = Jwts.builder().subject(user.getEmail()) // Set the subject (usually the username/email)
 				.issuedAt(new Date(System.currentTimeMillis())) // Token creation time
 				.expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)) // Expiration (in ms, so 30m here)
 				.signWith(SECRET_KEY) // use Key, not String
 				.compact(); // Generate the final JWT string
-		Map<String, String> tokenAsJson = new HashMap<>();
-		tokenAsJson.put("token", tokenString);
-		return tokenAsJson;
+		System.out.println(tokenString);
+
+		return new UserTokenDto(tokenString, user.getId());
+
 	}
 
 	public String returnUserFromToken(String token) {

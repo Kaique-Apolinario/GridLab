@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kaiqueapol.gridlab.entities.FileEntity;
-import com.kaiqueapol.gridlab.entities.dto.fileEntityDTO;
+import com.kaiqueapol.gridlab.entities.dto.FileEntityDto;
 import com.kaiqueapol.gridlab.services.DownloadZipService;
 import com.kaiqueapol.gridlab.services.SheetDividerService;
 import com.kaiqueapol.gridlab.services.SheetMergerService;
@@ -51,21 +51,21 @@ public class SheetController {
 			@ApiResponse(responseCode = "422", description = "Invalid data requisition"),
 			@ApiResponse(responseCode = "400", description = "Invalid parameters"),
 			@ApiResponse(responseCode = "500", description = "Internal server error"), })
-	public ResponseEntity<fileEntityDTO> uploadSheetToDivide(@RequestPart("file") MultipartFile file,
+	public ResponseEntity<FileEntityDto> uploadSheetToDivide(@RequestPart("file") MultipartFile file,
 			@RequestParam("sheetParts") int sheetParts, @RequestParam("header") boolean header) throws Exception {
 
 		FileEntity fileEntity = sheetDividerService.divideSheets(file, sheetParts, header);
 
-		return ResponseEntity.ok().body(new fileEntityDTO(fileEntity.getFileName(), fileEntity.getContentType(),
+		return ResponseEntity.ok().body(new FileEntityDto(fileEntity.getFileName(), fileEntity.getContentType(),
 				fileEntity.getSize(), fileEntity.getDlUrl()));
 	}
 
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/upload/merger/")
-	public ResponseEntity<fileEntityDTO> uploadSheetToMerge(@RequestPart("files") List<MultipartFile> file,
+	public ResponseEntity<FileEntityDto> uploadSheetToMerge(@RequestPart("files") List<MultipartFile> file,
 			@RequestParam("ignoreRepeatedRows") boolean ignoreRepeatedRows) throws Exception {
 		FileEntity fileEntity = sheetMergerService.mergeSheets(file, ignoreRepeatedRows);
 
-		return ResponseEntity.ok().body(new fileEntityDTO(fileEntity.getFileName(), fileEntity.getContentType(),
+		return ResponseEntity.ok().body(new FileEntityDto(fileEntity.getFileName(), fileEntity.getContentType(),
 				fileEntity.getSize(), fileEntity.getDlUrl()));
 	}
 

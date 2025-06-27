@@ -1,6 +1,7 @@
 package com.kaiqueapol.gridlab.infra.security;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.kaiqueapol.gridlab.entities.UserEntity;
+import com.kaiqueapol.gridlab.infra.exceptions.UserNotFoundException;
 import com.kaiqueapol.gridlab.repositories.UserRepository;
 import com.kaiqueapol.gridlab.services.TokenService;
 
@@ -35,11 +37,14 @@ public class TokenSecurityFilter extends OncePerRequestFilter {
 			// If there is a token, it'll be used to retrieve its owner (user)
 			String email = tokenService.returnUserFromToken(token);
 			// Then, we'll verify if the owner is in our database
-			UserEntity user = userRepo.findByEmailIgnoreCase(email).orElseThrow(() -> new IOException("AQUI"));
+			Optional<UserEntity> user = userRepo.findByEmailIgnoreCase(email);
+			if (user.isEmpty())
+				throw new UserNotFoundException();
 
 			// If it's all alright, the user gets authenticated with its password (already
 			// validated, so it's null here) and its roles
-			Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+			Authentication authentication = new UsernamePasswordAuthenticationToken(user.get(), null,
+					user.get().getAuthorities());
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			// Stores the Authentication object into the current security context, making SS
 			// treat the request as authenticated

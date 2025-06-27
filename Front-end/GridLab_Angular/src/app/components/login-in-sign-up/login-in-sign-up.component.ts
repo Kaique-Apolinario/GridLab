@@ -3,10 +3,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { MenuComponent } from "../menu/menu.component";
+import { UserSessionSharedService } from '../../services/user-session-shared.service';
 
 @Component({
   selector: 'app-login-in-sign-up',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, MenuComponent],
   standalone: true,
   templateUrl: './login-in-sign-up.component.html',
   styleUrl: './login-in-sign-up.component.scss'
@@ -14,6 +16,7 @@ import { CommonModule } from '@angular/common';
 export class LoginInSignUpComponent implements OnInit{
   private fb: FormBuilder = inject(FormBuilder)
   private authService: AuthService = inject(AuthService)
+  private sessionService: UserSessionSharedService = inject(UserSessionSharedService)
   private router: Router= inject(Router)
 
   formTitle = signal("Register");
@@ -37,7 +40,8 @@ onLogin() {
   if (this.loginForm.valid){
       this.authService.login(this.loginForm.value).subscribe((res) => {
       localStorage.setItem('token', res.token);
-      this.router.navigate(['/fileLib/' + res.userId]);
+      this.sessionService.setUserId(res.userId);
+      this.router.navigate(['/fileLib/' + this.sessionService.getUserId]);
     });
   }
 }
@@ -48,8 +52,6 @@ onRegister() {
   if (this.loginForm.valid){
     if (this.loginForm.get('password')?.value === this.loginForm.get('confirmationPassword')?.value) {
       this.authService.register(this.loginForm.value).subscribe(() => {
-
-      console.log("Current route I am on:",this.router.url);
       this.router.navigateByUrl('/', {skipLocationChange:true}).then(()=>{
       this.router.navigate(['/login'])})
       alert("You signed up! Log in to check your file library.");})

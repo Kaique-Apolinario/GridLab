@@ -3,10 +3,11 @@ import { UploadButtonComponent } from "../upload-button/upload-button.component"
 import { MergerComponent } from "../merger/merger.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MenuComponent } from "../menu/menu.component";
 
 @Component({
   selector: 'app-container',
-  imports: [UploadButtonComponent, MergerComponent, CommonModule, FormsModule],
+  imports: [UploadButtonComponent, MergerComponent, CommonModule, FormsModule, MenuComponent],
   templateUrl: './container.component.html',
   styleUrl: './container.component.scss'
 })

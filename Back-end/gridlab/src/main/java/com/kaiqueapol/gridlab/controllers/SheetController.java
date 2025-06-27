@@ -47,7 +47,7 @@ public class SheetController {
 	private final AuthenticationManager manager;
 
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/upload/divider/")
-	@Operation(summary = "It uploads the file into the API", method = "POST")
+	@Operation(summary = "It uploads a file to be divided into the API", method = "POST")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Sucess"),
 			@ApiResponse(responseCode = "422", description = "Invalid data requisition"),
 			@ApiResponse(responseCode = "400", description = "Invalid parameters"),
@@ -62,6 +62,11 @@ public class SheetController {
 	}
 
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/upload/merger/")
+	@Operation(summary = "It uploads files to be merged into the API", method = "POST")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Sucess"),
+			@ApiResponse(responseCode = "422", description = "Invalid data requisition"),
+			@ApiResponse(responseCode = "400", description = "Invalid parameters"),
+			@ApiResponse(responseCode = "500", description = "Internal server error"), })
 	public ResponseEntity<FileEntityDto> uploadSheetToMerge(@RequestPart("files") List<MultipartFile> file,
 			@RequestParam("ignoreRepeatedRows") boolean ignoreRepeatedRows) throws Exception {
 		FileEntity fileEntity = sheetMergerService.mergeSheets(file, ignoreRepeatedRows);
@@ -87,7 +92,7 @@ public class SheetController {
 	}
 
 	@GetMapping("/fileLib")
-	@Operation(summary = "It returns every file from the database", method = "GET")
+	@Operation(summary = "It returns every uploaded file from the database", method = "GET")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Sucess"),
 			@ApiResponse(responseCode = "422", description = "Invalid data requisition"),
 			@ApiResponse(responseCode = "400", description = "Invalid parameters"),
@@ -100,7 +105,7 @@ public class SheetController {
 	}
 
 	@GetMapping("/fileLib/{userId}")
-	@Operation(summary = "It returns every file from the database", method = "GET")
+	@Operation(summary = "It returns every uploadedfile of a specific user from the database", method = "GET")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Sucess"),
 			@ApiResponse(responseCode = "422", description = "Invalid data requisition"),
 			@ApiResponse(responseCode = "400", description = "Invalid parameters"),

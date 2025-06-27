@@ -3,11 +3,12 @@ import { FileUploaderService } from '../../services/file-uploader.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FileEntity} from '../../entities/FileEntity';
+import { MenuComponent } from "../menu/menu.component";
 
 @Component({
   standalone: true,
   selector: 'app-upload-button',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MenuComponent],
   templateUrl: './upload-button.component.html',
   styleUrl: './upload-button.component.scss'
 })

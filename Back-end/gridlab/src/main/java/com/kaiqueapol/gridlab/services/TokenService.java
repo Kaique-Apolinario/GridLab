@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component;
 
 import com.kaiqueapol.gridlab.entities.UserEntity;
 import com.kaiqueapol.gridlab.entities.dto.UserTokenDto;
+import com.kaiqueapol.gridlab.infra.exceptions.InvalidTokenException;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -28,18 +30,23 @@ public class TokenService {
 				.expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)) // Expiration (in ms, so 30m here)
 				.signWith(SECRET_KEY) // use Key, not String
 				.compact(); // Generate the final JWT string
-		System.out.println(tokenString);
 
 		return new UserTokenDto(tokenString, user.getId());
 
 	}
 
 	public String returnUserFromToken(String token) {
-		return Jwts.parser() // Starts building a JWT parser
-				.verifyWith((SecretKey) SECRET_KEY) // Tells that the key is in this variable
-				.build() // Finishes building
-				.parseSignedClaims(token) // Parses and verifies the signed JWT
-				.getPayload(). // Gets the claims (infos like subject, issued at, expiration etc.)
-				getSubject(); // Returns the username/email
+		String tokenFromUser;
+		try {
+			tokenFromUser = Jwts.parser() // Starts building a JWT parser
+					.verifyWith((SecretKey) SECRET_KEY) // Tells that the key is in this variable
+					.build() // Finishes building
+					.parseSignedClaims(token) // Parses and verifies the signed JWT
+					.getPayload(). // Gets the claims (infos like subject, issued at, expiration etc.)
+					getSubject(); // Returns the username/email
+		} catch (ExpiredJwtException e) {
+			throw new InvalidTokenException();
+		}
+		return tokenFromUser;
 	}
 }

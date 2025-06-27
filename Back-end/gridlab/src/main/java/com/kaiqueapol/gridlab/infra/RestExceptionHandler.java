@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.kaiqueapol.gridlab.infra.exceptions.AlreadyExistingUserException;
+import com.kaiqueapol.gridlab.infra.exceptions.InvalidTokenException;
 import com.kaiqueapol.gridlab.infra.exceptions.FileEntityNotFoundException;
 import com.kaiqueapol.gridlab.infra.exceptions.InvalidFileException;
 import com.kaiqueapol.gridlab.infra.exceptions.NosyException;
@@ -49,6 +50,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(NosyException.class)
 	public ResponseEntity<String> nosyException(NosyException e) {
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+	}
+
+	@ExceptionHandler(InvalidTokenException.class)
+	public ResponseEntity<String> invalidTokenException(InvalidTokenException e) {
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 	}
 

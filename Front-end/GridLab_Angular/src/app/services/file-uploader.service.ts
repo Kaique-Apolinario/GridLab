@@ -40,7 +40,7 @@ export class FileUploaderService {
     map(files =>
       files.map(file => ({
         ...file,
-        timeNDate: new Date(file.timeNDate.replace(' ', 'T'))  // <-- conversion
+        timeNDate: new Date(file.timeNDate.replace(' ', 'T'))  // conversion to a date TS accepts
       }))
     )
   );
@@ -51,7 +51,7 @@ getAllFilesFromUser(userId: number): Observable<FileEntity[]> {
     map(files =>
       files.map(file => ({
         ...file,
-        timeNDate: new Date(file.timeNDate.replace(' ', 'T'))  // <-- conversion
+        timeNDate: new Date(file.timeNDate.replace(' ', 'T'))  // conversion to a date TS accepts
       }))
     ));
 }

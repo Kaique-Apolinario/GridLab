@@ -30,9 +30,10 @@ public class SecurityConfig {
 				.csrf(csrf -> csrf.disable())
 				.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(req -> req.requestMatchers("/login", "/register").permitAll()
-						.requestMatchers("/fileLib", "/fileLib/*", "/logout").authenticated().anyRequest()
+						.requestMatchers("/fileLib", "/fileLib/*", "/logout", "/").authenticated().anyRequest()
 						.authenticated())
-				.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
+				.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
+				.logout(logout -> logout.logoutUrl("/logout"));
 
 		return http.build();
 	}

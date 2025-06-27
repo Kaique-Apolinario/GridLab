@@ -4,10 +4,11 @@ import { FileEntity } from '../../entities/FileEntity';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { error } from 'node:console';
+import { MenuComponent } from "../menu/menu.component";
 
 @Component({
   selector: 'app-file-lib',
-  imports: [CommonModule],
+  imports: [CommonModule, MenuComponent],
   templateUrl: './file-lib.component.html',
   styleUrl: './file-lib.component.scss'
 })

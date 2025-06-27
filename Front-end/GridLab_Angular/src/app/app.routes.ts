@@ -5,8 +5,11 @@ import { LoginInSignUpComponent } from './components/login-in-sign-up/login-in-s
 import { authGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
-    {path: '', pathMatch: "full", component: ContainerComponent},
     {path: 'login', pathMatch: "full", component: LoginInSignUpComponent},
+    {path: '', 
+        pathMatch: 'full',
+        component: ContainerComponent,
+        canActivate: [authGuard]},
     {path: 'fileLib', 
         pathMatch: 'full',
         component: FileLibComponent,

@@ -1,16 +1,23 @@
 import { Injectable, signal } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserSessionSharedService {
-  userId = signal(5);
+  
+  private userIdSubject = new BehaviorSubject<number | undefined>(
+    Number(localStorage.getItem('userId')) || undefined
+  );
+
+  userId$ = this.userIdSubject.asObservable();
 
   setUserId(id: number) {
-    this.userId.set(id);
+    localStorage.setItem('userId', String(id)); // Save to localStorage
+    this.userIdSubject.next(id); // Notify subscribers
   }
 
-  getUserId(): number {
-    return this.userId();
+  getUserId(): number | undefined {
+    return this.userIdSubject.getValue();
   }
 }

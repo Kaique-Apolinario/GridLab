@@ -28,6 +28,7 @@ export class AuthService {
 
   
   logout(): Observable<any> {
+    localStorage.removeItem('userId');
     return this.http.post(this.apiUrl + "/logout", {});
   }
 }

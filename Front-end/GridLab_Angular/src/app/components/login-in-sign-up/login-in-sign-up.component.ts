@@ -21,7 +21,6 @@ export class LoginInSignUpComponent implements OnInit{
 
   formTitle = signal("Register");
 
-
   loginForm: FormGroup = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -34,14 +33,13 @@ ngOnInit(): void {
 }
 
 
-
 onLogin() {
   this.emailNPasswordCheck();
   if (this.loginForm.valid){
       this.authService.login(this.loginForm.value).subscribe((res) => {
       localStorage.setItem('acessToken', res.acessToken);
       this.sessionService.setUserId(res.userId);
-      this.router.navigate(['/fileLib/' + this.sessionService.getUserId]);
+      this.router.navigate(['/fileLib/' + res.userId]);
     });
   }
 }

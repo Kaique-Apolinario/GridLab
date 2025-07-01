@@ -15,7 +15,10 @@ export class MenuComponent implements OnInit{
   userId = signal("");
 
 ngOnInit(): void {
-  this.userId.set("/fileLib/" + this.sessionService.getUserId());
+  this.sessionService.userId$.subscribe((id) => {
+    if (id !== undefined){
+    this.userId.set("/fileLib/" + id);
+  }})
 }
 
 logout() {

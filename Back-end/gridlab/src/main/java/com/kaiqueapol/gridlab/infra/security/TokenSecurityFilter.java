@@ -35,7 +35,8 @@ public class TokenSecurityFilter extends OncePerRequestFilter {
 
 		if (token != null) {
 			// If there is a token, it'll be used to retrieve its owner (user)
-			String email = tokenService.returnUserFromToken(token);
+			String email = tokenService.returnUserFromToken(token, response);
+
 			// Then, we'll verify if the owner is in our database
 			Optional<UserEntity> user = userRepo.findByEmailIgnoreCase(email);
 			if (user.isEmpty())
@@ -49,7 +50,6 @@ public class TokenSecurityFilter extends OncePerRequestFilter {
 			// Stores the Authentication object into the current security context, making SS
 			// treat the request as authenticated
 		}
-
 		filterChain.doFilter(request, response);
 	}
 
@@ -62,5 +62,4 @@ public class TokenSecurityFilter extends OncePerRequestFilter {
 		}
 		return null;
 	}
-
 }

@@ -39,7 +39,7 @@ onLogin() {
   this.emailNPasswordCheck();
   if (this.loginForm.valid){
       this.authService.login(this.loginForm.value).subscribe((res) => {
-      localStorage.setItem('token', res.token);
+      localStorage.setItem('acessToken', res.acessToken);
       this.sessionService.setUserId(res.userId);
       this.router.navigate(['/fileLib/' + this.sessionService.getUserId]);
     });
@@ -52,9 +52,9 @@ onRegister() {
   if (this.loginForm.valid){
     if (this.loginForm.get('password')?.value === this.loginForm.get('confirmationPassword')?.value) {
       this.authService.register(this.loginForm.value).subscribe(() => {
-      this.router.navigateByUrl('/', {skipLocationChange:true}).then(()=>{
+      this.router.navigateByUrl("/", {skipLocationChange:true}).then(()=>{
       this.router.navigate(['/login'])})
-      alert("You signed up! Log in to check your file library.");})
+      alert("You have signed up! Log in to check your file library.");})
     } else {
       alert("Oops! Password and confirmation password doesn't match!")
     }}

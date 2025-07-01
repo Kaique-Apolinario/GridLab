@@ -56,7 +56,4 @@ getAllFilesFromUser(userId: number): Observable<FileEntity[]> {
     ));
 }
 
-logout(): Observable<any> {
-  return this.httpClient.post(this.apiUrl + "logout", {});
-}
 }

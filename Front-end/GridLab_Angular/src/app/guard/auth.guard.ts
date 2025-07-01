@@ -9,7 +9,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   // Makes sure Angular takes the browser's 'localStorage'
   if (typeof window !== 'undefined' && window.localStorage) {
-    token = localStorage.getItem('token'); // get token from localStorage
+    token = localStorage.getItem('acessToken'); // get token from localStorage
   }
 
   //If the user has a token
@@ -19,7 +19,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     const currentTime = Math.floor(Date.now() / 1000);
 
     if (decodedToken.exp && decodedToken.exp < currentTime) {
-      localStorage.removeItem('token');
+      localStorage.removeItem('acessToken');
       router.navigate(['/login']);
       alert("Expired token! Please, log in.")
       return false

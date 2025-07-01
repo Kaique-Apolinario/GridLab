@@ -5,8 +5,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   // Makes sure Angular takes the browser's 'localStorage'
   if (typeof window !== 'undefined' && window.localStorage) {
-    token = localStorage.getItem('token'); // get token from localStorage
+    token = localStorage.getItem('acessToken'); // get token from localStorage
   }
+
 
     if (token && !(req.url.endsWith('/login') || req.url.endsWith('/register'))) {
       // clone the request and add Authorization header

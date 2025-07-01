@@ -8,7 +8,6 @@ export class UserSessionSharedService {
 
   setUserId(id: number) {
     this.userId.set(id);
-    alert("IM GONNA SET" + id)
   }
 
   getUserId(): number {

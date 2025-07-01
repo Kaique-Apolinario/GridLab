@@ -25,4 +25,9 @@ export class AuthService {
       throw error;
      })
   )}
+
+  
+  logout(): Observable<any> {
+    return this.http.post(this.apiUrl + "/logout", {});
+  }
 }

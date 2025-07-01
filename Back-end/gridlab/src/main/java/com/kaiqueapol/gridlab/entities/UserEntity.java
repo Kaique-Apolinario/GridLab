@@ -8,20 +8,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @Table(name = "T_RC_USERS")
+@ToString(exclude = "token")
 public class UserEntity implements UserDetails {
 
 	@Id
@@ -36,6 +40,9 @@ public class UserEntity implements UserDetails {
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FileEntity> fileList;
+
+	@OneToOne(mappedBy = "tokenUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private TokenEntity token;
 
 	public UserEntity(String email, String password) {
 		super();

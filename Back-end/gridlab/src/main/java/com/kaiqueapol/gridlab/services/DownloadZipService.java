@@ -59,7 +59,7 @@ public class DownloadZipService {
 		if (!userFromUrlId.isPresent())
 			throw new UserNotFoundException("No user with the URL's Id");
 
-		String userFromToken = tokenServ.returnUserFromToken(userToken.replace("Bearer ", ""));
+		String userFromToken = tokenServ.returnUserFromToken(userToken.replace("Bearer ", ""), null);
 		if (userFromUrlId.get().getEmail().equals(userFromToken)) {
 
 			List<FileEntity> foundFilesList = Optional.ofNullable(fileRep.fileListByUser(userId))

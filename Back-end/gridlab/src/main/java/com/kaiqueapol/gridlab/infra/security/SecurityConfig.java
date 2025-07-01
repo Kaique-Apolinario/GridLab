@@ -29,11 +29,11 @@ public class SecurityConfig {
 		http.cors(Customizer.withDefaults()) // It allows CORS
 				.csrf(csrf -> csrf.disable())
 				.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(req -> req.requestMatchers("/login", "/register").permitAll()
-						.requestMatchers("/fileLib", "/fileLib/*", "/logout", "/").authenticated().anyRequest()
-						.authenticated())
+				.authorizeHttpRequests(req -> req.requestMatchers("/login", "/register").anonymous()
+						.requestMatchers("/fileLib", "/fileLib/*", "/logout", "/", "/refreshToken").authenticated()
+						.anyRequest().authenticated())
 				.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
-				.logout(logout -> logout.logoutUrl("/logout"));
+				.logout(logout -> logout.disable());
 
 		return http.build();
 	}

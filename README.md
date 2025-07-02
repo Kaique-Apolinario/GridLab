@@ -150,7 +150,7 @@ You can merge many sheets into one by uploading them and then downloading it.
   
   ## Endpoints
   
-  ###### User's endpoints
+  ##### User's endpoints
   
   * `/login`: used to log in the user so they can use GridLab
     
@@ -191,7 +191,7 @@ You can merge many sheets into one by uploading them and then downloading it.
   
   * `/logout`: used to delete refreshToken from localStorage and invalidate them in the database.
   
-  ###### File manipulation endpoints
+  ##### File manipulation endpoints
   
   * `/upload/merger/`: used to upload .xslx or .xls sheets and combine them.
     
@@ -203,7 +203,9 @@ You can merge many sheets into one by uploading them and then downloading it.
   
   * `/download/{fileId}`: used to download a uploaded file
   
-  * `/fileLib/{id}`: used to acess the user's uploaded files. The user can only access their page of uploaded sheets<img title="" src="file:///C:/Users/KaiiaK/AppData/Roaming/marktext/images/2025-07-02-10-12-06-image.png" alt="" width="691"><img src="Front-end/GridLab_Angular/src/assets/GridLab name.png" width="100%">
+  * `/fileLib/{id}`: used to acess the user's uploaded files. The user can only access their page of uploaded sheets
+   <img src="Front-end/GridLab_Angular/src/assets/fileLibPreview.png" width="100%">
+    <img src="Front-end/GridLab_Angular/src/assets/GridLab name.png" width="100%">
 
 ## How to contribute
 

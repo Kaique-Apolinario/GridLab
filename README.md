@@ -146,7 +146,7 @@ You can merge many sheets into one by uploading them and then downloading it.
 
 - Full understanding and implementation of **refresh token flows**, rotated upon refresh, and the old one invalidated in the database.
   
-  ![LoginRegisterPreview.gif](C:\Users\KaiiaK\Documents\Projects\GridLab\gridlab\Front-end\GridLab_Angular\src\assets\LoginRegisterPreview.gif)
+<img src="\Front-end\GridLab_Angular\src\assets\LoginRegisterPreview.gif" width="100%">
   
   ## Endpoints
   
@@ -195,11 +195,11 @@ You can merge many sheets into one by uploading them and then downloading it.
   
   * `/upload/merger/`: used to upload .xslx or .xls sheets and combine them.
     
-    <img src="file:///C:/Users/KaiiaK/Documents/Projects/GridLab/gridlab/Front-end/GridLab_Angular/src/assets/MergerPreview.gif" title="" alt="MergerPreview.gif" width="391">
+    <img src="Front-end/GridLab_Angular/src/assets/MergerPreview.gif" title="" alt="MergerPreview.gif" width="391">
   
   * `/upload/divider/`: used to upload .xslx or .xls sheet and divide it into determined parts.
     
-    <img title="" src="file:///C:/Users/KaiiaK/Documents/Projects/GridLab/gridlab/Front-end/GridLab_Angular/src/assets/BreakPreview.gif" alt="BreakPreview.gif" width="393">
+    <img title="" src="Front-end/GridLab_Angular/src/assets/BreakPreview.gif" alt="BreakPreview.gif" width="393">
   
   * `/download/{fileId}`: used to download a uploaded file
   

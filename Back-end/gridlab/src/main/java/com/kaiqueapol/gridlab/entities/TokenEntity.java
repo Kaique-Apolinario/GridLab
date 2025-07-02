@@ -1,5 +1,7 @@
 package com.kaiqueapol.gridlab.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +31,7 @@ public class TokenEntity {
 
 	@OneToOne()
 	@JoinColumn(name = "id_user", referencedColumnName = "id")
+	@JsonIgnore
 	private UserEntity tokenUser;
 
 	private boolean valid;

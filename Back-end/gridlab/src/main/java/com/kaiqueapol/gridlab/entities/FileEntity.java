@@ -3,6 +3,8 @@ package com.kaiqueapol.gridlab.entities;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -55,6 +57,7 @@ public class FileEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
+	@JsonIgnore
 	private UserEntity user;
 
 	public FileEntity(UUID id, String fileName, Long size, String contentType, byte[] data, LocalDateTime timeNDate,

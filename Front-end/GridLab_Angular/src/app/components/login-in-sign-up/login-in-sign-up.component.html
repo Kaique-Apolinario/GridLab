@@ -1,20 +1,16 @@
 <form [formGroup]="loginForm" class="login-form">
     <h2>{{ formTitle() }}</h2>
-    <div>
+    <div class="login-form-fields">
         <label>Email</label>
         <input class="textbox" type="email" formControlName="email" />
-    </div>
-    <div>
         <label>Password</label>
         <input class="textbox" type="password" formControlName="password" />
-    </div>
 
-    @if (formTitle() === "Register") {
-    <div>
+        @if (formTitle() === "Register") {
         <label>Confirm password</label>
         <input class="textbox" type="password" formControlName="confirmationPassword" />
+        }
     </div>
-    }
 
     <div class="buttonLine">
 

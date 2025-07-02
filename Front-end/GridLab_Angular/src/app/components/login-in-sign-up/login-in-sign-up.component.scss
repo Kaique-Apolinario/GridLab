@@ -17,6 +17,12 @@
     max-height: 90dvh;
 }
 
+.login-form-fields {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
 .buttonLine {
     display: flex;
     flex-direction: row;
@@ -50,7 +56,5 @@ button {
     background-color: transparent;
     padding: 5px 10px;
     text-align: center;
-    width: 90%;
-    max-width: 100%;
     font-size: 0.8rem;
 }

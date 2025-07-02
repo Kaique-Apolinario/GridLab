@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -38,10 +40,12 @@ public class UserEntity implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<FileEntity> fileList;
 
 	@OneToOne(mappedBy = "tokenUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private TokenEntity token;
 
 	public UserEntity(String email, String password) {

@@ -72,9 +72,9 @@ public class UserController {
 			@ApiResponse(responseCode = "422", description = "Invalid data requisition"),
 			@ApiResponse(responseCode = "400", description = "Invalid parameters"),
 			@ApiResponse(responseCode = "500", description = "Internal server error"), })
-	public ResponseEntity<UserEntity> register(@RequestBody RegisterCredentialsDto signUpDto) {
+	public ResponseEntity<String> register(@RequestBody RegisterCredentialsDto signUpDto) {
 		UserEntity userEntity = userService.register(signUpDto);
-		return ResponseEntity.created(URI.create("/users/" + userEntity.getId())).body(userEntity);
+		return ResponseEntity.created(URI.create("/users/" + userEntity.getId())).body("User registered successfully!");
 	}
 
 	@PostMapping("/logout")

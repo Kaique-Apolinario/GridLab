@@ -22,14 +22,10 @@
         <button type="submit" (click)="switchLoginOrSignUp()">Login instead</button>
         }
 
-
         @if (formTitle() === "Sign In") {
         <button type="button" (click)="switchLoginOrSignUp()">Register</button>}
         @else {
         <button type="button" (click)="onRegister()">Sign In</button>
         }
-
-
-
     </div>
 </form>

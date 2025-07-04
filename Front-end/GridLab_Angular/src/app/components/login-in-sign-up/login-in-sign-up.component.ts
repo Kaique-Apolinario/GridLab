@@ -3,12 +3,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { MenuComponent } from "../menu/menu.component";
 import { UserSessionSharedService } from '../../services/user-session-shared.service';
 
 @Component({
   selector: 'app-login-in-sign-up',
-  imports: [ReactiveFormsModule, CommonModule, MenuComponent],
+  imports: [ReactiveFormsModule, CommonModule],
   standalone: true,
   templateUrl: './login-in-sign-up.component.html',
   styleUrl: './login-in-sign-up.component.scss'
@@ -37,7 +36,7 @@ onLogin() {
   this.emailNPasswordCheck();
   if (this.loginForm.valid){
       this.authService.login(this.loginForm.value).subscribe((res) => {
-      localStorage.setItem('acessToken', res.acessToken);
+      localStorage.setItem('accessToken', res.accessToken);
       this.sessionService.setUserId(res.userId);
       this.router.navigate(['/fileLib/' + res.userId]);
     });

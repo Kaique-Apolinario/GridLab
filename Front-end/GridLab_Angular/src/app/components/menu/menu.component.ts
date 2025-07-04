@@ -15,14 +15,14 @@ export class MenuComponent implements OnInit{
   userId = signal("");
 
 ngOnInit(): void {
-  this.sessionService.userId$.subscribe((id) => {
+    this.sessionService.userId$.subscribe((id) => {
     if (id !== undefined){
     this.userId.set("/fileLib/" + id);
   }})
 }
 
 logout() {
-    localStorage.removeItem('acessToken');
+    localStorage.removeItem('accessToken');
     this.authService.logout().subscribe();
   }
 }

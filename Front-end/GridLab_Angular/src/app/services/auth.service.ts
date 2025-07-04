@@ -13,7 +13,7 @@ export class AuthService {
   login(loginCredentials: { email: string; password: string }): Observable<any> {
     return this.http.post(this.apiUrl + "/login", loginCredentials).pipe(
      catchError(error => {
-      alert(error.error)
+      alert("Oops! An error occurred. Please, reload and try again!")
       throw error;
      })
   )}
@@ -21,7 +21,7 @@ export class AuthService {
   register(loginCredentials: { email: string; password: string; confirmationPassword: string }): Observable<any> {
     return this.http.post(this.apiUrl + "/register", loginCredentials).pipe(
      catchError(error => {
-      alert(error.error)
+      alert("Oops! An error occurred. Please, reload and try again!")
       throw error;
      })
   )}

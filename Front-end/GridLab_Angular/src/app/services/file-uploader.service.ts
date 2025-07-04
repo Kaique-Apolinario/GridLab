@@ -32,8 +32,13 @@ export class FileUploaderService {
   } 
 
   getFile(fileId: string): Observable<Blob>{
-    return this.httpClient.get(this.apiUrl + fileId, {responseType: 'blob'});
-  }
+    return this.httpClient.get(this.apiUrl + fileId, {responseType: 'blob'}).pipe(
+      catchError((error) => { 
+        alert(error.error)
+        throw error;
+      })
+    );
+  } 
 
   getAllFiles(): Observable<FileEntity[]> {
   return this.httpClient.get<any[]>(this.apiUrl + "/fileLib").pipe(

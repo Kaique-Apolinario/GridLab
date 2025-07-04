@@ -37,7 +37,6 @@ export const authGuard: CanActivateFn = (route, state) => {
       alert("Expired token! Please, log in.")
       return false
     } else if (state.url == '/login'){
-      alert(router.url)
       router.navigate(['/']);
       return false
     }

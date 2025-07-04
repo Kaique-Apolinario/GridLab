@@ -6,13 +6,13 @@
 
 ## About The Project
 
+> *Se você quiser ler a versão em português 🇧🇷, <a href="/README-ptBR.md">clique aqui</a>*
+
 Welcome! 
 
-Frustrated by the lack of tools to properly merge and split spreadsheet sheets for my work, I built my own solution: **GridLab**!
+Frustrated by the lack of tools to properly merge and split spreadsheet for my work, I built my own solution: **GridLab**!
 
-This is GridLab, a fun and useful FullStack application, which uses Java Spring, Angular and PostgreSQL as the main technologies to build the API that will fit your needs when managing your Excel or Google Sheets! Scroll down to see more details!
-
-## 
+This is GridLab, a useful Full-Stack application, which uses Java Spring, Angular and PostgreSQL as main technologies to provide an API for managing Excel and Google Sheets! Scroll down for more details!
 
 ### Built with
 
@@ -31,7 +31,7 @@ This is GridLab, a fun and useful FullStack application, which uses Java Spring,
   * PostgreSQL Database
   * Maven
   * Lombok
-  * MVC desgin pattern
+  * MVC design pattern
   
   #### 
 
@@ -103,7 +103,7 @@ npm install
 ng serve --o
 ```
 
-## Pre-requisite
+## Prerequisites
 
 * Java 17+
 * Maven
@@ -128,11 +128,11 @@ You can break your sheets down by uploading the big one and then typing how many
 
 You can merge many sheets into one by uploading them and then downloading it.
 
-#### Ignore repeated rows
+#### Skip repeated rows
 
 * By enabling "Ignore repeated rows" you make sure each row in the final sheet is unique.
 
-#### Ordering files
+#### Reordering files
 
 * After uploading all of the sheets to be merged, you are able to change the order each sheet will be copied into the final one.
 
@@ -142,74 +142,73 @@ You can merge many sheets into one by uploading them and then downloading it.
 
 ## Spring Security
 
-- Securely handling **JWT expiration and renewal**
+- Handles **JWT expiration and renewal** securely
 
-- Full understanding and implementation of **refresh token flows**, rotated upon refresh, and the old one invalidated in the database.
-  
+- Implements refresh token rotation, invalidating old tokens in the database upon renewal.
+
 <img src="\Front-end\GridLab_Angular\src\assets\LoginRegisterPreview.gif" width="100%">
+
+## Endpoints
+
+##### User endpoints
+
+* `/login`: used to log in the user so they can use GridLab
   
-  ## Endpoints
+  Input:
   
-  ##### User's endpoints
+  * ```json
+    {
+        "email":"kaique@gridlab.com",
+        "password": "kaiquegridlab"
+    }
+    ```
   
-  * `/login`: used to log in the user so they can use GridLab
-    
-    input:
-    
-    * ```json
-      {
-          "email":"kaique@gridlab.com",
-          "password": "kaiquegridlab"
-      }
-      ```
-    
-    output:
-    
-    * ```json
-      {
-          "acessToken": "jwt_code_here",
-          "userId": 1
-      }
-      "refreshToken" sent as an HttpOnly Cookie to the frontend for enhanced security.
-      ```
-    
-    
+  Output:
   
-  * `/register`: used to sign up a new user
-    
-    input:
-    
-    * ```json
-      {
-          "email": "kaique@teste.com",
-          "password": "kaiqueteste",
-          "confirmationPassword": "kaiqueteste"
-      }
-      ```
+  * ```json
+    {
+        "accessToken": "jwt_code_here",
+        "userId": 1
+    }
+    "refreshToken" is sent as an HttpOnly Cookie to the frontend for enhanced security.
+    ```
+
+* `/register`: used to sign up a new user
   
-  * `/refreshToken`: used to replace expired short-lived accessToken using a long-lived refreshToken (sent as a cookie), allowing extended GridLab usage without re-login. Users only need to sign in again when it also expires.
+  input:
   
-  * `/logout`: used to delete refreshToken from localStorage and invalidate them in the database.
+  * ```json
+    {
+        "email": "kaique@teste.com",
+        "password": "kaiqueteste",
+        "confirmationPassword": "kaiqueteste"
+    }
+    ```
+
+* `/refreshToken`: used to replace expired short-lived accessToken using a long-lived refreshToken (sent as a cookie), allowing extended GridLab usage without re-login. Users only need to sign in again when it also expires.
+
+* `/logout`: used to delete refreshToken from localStorage and invalidate it in the database.
   
   ##### File manipulation endpoints
+
+* `/upload/merger/`: used to upload .xslx or .xls sheets and combine them.
   
-  * `/upload/merger/`: used to upload .xslx or .xls sheets and combine them.
-    
-    <img src="Front-end/GridLab_Angular/src/assets/MergerPreview.gif" title="" alt="MergerPreview.gif" width="391">
+  <img src="Front-end/GridLab_Angular/src/assets/MergerPreview.gif" title="" alt="MergerPreview.gif" width="391">
+
+* `/upload/divider/`: used to upload .xslx or .xls sheet and divide it into determined parts.
   
-  * `/upload/divider/`: used to upload .xslx or .xls sheet and divide it into determined parts.
-    
-    <img title="" src="Front-end/GridLab_Angular/src/assets/BreakPreview.gif" alt="BreakPreview.gif" width="393">
+  <img title="" src="Front-end/GridLab_Angular/src/assets/BreakPreview.gif" alt="BreakPreview.gif" width="393">
+
+* `/download/{fileId}`: used to download a uploaded file
+
+* `/fileLib/{id}`: used to access the user's uploaded files. The user can only access their page of uploaded sheets
   
-  * `/download/{fileId}`: used to download a uploaded file
-  
-  * `/fileLib/{id}`: used to acess the user's uploaded files. The user can only access their page of uploaded sheets
-   <img src="Front-end/GridLab_Angular/src/assets/fileLibPreview.png" width="100%">
-    <img src="Front-end/GridLab_Angular/src/assets/GridLab name.png" width="100%">
+  <img src="Front-end/GridLab_Angular/src/assets/fileLibPreview.png" width="100%">
+  <img src="Front-end/GridLab_Angular/src/assets/GridLab name.png" width="100%">
 
 ## How to contribute
 
-1. Fork it (https://github.com/Kaique-Apolinario/GridLab/fork)
+1. Fork the repository (https://github.com/Kaique-Apolinario/GridLab/fork)
 2. Create your feature branch (`git checkout -b feature/name`)
 3. Commit your changes (`git commit -am 'Add some changes'`)
 4. Push to the branch (`git push origin feature/name`)
@@ -219,7 +218,7 @@ You can merge many sheets into one by uploading them and then downloading it.
 
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/Kaique-Apolinario/task-manager/blob/main/LICENSE) 
 
-Code under MIT License.
+*Licensed under MIT.*
 
 ## Author and Contact
 

@@ -7,12 +7,18 @@ th, tr {
 
 th {
     background: rgba(199, 255, 223, 0.775);
+    max-width: 150px;
 }
 
 td{
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(5px);
+}
+
+.truncate {
+  max-width: 100px;
+  white-space: nowrap;
 }
 
 table{

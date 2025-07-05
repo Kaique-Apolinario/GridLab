@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { FileEntity } from '../entities/FileEntity';
 import { catchError, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { error } from 'node:console';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,6 @@ export class FileUploaderService {
   } 
 
   postFileList(formData: FormData):Observable<FileEntity>{
-    console.log("I'm in service hiiii")
     return this.httpClient.post<FileEntity>(this.apiUrl + "/upload/merger/", formData).pipe(
       catchError((error) => { 
         alert(error.error)
@@ -32,17 +32,33 @@ export class FileUploaderService {
   } 
 
   getFile(fileId: string): Observable<Blob>{
-    return this.httpClient.get(this.apiUrl + fileId, {responseType: 'blob'});
-  }
+    return this.httpClient.get(this.apiUrl + fileId, {responseType: 'blob'}).pipe(
+      catchError((error) => { 
+        alert(error.error)
+        throw error;
+      })
+    );
+  } 
 
   getAllFiles(): Observable<FileEntity[]> {
   return this.httpClient.get<any[]>(this.apiUrl + "/fileLib").pipe(
     map(files =>
       files.map(file => ({
         ...file,
-        timeNDate: new Date(file.timeNDate.replace(' ', 'T'))  // <-- conversion
+        timeNDate: new Date(file.timeNDate.replace(' ', 'T'))  // conversion to a date TS accepts
       }))
     )
   );
 }
+
+getAllFilesFromUser(userId: number): Observable<FileEntity[]> {
+  return this.httpClient.get<any[]>(this.apiUrl + "/fileLib/" + userId).pipe(
+    map(files =>
+      files.map(file => ({
+        ...file,
+        timeNDate: new Date(file.timeNDate.replace(' ', 'T'))  // conversion to a date TS accepts
+      }))
+    ));
+}
+
 }

@@ -1,0 +1,18 @@
+<div class="menuContainer">
+    <div class="container">
+        <input type="checkbox" id="toggle" checked />
+        <label class="button" for="toggle">
+            <nav class="nav">
+                <ul>
+                    <li><a href="/" title="Cut and Merge sheets!"><img src="./assets/sheetSvg.svg" width="50%"></a></li>
+                    <li><a href="{{ userId() }}" title="Access your file library"><img src="./assets/fileLibrarySvg.svg"
+                                width="50%"></a>
+                    </li>
+                    <li><a href="/logout" title="Log out GridLab" (click)="logout()"><img src="./assets/logOutSvg.svg"
+                                width="50%"></a>
+                    </li>
+                </ul>
+            </nav>
+        </label>
+    </div>
+</div>

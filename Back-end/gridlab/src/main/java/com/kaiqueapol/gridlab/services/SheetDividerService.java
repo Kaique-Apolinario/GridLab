@@ -16,11 +16,12 @@ import com.kaiqueapol.gridlab.util.ZipSheet;
 import com.kaiqueapol.gridlab.validations.FileValidation;
 import com.kaiqueapol.gridlab.validations.RowPerSheetsValidation;
 
-@Service
-public class SheetDividerService {
+import lombok.AllArgsConstructor;
 
-	public SheetDividerService() {
-	}
+@Service
+@AllArgsConstructor
+public class SheetDividerService {
+	private DownloadZipService zipServ;
 
 	public FileEntity divideSheets(MultipartFile rawFile, int amountOfNewSheets, boolean header) throws Exception {
 		// It validates if the file is a .xlsx or .xls sheet and converts it to
@@ -71,7 +72,7 @@ public class SheetDividerService {
 		String fileNameWoExtension = file.getOriginalFilename().substring(0, file.getOriginalFilename().length() - 5);
 		ZipSheet.sheetZipping(fileNameWoExtension, amountOfNewSheets, listOfNewWorkbook, workbook);
 
-		FileEntity fileEntity = DownloadZipService
+		FileEntity fileEntity = zipServ
 				.zipToEntity(new File(System.getProperty("java.io.tmpdir") + fileNameWoExtension + ".zip"));
 		return fileEntity;
 	}

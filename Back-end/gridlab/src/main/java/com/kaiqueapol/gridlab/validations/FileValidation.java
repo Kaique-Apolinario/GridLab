@@ -3,7 +3,7 @@ package com.kaiqueapol.gridlab.validations;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kaiqueapol.gridlab.exceptions.InvalidFileException;
+import com.kaiqueapol.gridlab.infra.exceptions.InvalidFileException;
 
 @Component
 public class FileValidation { // Stateless class

@@ -10,19 +10,26 @@ import java.util.UUID;
 
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.kaiqueapol.gridlab.entities.FileEntity;
-import com.kaiqueapol.gridlab.exceptions.FileEntityNotFoundException;
+import com.kaiqueapol.gridlab.entities.UserEntity;
+import com.kaiqueapol.gridlab.infra.exceptions.FileEntityNotFoundException;
+import com.kaiqueapol.gridlab.infra.exceptions.NosyException;
+import com.kaiqueapol.gridlab.infra.exceptions.UserNotFoundException;
 import com.kaiqueapol.gridlab.repositories.FileRepository;
+import com.kaiqueapol.gridlab.repositories.UserRepository;
+
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class DownloadZipService {
-	private static FileRepository fileRep;
-
-	public DownloadZipService(FileRepository fileRep) {
-		DownloadZipService.fileRep = fileRep;
-	}
+	private FileRepository fileRep;
+	private UserRepository userRepo;
+	private TokenService tokenServ;
 
 	public Resource downloadZip(UUID id) throws IOException {
 		ByteArrayResource resource = new ByteArrayResource(getEntityById(id).getData());
@@ -38,16 +45,50 @@ public class DownloadZipService {
 	}
 
 	public List<FileEntity> getAllFiles() {
-		List<FileEntity> foundFilesList = Optional.ofNullable(fileRep.findAll())
-				.orElseThrow(FileEntityNotFoundException::new);
-
-		return foundFilesList;
+		Optional<List<FileEntity>> foundFilesList = Optional.ofNullable(fileRep.findAll());
+		if (foundFilesList.isEmpty())
+			throw new FileEntityNotFoundException();
+		return foundFilesList.get();
 	}
 
-	public static FileEntity zipToEntity(File zip) throws IOException {
+	public List<FileEntity> getAllFilesFromUser(String userToken, Long userId) {
+
+		Optional<UserEntity> userFromUrlId = Optional.ofNullable(userRepo.findById(userId))
+				.orElseThrow(() -> new UserNotFoundException());
+
+		if (!userFromUrlId.isPresent())
+			throw new UserNotFoundException("No user with the URL's Id");
+
+		String userFromToken = tokenServ.returnUserFromToken(userToken.replace("Bearer ", ""), null);
+		if (userFromUrlId.get().getEmail().equals(userFromToken)) {
+
+			List<FileEntity> foundFilesList = Optional.ofNullable(fileRep.fileListByUser(userId))
+					.orElseThrow(FileEntityNotFoundException::new);
+
+			return foundFilesList;
+		} else {
+			throw new NosyException();
+		}
+	}
+
+	@Transactional
+	public FileEntity zipToEntity(File zip) throws IOException {
+
+		// You need to get the user tracked/controlled by Hibernate, so you take from
+		// the repo
+		Optional<UserEntity> user = userRepo.findByEmailIgnoreCase(
+				((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
+
+		// Attach current authenticated user to the file
 		FileEntity fileEntity = new FileEntity(UUID.randomUUID(), zip.getName(), zip.length(),
-				Files.probeContentType(zip.toPath()), Files.readAllBytes(zip.toPath()), LocalDateTime.now());
+				Files.probeContentType(zip.toPath()), Files.readAllBytes(zip.toPath()), LocalDateTime.now(),
+				user.get());
+
 		fileRep.save(fileEntity);
+
+		// Attach current file to the user's list of files
+		user.get().getFileList().add(fileEntity);
+		userRepo.save(user.get());
 		return fileEntity;
 	}
 }

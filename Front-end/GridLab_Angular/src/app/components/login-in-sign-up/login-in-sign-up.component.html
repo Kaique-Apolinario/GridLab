@@ -1,0 +1,31 @@
+<form [formGroup]="loginForm" class="login-form">
+    <h2>{{ formTitle() }}</h2>
+    <div class="login-form-fields">
+        <label>Email</label>
+        <input class="textbox" type="email" formControlName="email" />
+        <label>Password</label>
+        <input class="textbox" type="password" formControlName="password" />
+
+        @if (formTitle() === "Register") {
+        <label>Confirm password</label>
+        <input class="textbox" type="password" formControlName="confirmationPassword" />
+        }
+    </div>
+
+    <div class="buttonLine">
+
+        @if (formTitle() === "Sign In") {
+
+        <button type="submit" (click)="onLogin()">Login</button>
+        } @else {
+
+        <button type="submit" (click)="switchLoginOrSignUp()">Login instead</button>
+        }
+
+        @if (formTitle() === "Sign In") {
+        <button type="button" (click)="switchLoginOrSignUp()">Register</button>}
+        @else {
+        <button type="button" (click)="onRegister()">Sign In</button>
+        }
+    </div>
+</form>

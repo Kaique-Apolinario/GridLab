@@ -18,7 +18,7 @@ export class LoginInSignUpComponent implements OnInit{
   private sessionService: UserSessionSharedService = inject(UserSessionSharedService)
   private router: Router= inject(Router)
 
-  formTitle = signal("Register");
+  formTitle = signal("");
 
   loginForm: FormGroup = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -49,8 +49,7 @@ onRegister() {
   if (this.loginForm.valid){
     if (this.loginForm.get('password')?.value === this.loginForm.get('confirmationPassword')?.value) {
       this.authService.register(this.loginForm.value).subscribe(() => {
-      this.router.navigateByUrl("/", {skipLocationChange:true}).then(()=>{
-      this.router.navigate(['/login'])})
+      window.location.href = '/login';
       alert("You have signed up! Log in to check your file library.");})
     } else {
       alert("Oops! Password and confirmation password doesn't match!")

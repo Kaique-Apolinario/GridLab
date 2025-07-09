@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 
-@SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "GridLabAPI", version = "1", description = "Documentation of GridLab API"))
+@SpringBootApplication
 public class Application {
 
 	public static void main(String[] args) {

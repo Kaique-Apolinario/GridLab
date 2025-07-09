@@ -1,6 +1,7 @@
 package com.kaiqueapol.gridlab.controllers;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -72,9 +73,11 @@ public class UserController {
 			@ApiResponse(responseCode = "422", description = "Invalid data requisition"),
 			@ApiResponse(responseCode = "400", description = "Invalid parameters"),
 			@ApiResponse(responseCode = "500", description = "Internal server error"), })
-	public ResponseEntity<String> register(@RequestBody RegisterCredentialsDto signUpDto) {
+	public ResponseEntity<Map<String, String>> register(@RequestBody RegisterCredentialsDto signUpDto) {
 		UserEntity userEntity = userService.register(signUpDto);
-		return ResponseEntity.created(URI.create("/users/" + userEntity.getId())).body("User registered successfully!");
+	    Map<String, String> response = new HashMap<>();
+	    response.put("message", "User registered successfully!"); // Angular expects a JSON from 'POST'
+		return ResponseEntity.created(URI.create("/users/" + userEntity.getId())).body(response);
 	}
 
 	@PostMapping("/logout")

@@ -128,7 +128,7 @@ public class SheetMergerService {
 		ZipSheet.sheetZipping("GridLab_SheetUnision", 1, workArray, unitionWorkbook);
 
 		FileEntity fileEntity = zipServ
-				.zipToEntity(new File(System.getProperty("java.io.tmpdir") + "GridLab_SheetUnision" + ".zip"));
+				.zipToEntity(new File("/tmp/" + "GridLab_SheetUnision" + ".zip"));
 
 		unitionWorkbook.close();
 		return fileEntity;

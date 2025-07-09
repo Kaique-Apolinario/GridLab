@@ -73,7 +73,7 @@ public class SheetDividerService {
 		ZipSheet.sheetZipping(fileNameWoExtension, amountOfNewSheets, listOfNewWorkbook, workbook);
 
 		FileEntity fileEntity = zipServ
-				.zipToEntity(new File(System.getProperty("java.io.tmpdir") + fileNameWoExtension + ".zip"));
+				.zipToEntity(new File("/tmp/" + fileNameWoExtension + ".zip"));
 		return fileEntity;
 	}
 

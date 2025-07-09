@@ -53,7 +53,7 @@ public class TokenSecurityFilter extends OncePerRequestFilter {
 		filterChain.doFilter(request, response);
 	}
 
-	// If the request has a token in its header, it is going to be returned, else,
+	// If the request has a token in its header, it is going to be returned, otherwise,
 	// nothing.
 	private String getTokenFromReq(HttpServletRequest request) {
 		String authorizationHeader = request.getHeader("Authorization");

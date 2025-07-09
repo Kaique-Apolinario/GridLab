@@ -114,13 +114,6 @@ public class SheetMergerService {
 			}
 		}
 
-		try {
-			FileOutputStream fos = new FileOutputStream("C:\\Users\\KaiiaK\\Desktop\\Sheets Manager\\Done.xlsx");
-			unitionWorkbook.write(fos);
-		} catch (IOException e) {
-			e.getMessage();
-		}
-
 		// Save the new sheets into a .zip file
 		ArrayList<Workbook> workbookArray = new ArrayList<>();
 		workbookArray.add(unitionWorkbook);
@@ -128,7 +121,7 @@ public class SheetMergerService {
 		ZipSheet.sheetZipping("GridLab_SheetUnision", 1, workArray, unitionWorkbook);
 
 		FileEntity fileEntity = zipServ
-				.zipToEntity(new File(System.getProperty("java.io.tmpdir") + "GridLab_SheetUnision" + ".zip"));
+				.zipToEntity(new File("/tmp/" + "GridLab_SheetUnision" + ".zip"));
 
 		unitionWorkbook.close();
 		return fileEntity;

@@ -114,13 +114,6 @@ public class SheetMergerService {
 			}
 		}
 
-		try {
-			FileOutputStream fos = new FileOutputStream("C:\\Users\\KaiiaK\\Desktop\\Sheets Manager\\Done.xlsx");
-			unitionWorkbook.write(fos);
-		} catch (IOException e) {
-			e.getMessage();
-		}
-
 		// Save the new sheets into a .zip file
 		ArrayList<Workbook> workbookArray = new ArrayList<>();
 		workbookArray.add(unitionWorkbook);

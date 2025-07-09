@@ -22,3 +22,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gridlab
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: admin
+
+  frontend:
+    image: kaiqueapol/gridlab_front:1.0
+    container_name: frontend_service
+    restart: always 
+    ports: ["4200:4200"]

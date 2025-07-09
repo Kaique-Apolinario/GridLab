@@ -61,6 +61,7 @@ public class TokenService {
 				.expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1h
 				.signWith(SECRET_KEY).compact();
 
+		// It will replace the old refreshToken by a new one in the database
 		if (tokenRepo.findTokenEntityByEmail(user.getEmail()).isPresent()) {
 			Optional<TokenEntity> tokensOfUser = tokenRepo.findTokenEntityByEmail(user.getEmail());
 			tokenRepo.deleteTokenEntity(tokensOfUser.get().getToken());

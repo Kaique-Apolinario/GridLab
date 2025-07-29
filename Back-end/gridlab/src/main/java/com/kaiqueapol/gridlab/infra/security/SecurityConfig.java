@@ -30,7 +30,7 @@ public class SecurityConfig {
 				.csrf(csrf -> csrf.disable())
 				.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(req -> req.requestMatchers("/login", "/register").anonymous()
-						.requestMatchers("/fileLib", "/fileLib/*", "/logout", "/", "/refreshToken").authenticated()
+						.requestMatchers("/fileLib", "/fileLib/*", "/logout", "/", "/refreshToken", "/download/*").authenticated()
 						.anyRequest().authenticated())
 				.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
 				.logout(logout -> logout.disable());

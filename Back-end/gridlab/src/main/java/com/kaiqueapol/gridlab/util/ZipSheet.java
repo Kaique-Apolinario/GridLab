@@ -22,7 +22,12 @@ public class ZipSheet { // Stateless class
 		// It creates a list with every .xlsx created
 		List<File> listWithEveryNewSheet = new ArrayList<>();
 		for (int i = 0; i < amountOfNewSheets; i++) {
-			File fileName = new File("/tmp/" + ogName + "_" + (i + 1) + ".xlsx"); //AQUI
+			//Docker temp files
+			/*File fileName = new File("/tmp/" + ogName + "_" + (i + 1) + ".xlsx");*/
+			//System temp files
+			File fileName = new File(System.getProperty("java.io.tmpdir") + ogName + "_" + (i + 1) + ".xlsx");
+			
+			
 
 			listWithEveryNewSheet.add(fileName);
 
@@ -39,7 +44,14 @@ public class ZipSheet { // Stateless class
 		}
 
 		// It creates a .zip including all of the .xlsx within listWithEveryNewSheet
-		try (FileOutputStream fos = new FileOutputStream("/tmp/" + ogName + ".zip");
+		try (
+				//Docker temp files
+				/*FileOutputStream fos = new FileOutputStream("/tmp/" + ogName + ".zip"*/
+				
+				//System temp files
+				FileOutputStream fos = new FileOutputStream(System.getProperty("java.io.tmpdir") + ogName + ".zip"
+
+				);
 				ZipOutputStream zos = new ZipOutputStream(fos);) {
 
 			for (File fileToZip : listWithEveryNewSheet) {

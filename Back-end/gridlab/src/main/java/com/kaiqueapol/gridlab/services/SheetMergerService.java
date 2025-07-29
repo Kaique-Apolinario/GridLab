@@ -120,9 +120,18 @@ public class SheetMergerService {
 		Workbook[] workArray = workbookArray.toArray(new Workbook[0]);
 		ZipSheet.sheetZipping("GridLab_SheetUnision", 1, workArray, unitionWorkbook);
 
+		//Docker temp files
+		/*FileEntity fileEntity = zipServ
+				.zipToEntity(new File("/tmp/" + "GridLab_SheetUnision" + ".zip"));*/
+		
+		//System temp files
 		FileEntity fileEntity = zipServ
-				.zipToEntity(new File("/tmp/" + "GridLab_SheetUnision" + ".zip"));
+				.zipToEntity(new File(System.getProperty("java.io.tmpdir") + "GridLab_SheetUnision" + ".zip"));
+		
 
+		
+				
+				
 		unitionWorkbook.close();
 		return fileEntity;
 

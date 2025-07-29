@@ -72,8 +72,15 @@ public class SheetDividerService {
 		String fileNameWoExtension = file.getOriginalFilename().substring(0, file.getOriginalFilename().length() - 5);
 		ZipSheet.sheetZipping(fileNameWoExtension, amountOfNewSheets, listOfNewWorkbook, workbook);
 
+		//Docker temp files
+		/*FileEntity fileEntity = zipServ
+				.zipToEntity(new File("/tmp/" + fileNameWoExtension + ".zip"));*/
+		
+		//System temp files
 		FileEntity fileEntity = zipServ
-				.zipToEntity(new File("/tmp/" + fileNameWoExtension + ".zip"));
+				.zipToEntity(new File(System.getProperty("java.io.tmpdir") + fileNameWoExtension + ".zip"));
+		
+		
 		return fileEntity;
 	}
 

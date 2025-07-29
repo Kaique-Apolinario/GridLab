@@ -28,4 +28,18 @@ export class FileLibComponent implements OnInit{
     this.fileService.getAllFiles().subscribe((response) => {this.fileList.set(response)});
   }
 
+
+  downloadFile(filelUrl: string) {
+        this.fileService.getFile(filelUrl).subscribe((blob) => {
+        const objectUrl = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = objectUrl;
+        if (this.downloadFile != null) {
+        a.download = "GridLab result";
+        a.click();
+
+        URL.revokeObjectURL(objectUrl);
+        }})
+  }
 }

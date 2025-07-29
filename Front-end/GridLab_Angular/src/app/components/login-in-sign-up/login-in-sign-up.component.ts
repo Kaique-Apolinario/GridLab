@@ -62,7 +62,7 @@ if ((this.loginForm.get('email')?.invalid && this.loginForm.get('email')?.touche
     }
     
   if ((this.loginForm.get('password')?.invalid && this.loginForm.get('password')?.touched) || this.loginForm.get('password')?.value == ""){
-    alert("Oops! Your password needs to be at lease 6 characters long!" )
+    alert("Oops! Your password needs to be at least 6 characters long!" )
   }
 }
 

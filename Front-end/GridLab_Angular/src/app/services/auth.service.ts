@@ -12,7 +12,8 @@ export class AuthService {
 
   login(loginCredentials: { email: string; password: string }): Observable<any> {
     return this.http.post(this.apiUrl + "/login", loginCredentials).pipe(
-     catchError(error => {
+     catchError(
+      error => {
       alert("Oops! An error occurred. Please, reload and try again!")
       throw error;
      })

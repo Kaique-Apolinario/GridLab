@@ -24,7 +24,6 @@ export class MergerComponent implements OnInit{
   allFiles!:File[];
 
 
-
   ngOnInit(): void {
   }
 
@@ -37,19 +36,27 @@ export class MergerComponent implements OnInit{
        this.downloadFile = null;
        this.formData = new FormData()
        this.filesToFormData();
-      
     }
     }
 
     filesToFormData(){
-      for (const file of this.allFiles) {
-        if (file.name.toString().endsWith(".xlsx") || file.name.toString().endsWith(".xls")){
-          this.formData!.append('files', file);
-        } else {
-          this.formData = null;
-          alert("It isn't a .xlsx or a .xls file. Please, try again!");
-        }
-      }
+  const validFiles = this.allFiles.filter(file =>
+    file.name.endsWith('.xlsx') || file.name.endsWith('.xls')
+  );
+
+  if (validFiles.length === 0) {
+    this.formData = null;
+    this.allFiles = [];
+    alert("It isn't a .xlsx or a .xls file. Please, try again!");
+    return;
+  }
+
+  this.allFiles = validFiles;
+  this.formData = new FormData();
+  for (const file of this.allFiles) {
+    this.formData.append('files', file);
+  }
+
     }
 
     onToggle(){
@@ -81,7 +88,6 @@ export class MergerComponent implements OnInit{
         }
   })}
   }
-
 
     changeFileOrder(event: CdkDragDrop<File[]>) {
       moveItemInArray(this.allFiles,  event.previousIndex, event.currentIndex);

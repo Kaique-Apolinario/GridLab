@@ -20,21 +20,31 @@ export class UploadButtonComponent implements OnInit{
   header: boolean = false;
   buttonMessage:string= "";
   downloadFile!:FileEntity | null ;
+  file!: File | null ;
 
 
   ngOnInit(): void {
   }
 
   OnFileUpload(event: any){
-    if(event.target.files.length > 0 ) {
-      let file: File = event.target.files[0];
-      if (file.name.toString().endsWith(".xlsx") || file.name.toString().endsWith(".xls")){
-      this.fileName = file.name.toString();
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+
+    if(input.files.length > 0) {
+      this.file = input.files[0];
+
+      if (this.file !== null && (this.file.name.toString().endsWith(".xlsx") || this.file.name.toString().endsWith(".xls"))){
+      this.fileName = this.file.name.toString();
       this.formData = new FormData();
-      this.formData.append('file', file);
+      this.formData.append('file', this.file);
       } else {
+        this.file = null;
         alert("It isn't a .xlsx or a .xls file. Please, try again!")
       }
+      input.value = "";
     }
   }
 

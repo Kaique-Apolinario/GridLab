@@ -1,7 +1,6 @@
 th, tr {
     border: solid 2px black;
-    padding: 10px 50px;
-    margin: 0 auto;
+    padding: 10px 20px;
     text-align: center;
 }
 
@@ -14,15 +13,13 @@ td{
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(5px);
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .truncate {
   max-width: 100px;
   white-space: nowrap;
-}
-
-table{
-    margin: 10px;
 }
 
 @media (max-width: 750px) {
@@ -41,11 +38,9 @@ button {
   background: transparent;
   padding: 0;
   border: 0;
-  font: inherit; 
   text-decoration: underline;
   cursor: pointer;
   color: blue;
   -webkit-appearance: none;
-
 }
 
